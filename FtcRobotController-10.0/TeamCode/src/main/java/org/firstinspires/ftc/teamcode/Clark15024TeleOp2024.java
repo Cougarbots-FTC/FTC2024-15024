@@ -27,17 +27,17 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
 
         //Sets the mode all motors for driving to reset the counter for the encode and to run without using the encoders(encoders will not pick up change)
         robot.driveLeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.driveLeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //robot.driveLeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.driveLeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.driveLeftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //robot.driveLeftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.driveRightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.driveRightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //robot.driveRightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.driveRightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.driveRightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //robot.driveRightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        /*robot.linearMotionUp1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.linearMotionUp1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.linearMotionUp1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.linearMotionUp2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        /*robot.linearMotionUp2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.linearMotionUp2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.linearMotionRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -75,6 +75,7 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
 
             //Obtains values for each motor through the positions through values
             //from  left joystick which has up/down(vertical) and left/right values(horizontal), and right joystick which has left/right values(pivot)
+
             double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
             double rightFrontPower = (vertical - horizontal - pivot) / denominator;
             double rightBackPower = (vertical + horizontal - pivot) / denominator;
@@ -86,6 +87,14 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
             robot.driveRightBack.setPower(rightBackPower * slow);
             robot.driveLeftBack.setPower(LeftBackPower * slow);
             robot.driveLeftFront.setPower(LeftFrontPower * slow);
+
+            //forward
+            //robot.driveRightFront.setPower();
+            if(gamepad2.right_stick_y > 0 || gamepad2.right_stick_y < 0){
+                robot.linearMotionUp1.setPower(gamepad2.right_stick_y);
+            }
+            robot.linearMotionUp1.setPower(0);
+
         }
     }
 }
