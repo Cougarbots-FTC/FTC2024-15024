@@ -95,6 +95,11 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
             }
             robot.linearMotionUp1.setPower(0);
 
+
+            if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0){
+                robot.intakeHD.setPower(gamepad1.left_stick_y);
+            }
+            robot.intakeHD.setPower(0);
         }
     }
 }

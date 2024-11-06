@@ -46,6 +46,7 @@ public class Clark15024HWMap {
         //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
         temp = HWM.get(Servo.class, "TrialServo");
         odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
+        intakeHD = HWM.get(DcMotor.class, "Intake");
 
 
 
@@ -83,13 +84,13 @@ public class Clark15024HWMap {
         //TODO Change direction of motor according to the plans of hardware team
         linearMotionRight1.setDirection(DcMotorSimple.Direction.FORWARD);
         linearMotionRight1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
 
         intakeHD.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeHD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeHD.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        pos = odom.getPosition();*/
+        //pos = odom.getPosition();
 
 
 
