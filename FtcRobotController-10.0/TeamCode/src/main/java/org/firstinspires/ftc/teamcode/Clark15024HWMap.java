@@ -22,7 +22,7 @@ public class Clark15024HWMap {
     public DcMotor linearMotionRight1 = null;
     public DcMotor intakeHD = null;
     //public SensorSparkFunOTOS odom = null;
-    public Servo temp = null;
+    public Servo drop = null;
     public SparkFunOTOS odom = null;
     public SparkFunOTOS.Pose2D pos = null;
 
@@ -44,8 +44,10 @@ public class Clark15024HWMap {
         linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
         intakeHD = HWM.get(DcMotor.class, "Intake");
         //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
-        temp = HWM.get(Servo.class, "TrialServo");
         odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
+
+        drop = HWM.get(Servo.class, "drop");
+
         intakeHD = HWM.get(DcMotor.class, "Intake");
 
 
@@ -89,6 +91,10 @@ public class Clark15024HWMap {
         intakeHD.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeHD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeHD.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        drop.setDirection(Servo.Direction.FORWARD);
+        //drop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         //pos = odom.getPosition();
 

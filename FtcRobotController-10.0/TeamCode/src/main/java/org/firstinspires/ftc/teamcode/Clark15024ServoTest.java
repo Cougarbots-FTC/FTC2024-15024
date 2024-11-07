@@ -22,16 +22,16 @@ public class Clark15024ServoTest extends LinearOpMode {
         while(opModeIsActive()){
             //If y is pressed on gamepad 1, then the servo is going to go to 0 degrees
             if(gamepad1.y){
-                robot.temp.setPosition(0);
+                robot.drop.setPosition(0);
             //If a is pressed on gamepad 1, then the servo is going to go to 180 degrees
             } else if (gamepad1.a) {
-                robot.temp.setPosition(0.5);
+                robot.drop.setPosition(0.5);
             //If a is pressed on gamepad 1, then the servo is going to go to 360 degrees
             } else if (gamepad1.b) {
-                robot.temp.setPosition(1);
+                robot.drop.setPosition(1);
             }
 
-            telemetry.addData("Servo Position", robot.temp.getPosition());
+            telemetry.addData("Servo Position", robot.drop.getPosition());
             telemetry.update();
         }
     }
