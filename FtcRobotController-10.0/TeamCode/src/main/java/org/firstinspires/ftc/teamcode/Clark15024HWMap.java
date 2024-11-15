@@ -17,8 +17,8 @@ public class Clark15024HWMap {
     public DcMotor driveLeftFront = null;
     public DcMotor driveRightBack = null;
     public DcMotor driveLeftBack = null;
-    public DcMotor linearMotionUp1 = null;
-    public DcMotor linearMotionUp2 = null;
+    public DcMotor LiftA = null;
+    public DcMotor LiftB = null;
     public DcMotor linearMotionRight1 = null;
     public DcMotor intakeHD = null;
     //public SensorSparkFunOTOS odom = null;
@@ -39,9 +39,9 @@ public class Clark15024HWMap {
         driveRightFront = HWM.get(DcMotor.class, "driveRightFront");
         driveRightBack = HWM.get(DcMotor.class, "driveRightBack");
 
-       linearMotionUp1 = HWM.get(DcMotor.class, "linearMotionUp1");
-        /*linearMotionUp2 = HWM.get(DcMotor.class, "linearMotionUp2");
-        linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
+        LiftA = HWM.get(DcMotor.class, "LiftA");
+        LiftB = HWM.get(DcMotor.class, "LiftB");
+        /*linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
         intakeHD = HWM.get(DcMotor.class, "Intake");
         //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
         odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
@@ -75,18 +75,21 @@ public class Clark15024HWMap {
         driveRightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driveRightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        linearMotionUp1.setDirection(DcMotorSimple.Direction.FORWARD);
-        linearMotionUp1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearMotionUp1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LiftA.setDirection(DcMotorSimple.Direction.FORWARD);
+        LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LiftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        /*linearMotionUp2.setDirection(DcMotorSimple.Direction.REVERSE);
-        linearMotionUp2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearMotionUp2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LiftB.setDirection(DcMotorSimple.Direction.REVERSE);
+        LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //TODO Change direction of motor according to the plans of hardware team
-        linearMotionRight1.setDirection(DcMotorSimple.Direction.FORWARD);
-        linearMotionRight1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
+        /*TODO Change direction of motor according to the plans of hardware team
+        StretchA.setDirection(DcMotorSimple.Direction.FORWARD);
+        StretchA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        StretchA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        StretchB.setDirection(DcMotorSimple.Direction.FORWARD);
+        StretchB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        StretchB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
 
         intakeHD.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeHD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
