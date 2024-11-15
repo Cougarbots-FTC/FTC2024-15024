@@ -79,6 +79,7 @@ public class Clark15024HWMap {
         LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+<<<<<<< HEAD
         LiftB.setDirection(DcMotorSimple.Direction.REVERSE);
         LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -90,6 +91,16 @@ public class Clark15024HWMap {
         StretchB.setDirection(DcMotorSimple.Direction.FORWARD);
         StretchB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         StretchB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
+=======
+        linearMotionUp2.setDirection(DcMotorSimple.Direction.REVERSE);
+        linearMotionUp2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        linearMotionUp2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //TODO Change direction of motor according to the plans of hardware team
+        /*linearMotionRight1.setDirection(DcMotorSimple.Direction.FORWARD);
+        linearMotionRight1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
+>>>>>>> 450cdafe9587b158228601265a2b08529ba7b55b
 
         intakeHD.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeHD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -87,11 +87,40 @@ public class Clark15024TeleOp extends LinearOpMode {
             robot.driveLeftBack.setPower(LeftBackPower * slow);
             robot.driveLeftFront.setPower(LeftFrontPower * slow);
 
+<<<<<<< HEAD:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp.java
             //One-button operation of the spinning intake
             if (gamepad1.a&&!gamepad1AState){
                 robot.intakeHD.setPower(1);
                 gamepad1AState = true;
             } else if (gamepad1.a&&gamepad1AState) {
+=======
+            //forward
+            //robot.driveRightFront.setPower();
+            /*if(gamepad2.right_stick_y > 0){
+                robot.linearMotionUp1.setPower(gamepad2.right_stick_y);
+            }
+            else if(gamepad2.right_stick_y < 0)
+            {
+                robot.linearMotionUp1.setPower(gamepad2.right_stick_y);
+            }
+            robot.linearMotionUp1.setPower(0);*/
+
+
+
+
+
+            if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0) {
+                robot.linearMotionUp1.setPower(gamepad2.left_stick_y);
+                robot.linearMotionUp2.setPower(-gamepad2.left_stick_y);
+            }
+            robot.linearMotionUp1.setPower(0);
+            robot.linearMotionUp2.setPower(0);
+
+            if(gamepad2.right_trigger > 0) {
+                robot.intakeHD.setPower(gamepad1.left_stick_y);
+            }
+            if(gamepad2.right_trigger == 0){
+>>>>>>> 450cdafe9587b158228601265a2b08529ba7b55b:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp2024.java
                 robot.intakeHD.setPower(0);
                 gamepad1AState=false;
             }
@@ -105,6 +134,7 @@ public class Clark15024TeleOp extends LinearOpMode {
                 robot.LiftB.setPower(0.5);
                 gamepad1YState=false;
             }
+<<<<<<< HEAD:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp.java
             //One-button operation of the lift bucket
             if (gamepad1.b&&!gamepad1BState){
                 gamepad1BState = true;
@@ -119,6 +149,11 @@ public class Clark15024TeleOp extends LinearOpMode {
                 gamepad1XState=false;
             }
             telemetry.update();
+=======
+            else if (gamepad2.b){
+                robot.drop.setPosition(0);
+            }
+>>>>>>> 450cdafe9587b158228601265a2b08529ba7b55b:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp2024.java
         }
     }
 }
