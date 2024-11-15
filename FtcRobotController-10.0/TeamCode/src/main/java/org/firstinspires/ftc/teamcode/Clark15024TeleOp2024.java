@@ -90,24 +90,27 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
 
             //forward
             //robot.driveRightFront.setPower();
-            if(gamepad2.right_stick_y > 0 || gamepad2.right_stick_y < 0){
+            /*if(gamepad2.right_stick_y > 0){
                 robot.linearMotionUp1.setPower(gamepad2.right_stick_y);
             }
-            if(gamepad1.right_bumper){
-                robot.linearMotionUp1.setPower(0);
+            else if(gamepad2.right_stick_y < 0)
+            {
+                robot.linearMotionUp1.setPower(gamepad2.right_stick_y);
             }
+            robot.linearMotionUp1.setPower(0);*/
+
+
+
 
 
             if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0) {
                 robot.linearMotionUp1.setPower(gamepad2.left_stick_y);
-                robot.linearMotionUp2.setPower(gamepad2.left_stick_y);
+                robot.linearMotionUp2.setPower(-gamepad2.left_stick_y);
             }
-            if(gamepad2.left_bumper){
-                robot.linearMotionUp1.setPower(0);
-                robot.linearMotionUp2.setPower(0);
-            }
+            robot.linearMotionUp1.setPower(0);
+            robot.linearMotionUp2.setPower(0);
 
-            if(gamepad2.right_trigger > 0 || gamepad2.right_trigger < 0) {
+            if(gamepad2.right_trigger > 0) {
                 robot.intakeHD.setPower(gamepad1.left_stick_y);
             }
             if(gamepad2.right_trigger == 0){
@@ -116,6 +119,9 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
 
             if (gamepad2.a){
                 robot.drop.setPosition(0.5);
+            }
+            else if (gamepad2.b){
+                robot.drop.setPosition(0);
             }
         }
     }
