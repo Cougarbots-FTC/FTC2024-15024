@@ -19,12 +19,18 @@ public class Clark15024HWMap {
     public DcMotor driveLeftBack = null;
     public DcMotor LiftA = null;
     public DcMotor LiftB = null;
-    public DcMotor linearMotionRight1 = null;
-    public DcMotor intakeHD = null;
+    public DcMotor ArmExtender = null;
+    public DcMotor ArmRotator = null;
     //public SensorSparkFunOTOS odom = null;
-    public Servo drop = null;
-    public SparkFunOTOS odom = null;
-    public SparkFunOTOS.Pose2D pos = null;
+    //public Servo drop = null;
+
+    public Servo claw = null;
+    public Servo clawRotator = null;
+
+    public Servo bucketRotator = null;
+
+    //public SparkFunOTOS odom = null;
+    //public SparkFunOTOS.Pose2D pos = null;
 
 
     HardwareMap hM = null;
@@ -41,14 +47,22 @@ public class Clark15024HWMap {
 
         LiftA = HWM.get(DcMotor.class, "LiftA");
         LiftB = HWM.get(DcMotor.class, "LiftB");
+        ArmExtender = HWM.get(DcMotor.class, "ArmExtender");
+        ArmRotator = HWM.get(DcMotor.class, "ArmRotator");
+
         /*linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
         intakeHD = HWM.get(DcMotor.class, "Intake");
         //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
         odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
 
-        drop = HWM.get(Servo.class, "drop");
+        //drop = HWM.get(Servo.class, "drop");
+        //intakeHD = HWM.get(DcMotor.class, "Intake");
 
-        intakeHD = HWM.get(DcMotor.class, "Intake");
+        //Servos for delivery
+        claw = HWM.get(Servo.class, "claw");
+        clawRotator = HWM.get(Servo.class, "clawRotator");
+        bucketRotator = HWM.get(Servo.class, "bucketRotator");
+
 
 
 
