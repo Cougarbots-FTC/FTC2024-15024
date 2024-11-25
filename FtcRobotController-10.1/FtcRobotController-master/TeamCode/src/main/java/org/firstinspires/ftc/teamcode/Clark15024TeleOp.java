@@ -81,10 +81,10 @@ public class Clark15024TeleOp extends LinearOpMode {
             //Obtains values for each motor through the positions through values
             //from  left joystick which has up/down(vertical) and left/right values(horizontal), and right joystick which has left/right values(pivot)
             double denominator = Math.max(Math.abs(vertical) + Math.abs(horizontal) + Math.abs(pivot), 1);
-            double rightFrontPower = (vertical - horizontal - pivot) / denominator;
-            double rightBackPower = (vertical + horizontal - pivot) / denominator;
-            double LeftFrontPower = (pivot + vertical + horizontal) / denominator;
-            double LeftBackPower = (vertical - horizontal + pivot) / denominator;
+            double rightFrontPower = (vertical + horizontal + pivot) / denominator;
+            double rightBackPower = (vertical - horizontal + pivot) / denominator;
+            double LeftFrontPower = (vertical - horizontal - pivot) / denominator;
+            double LeftBackPower = (vertical + horizontal - pivot) / denominator;
 
             //Sets Power to the motors and changed the signed of the math in order to proportion the wheels right to move
             robot.driveRightFront.setPower(rightFrontPower * slow);

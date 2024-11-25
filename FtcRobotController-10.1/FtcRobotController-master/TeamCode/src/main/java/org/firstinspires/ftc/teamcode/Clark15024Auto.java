@@ -13,8 +13,12 @@ public class Clark15024Auto extends LinearOpMode {
 
     @Override
     public void runOpMode(){
+        robot.Map(hardwareMap);
         telemetry.addData("Time", time.time());
-        moveForward(10, 100);
+        waitForStart();
+
+        moveForward(10, 1000);
+        moveLeft(10,1000);
     }
 
     public void moveForward(double p, int t){
