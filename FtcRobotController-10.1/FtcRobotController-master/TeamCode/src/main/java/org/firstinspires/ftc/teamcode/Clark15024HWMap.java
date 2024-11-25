@@ -17,20 +17,22 @@ public class Clark15024HWMap {
     public DcMotor driveLeftFront = null;
     public DcMotor driveRightBack = null;
     public DcMotor driveLeftBack = null;
+
     public DcMotor LiftA = null;
     public DcMotor LiftB = null;
+
     public DcMotor ArmExtender = null;
     public DcMotor ArmRotator = null;
-    //public SensorSparkFunOTOS odom = null;
-    //public Servo drop = null;
 
     public Servo claw = null;
     public Servo clawRotator = null;
-
     public Servo bucketRotator = null;
 
     //public SparkFunOTOS odom = null;
     //public SparkFunOTOS.Pose2D pos = null;
+    //public SensorSparkFunOTOS odom = null;
+    //public Servo drop = null;
+
 
 
     HardwareMap hM = null;
@@ -55,17 +57,10 @@ public class Clark15024HWMap {
         //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
         odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
 
-        //drop = HWM.get(Servo.class, "drop");
-        //intakeHD = HWM.get(DcMotor.class, "Intake");
-
         //Servos for delivery
         claw = HWM.get(Servo.class, "claw");
         clawRotator = HWM.get(Servo.class, "clawRotator");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
-
-
-
-
 
         //Using functions from the DcMotor class, this changes the direction of the motor, sets the power to 0, and makes the runmode to run without encoder as the robot is not moving
         //The direction of the some variables are different because they are needed to offset each other to move
@@ -93,35 +88,41 @@ public class Clark15024HWMap {
         LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-<<<<<<< HEAD
         LiftB.setDirection(DcMotorSimple.Direction.REVERSE);
         LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        /*TODO Change direction of motor according to the plans of hardware team
-        StretchA.setDirection(DcMotorSimple.Direction.FORWARD);
-        StretchA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        StretchA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        StretchB.setDirection(DcMotorSimple.Direction.FORWARD);
-        StretchB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        StretchB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
-=======
+        //TODO Change direction of motor according to the plans of hardware team
+        ArmExtender.setDirection(DcMotorSimple.Direction.FORWARD);
+        ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ArmExtender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
+        //ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        /*
         linearMotionUp2.setDirection(DcMotorSimple.Direction.REVERSE);
         linearMotionUp2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearMotionUp2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+*/
         //TODO Change direction of motor according to the plans of hardware team
         /*linearMotionRight1.setDirection(DcMotorSimple.Direction.FORWARD);
         linearMotionRight1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
->>>>>>> 450cdafe9587b158228601265a2b08529ba7b55b
-
+/*
         intakeHD.setDirection(DcMotorSimple.Direction.FORWARD);
         intakeHD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeHD.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+*/
+        claw.setDirection(Servo.Direction.FORWARD);
+        //claw.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        drop.setDirection(Servo.Direction.FORWARD);
-        //drop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        clawRotator.setDirection(Servo.Direction.FORWARD);
+        //clawRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        bucketRotator.setDirection(Servo.Direction.FORWARD);
+        //bucketRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         //pos = odom.getPosition();

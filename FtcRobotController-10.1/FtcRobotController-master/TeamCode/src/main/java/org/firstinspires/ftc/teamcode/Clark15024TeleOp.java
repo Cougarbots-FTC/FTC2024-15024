@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 //This is essentially a new version that significantly cuts down on unused code and comments,
 //as well as maximizing optimization for ease of future development.
@@ -32,6 +33,7 @@ public class Clark15024TeleOp extends LinearOpMode {
         Boolean gamepad1XState = false;
         Boolean gamepad1YState = false;
 
+        /*
         //Sets the mode all motors for driving to reset the counter for the encode and to run without using the encoders(encoders will not pick up change)
         robot.driveLeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //robot.driveLeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -46,10 +48,7 @@ public class Clark15024TeleOp extends LinearOpMode {
         robot.LiftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.LiftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        /*robot.linearMotionRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.intakeHD.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.intakeHD.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        */
 
         //Waits for the button to start on the driver hub to be pressed
         waitForStart();
@@ -60,7 +59,7 @@ public class Clark15024TeleOp extends LinearOpMode {
             /*telemetry.addData("Sensor X", robot.pos.x);
             telemetry.addData("Sensor Y", robot.pos.y);
             telemetry.addData("Sensor H", robot.pos.h);*/
-            telemetry.update();
+            //telemetry.update();
 
             //Slow mode whenever you need to go slower to get precise blocks
             //TODO change controller input if needed
@@ -87,73 +86,71 @@ public class Clark15024TeleOp extends LinearOpMode {
             robot.driveLeftBack.setPower(LeftBackPower * slow);
             robot.driveLeftFront.setPower(LeftFrontPower * slow);
 
-<<<<<<< HEAD:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp.java
-            //One-button operation of the spinning intake
-            if (gamepad1.a&&!gamepad1AState){
-                robot.intakeHD.setPower(1);
-                gamepad1AState = true;
-            } else if (gamepad1.a&&gamepad1AState) {
-=======
-            //forward
-            //robot.driveRightFront.setPower();
-            /*if(gamepad2.right_stick_y > 0){
-                robot.linearMotionUp1.setPower(gamepad2.right_stick_y);
+            robot.LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            robot.LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            robot.ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            robot.ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            //left_trigger - liftA and liftB up
+            //right_trigger - liftA and liftB down
+            float liftPowerUp = gamepad1.left_trigger;
+            float liftPowerDown = gamepad1.right_trigger;
+            if (gamepad1.left_trigger > 0.1) {
+                robot.LiftA.setPower(liftPowerUp);
+                robot.LiftB.setPower(liftPowerUp);
+            } else if (gamepad1.right_trigger > 0.1) {
+                robot.LiftA.setPower(-1 * liftPowerDown);
+                robot.LiftB.setPower(-1 * liftPowerDown);
+            } else {
+                robot.LiftA.setPower(0);
+                robot.LiftB.setPower(0);
             }
-            else if(gamepad2.right_stick_y < 0)
-            {
-                robot.linearMotionUp1.setPower(gamepad2.right_stick_y);
+
+            //ArmExtender on DPad up and down
+            double armExtenderPower = gamepad1.right_bumper ? 1 : 0.5;
+            if (gamepad1.dpad_down) {
+                robot.ArmExtender.setPower(armExtenderPower);
+            } else if (gamepad1.dpad_up) {
+                robot.ArmExtender.setPower(-1 * armExtenderPower);
+            } else {
+               robot.ArmExtender.setPower(0);
             }
-            robot.linearMotionUp1.setPower(0);*/
+
+            //ArmRotator on DPad left and Right
+            double armRotatorPower = gamepad1.right_bumper ? 0.5 : 0.3;
+            if (gamepad1.dpad_left) {
+                robot.ArmRotator.setPower(armRotatorPower);
+                telemetry.addData("Arm Rotator Power: ", armRotatorPower);
+                telemetry.update();
+
+            } else if (gamepad1.dpad_right){
+                //down
+                robot.ArmRotator.setPower(-0.3);
+            } else {
+                robot.ArmRotator.setPower(0);
+            }
+
+            //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
+            if (gamepad1.b) {
+                robot.bucketRotator.setPosition(0);//robot.bucketRotator.getPosition()+0.1);
+            }
+            if (gamepad1.a) {
+                robot.bucketRotator.setPosition(0.4);//robot.bucketRotator.getPosition()+0.1);
+            }
+            //servo spin for intake on A
+        /*if (gamepad1.back) {
+          Claw.setPosition(-0.1);
+        } else if (gamepad1.start) {
+          Claw.setPosition(0.8);
+        }
+        if (gamepad1.right_stick_y < 0) {
+          ClawRotator.setPosition(0);
+        } else if (gamepad1.right_stick_y > 0) {
+          ClawRotator.setPosition(1);
+        }*/
 
 
-
-
-
-            if(gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0) {
-                robot.linearMotionUp1.setPower(gamepad2.left_stick_y);
-                robot.linearMotionUp2.setPower(-gamepad2.left_stick_y);
-            }
-            robot.linearMotionUp1.setPower(0);
-            robot.linearMotionUp2.setPower(0);
-
-            if(gamepad2.right_trigger > 0) {
-                robot.intakeHD.setPower(gamepad1.left_stick_y);
-            }
-            if(gamepad2.right_trigger == 0){
->>>>>>> 450cdafe9587b158228601265a2b08529ba7b55b:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp2024.java
-                robot.intakeHD.setPower(0);
-                gamepad1AState=false;
-            }
-            //One-button operation of the lift itself
-            if (gamepad1.y&&!gamepad1YState){
-                robot.LiftA.setPower(0.5);
-                robot.LiftB.setPower(-0.5);
-                gamepad1YState = true;
-            } else if (gamepad1.y&&gamepad1YState) {
-                robot.LiftA.setPower(-0.5);
-                robot.LiftB.setPower(0.5);
-                gamepad1YState=false;
-            }
-<<<<<<< HEAD:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp.java
-            //One-button operation of the lift bucket
-            if (gamepad1.b&&!gamepad1BState){
-                gamepad1BState = true;
-            } else if (gamepad1.b&&gamepad1BState) {
-                robot.drop.setPosition(0);
-                gamepad1BState=false;
-            }
-            //One-button operation of the horizontal linear motion arm
-            if (gamepad1.x&&!gamepad1XState){
-                gamepad1XState = true;
-            } else if (gamepad1.x&&gamepad1XState) {
-                gamepad1XState=false;
-            }
-            telemetry.update();
-=======
-            else if (gamepad2.b){
-                robot.drop.setPosition(0);
-            }
->>>>>>> 450cdafe9587b158228601265a2b08529ba7b55b:FtcRobotController-10.0/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Clark15024TeleOp2024.java
         }
     }
 }
