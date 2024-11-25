@@ -101,20 +101,7 @@ public class Clark15024HWMap {
         //ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        /*
-        linearMotionUp2.setDirection(DcMotorSimple.Direction.REVERSE);
-        linearMotionUp2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearMotionUp2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-*/
-        //TODO Change direction of motor according to the plans of hardware team
-        /*linearMotionRight1.setDirection(DcMotorSimple.Direction.FORWARD);
-        linearMotionRight1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
-/*
-        intakeHD.setDirection(DcMotorSimple.Direction.FORWARD);
-        intakeHD.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeHD.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-*/
+
         claw.setDirection(Servo.Direction.FORWARD);
         //claw.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 

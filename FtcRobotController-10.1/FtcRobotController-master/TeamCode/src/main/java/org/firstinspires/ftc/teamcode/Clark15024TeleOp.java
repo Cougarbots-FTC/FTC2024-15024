@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 //Imports
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,6 +18,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Clark15024TeleOp extends LinearOpMode {
     //Initialized Hardware map instance variable assigned to "robot"
     Clark15024HWMap robot = new Clark15024HWMap();
+
+    //PIDF Test
+    PIDFArm pidfArm = new PIDFArm();
+    private PIDFController exampleCPIDF = new PIDFController(0.005, 0, 0.0005, 0.15);
+    int targetPosition = 500;
 
     //@Override - Used to rewrite the runOpMode function which is in the LinearOpMode class
     //runOpMode - runs when the button before the start button is pressed
@@ -133,22 +139,15 @@ public class Clark15024TeleOp extends LinearOpMode {
 
             //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
             if (gamepad1.b) {
-                robot.bucketRotator.setPosition(0);//robot.bucketRotator.getPosition()+0.1);
+                robot.bucketRotator.setPosition(robot.bucketRotator.getPosition()-0.1);
+            } else {
+                robot.bucketRotator.setPosition(0.4);
             }
-            if (gamepad1.a) {
-                robot.bucketRotator.setPosition(0.4);//robot.bucketRotator.getPosition()+0.1);
-            }
+
             //servo spin for intake on A
-        /*if (gamepad1.back) {
-          Claw.setPosition(-0.1);
-        } else if (gamepad1.start) {
-          Claw.setPosition(0.8);
-        }
-        if (gamepad1.right_stick_y < 0) {
-          ClawRotator.setPosition(0);
-        } else if (gamepad1.right_stick_y > 0) {
-          ClawRotator.setPosition(1);
-        }*/
+            if (gamepad1.a) {
+                robot.clawRotator.setPosition(robot.clawRotator.getPosition()+0.1);
+            }
 
 
         }
