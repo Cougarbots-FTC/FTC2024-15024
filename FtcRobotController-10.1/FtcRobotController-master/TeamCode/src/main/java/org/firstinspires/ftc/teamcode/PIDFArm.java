@@ -16,7 +16,7 @@ public class PIDFArm extends OpMode {
 
     public static double p = 0, i = 0, d = 0;
     public static double f = 0;
-    public static int target = 0;
+    public static int target = -800;
 
     // TODO: update based on Motor
     private final double ticksInDegrees = 700/180.0;

@@ -17,8 +17,7 @@ public class Clark15024Auto extends LinearOpMode {
         telemetry.addData("Time", time.time());
         waitForStart();
 
-        moveForward(10, 1000);
-        moveLeft(10,1000);
+        turnRight(500);
     }
 
     public void moveForward(double p, int t){
@@ -71,5 +70,14 @@ public class Clark15024Auto extends LinearOpMode {
         robot.driveRightFront.setPower(0);
         robot.driveLeftFront.setPower(0);
         robot.driveRightBack.setPower(0);
+    }
+
+    public void turnRight(int t){{
+        robot.driveLeftBack.setPower(-1);
+        robot.driveRightFront.setPower(1);
+        robot.driveLeftFront.setPower(-1);
+        robot.driveRightBack.setPower(1);
+        sleep(t);
+    }
     }
 }
