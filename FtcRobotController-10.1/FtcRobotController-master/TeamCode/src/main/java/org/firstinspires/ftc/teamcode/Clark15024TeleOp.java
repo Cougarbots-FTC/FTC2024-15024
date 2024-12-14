@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 //This is essentially a new version that significantly cuts down on unused code and comments,
 //as well as maximizing optimization for ease of future development.
+//Please check out the Code Graveyard, which is in the FTC directory that teamcode is in, to see all of the unused code and comments
+//omitted in TeleOp 2.0.
 //Version 2.0
 
 //Used to name this specific TeleOP in the driver hub
@@ -30,8 +32,14 @@ public class Clark15024TeleOp extends LinearOpMode {
     public void runOpMode(){
         //Initiates the Map function, assigning items to instance variables in the hardware map
         robot.Map(hardwareMap);
-
+        //Launch easter eggs
         telemetry.addData("Say", "Starting 15024 TeleOp 2.0");
+        telemetry.addData("Say", "Initializing 15024 TeleOp 2.0");
+        telemetry.addData("Say", "Locking hardware people out of the code...");
+        telemetry.addData("Say", "Eating s'mores...");
+        telemetry.addData("Say", "Annihilating positrons...");
+        telemetry.addData("Say", "Downloading RAM...");
+        telemetry.addData("Say", "Done!");
         telemetry.update();
         //Local boolean variables for one-button-two-functions operations
         Boolean gamepad1AState = false;
@@ -39,34 +47,11 @@ public class Clark15024TeleOp extends LinearOpMode {
         Boolean gamepad1XState = false;
         Boolean gamepad1YState = false;
 
-        /*
-        //Sets the mode all motors for driving to reset the counter for the encode and to run without using the encoders(encoders will not pick up change)
-        robot.driveLeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.driveLeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.driveLeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.driveLeftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.driveRightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.driveRightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.driveRightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.driveRightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        robot.LiftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.LiftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.LiftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        */
-
         //Waits for the button to start on the driver hub to be pressed
         waitForStart();
 
         //while loop starts once the start button is pressed
         while(opModeIsActive()){
-            //Assigned Spark fun variable in the hardware map as a 2DPos and using that we get the x,y,h
-            /*telemetry.addData("Sensor X", robot.pos.x);
-            telemetry.addData("Sensor Y", robot.pos.y);
-            telemetry.addData("Sensor H", robot.pos.h);*/
-            //telemetry.update();
-
             //Slow mode whenever you need to go slower to get precise blocks
             //TODO change controller input if needed
             double slow = gamepad1.right_bumper ? 0.5 : 1.0;
