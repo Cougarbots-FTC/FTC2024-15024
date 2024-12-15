@@ -25,8 +25,8 @@ public class PIDFArm extends OpMode {
 
     @Override
     public void init() {
-        controller = new PIDController(p,i,d);
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        //controller = new PIDController(p,i,d);
+        //telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         armRotator = hardwareMap.get(DcMotorEx.class, "ArmRotator");
     }

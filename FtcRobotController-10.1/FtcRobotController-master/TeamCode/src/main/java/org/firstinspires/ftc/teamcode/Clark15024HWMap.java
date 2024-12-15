@@ -58,7 +58,8 @@ public class Clark15024HWMap {
         odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
 
         //Servos for delivery
-        claw = HWM.get(Servo.class, "claw");
+
+        claw = HWM.get(Servo.class, "intake");
         clawRotator = HWM.get(Servo.class, "clawRotator");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
 
@@ -105,7 +106,7 @@ public class Clark15024HWMap {
         claw.setDirection(Servo.Direction.FORWARD);
         //claw.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        clawRotator.setDirection(Servo.Direction.FORWARD);
+        //clawRotator.setDirection(Servo.Direction.FORWARD);
         //clawRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         bucketRotator.setDirection(Servo.Direction.FORWARD);

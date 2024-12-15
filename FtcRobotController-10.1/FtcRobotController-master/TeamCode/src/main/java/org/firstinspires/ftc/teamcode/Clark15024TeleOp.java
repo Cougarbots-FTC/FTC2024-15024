@@ -122,6 +122,18 @@ public class Clark15024TeleOp extends LinearOpMode {
                 robot.ArmRotator.setPower(0);
             }
 
+            //servo for intake
+            robot.claw.setPosition(robot.claw.getPosition() - robot.claw.getPosition());
+            if (gamepad1.x) {
+                robot.claw.setPosition(robot.claw.getPosition() - 1);
+            }
+            else if (gamepad1.y){
+                robot.claw.setPosition(robot.claw.getPosition() + 1);
+            }
+//            else{
+//
+//            }
+
             //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
             if (gamepad1.b) {
                 robot.bucketRotator.setPosition(robot.bucketRotator.getPosition()-0.1);
@@ -130,9 +142,9 @@ public class Clark15024TeleOp extends LinearOpMode {
             }
 
             //servo spin for intake on A
-            if (gamepad1.a) {
+            /*if (gamepad1.a) {
                 robot.clawRotator.setPosition(robot.clawRotator.getPosition()+0.1);
-            }
+            }*/
 
 
         }
