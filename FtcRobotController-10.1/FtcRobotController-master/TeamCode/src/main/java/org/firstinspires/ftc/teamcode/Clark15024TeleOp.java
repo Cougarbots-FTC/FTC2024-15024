@@ -54,14 +54,14 @@ public class Clark15024TeleOp extends LinearOpMode {
         while(opModeIsActive()){
             //Slow mode whenever you need to go slower to get precise blocks
             //TODO change controller input if needed
-            double slow = gamepad1.right_bumper ? 0.5 : 1.0;
+            double slow = gamepad2.right_bumper ? 1.0 : 0.5;
 
             //Instances variables assigned to double or decimal values to the different gamepad
             //Set the vertical as a negative because of the different values needed for the right side as they are in reverse
             //TODO change negative signs of all variables if robot not moving or working as the values for the robot could need to be switched
-            double vertical = gamepad1.left_stick_y;
-            double horizontal = gamepad1.left_stick_x * 1.1; //  Multiply by 1.1 to negate imperfect strafing
-            double pivot = gamepad1.right_stick_x;
+            double vertical = gamepad2.left_stick_y;
+            double horizontal = gamepad2.left_stick_x * 1.1; //  Multiply by 1.1 to negate imperfect strafing
+            double pivot = gamepad2.right_stick_x;
 
             //Obtains values for each motor through the positions through values
             //from  left joystick which has up/down(vertical) and left/right values(horizontal), and right joystick which has left/right values(pivot)
@@ -133,7 +133,6 @@ public class Clark15024TeleOp extends LinearOpMode {
             if (gamepad1.a) {
                 robot.clawRotator.setPosition(robot.clawRotator.getPosition()+0.1);
             }
-
 
         }
     }
