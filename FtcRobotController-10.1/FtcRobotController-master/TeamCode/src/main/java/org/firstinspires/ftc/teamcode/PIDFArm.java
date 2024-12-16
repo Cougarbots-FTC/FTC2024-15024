@@ -19,7 +19,7 @@ public class PIDFArm extends OpMode {
     public static int target = -800;
 
     // TODO: update based on Motor
-    private final double ticksInDegrees = 700/180.0;
+    private final double ticksInDegrees = 28;
 
     private DcMotorEx armRotator;
 
