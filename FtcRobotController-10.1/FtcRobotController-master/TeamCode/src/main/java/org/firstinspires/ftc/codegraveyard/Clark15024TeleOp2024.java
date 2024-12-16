@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+/*
 //Imports
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -47,7 +48,7 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
         /*robot.linearMotionRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.linearMotionRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.intakeHD.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.intakeHD.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        robot.intakeHD.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
 
@@ -66,7 +67,7 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
             //Assigned Spark fun variable in the hardware map as a 2DPos and using that we get the x,y,h
             /*telemetry.addData("Sensor X", robot.pos.x);
             telemetry.addData("Sensor Y", robot.pos.y);
-            telemetry.addData("Sensor H", robot.pos.h);*/
+            telemetry.addData("Sensor H", robot.pos.h);
             telemetry.update();
 
             //Slow mode whenever you need to go slower to get precise blocks
@@ -113,7 +114,7 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
             if (gamepad1.x) {
                 gamepad1ABuffer=true;
             }
-            */
+
             //One-button operation of the spinning intake
             if (gamepad1.a==true&&gamepad1AState==false){
                 robot.intakeHD.setPower(1);
@@ -178,8 +179,10 @@ public class Clark15024TeleOp2024 extends LinearOpMode {
                 robot.drop.setPosition(0.5);
             }
 
-             */
+
             telemetry.update();
         }
     }
 }
+*/
+

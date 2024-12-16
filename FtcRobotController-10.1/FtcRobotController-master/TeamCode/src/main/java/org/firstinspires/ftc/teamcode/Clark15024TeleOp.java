@@ -32,15 +32,7 @@ public class Clark15024TeleOp extends LinearOpMode {
     public void runOpMode(){
         //Initiates the Map function, assigning items to instance variables in the hardware map
         robot.Map(hardwareMap);
-        //Launch easter eggs
-        telemetry.addData("Say", "Starting 15024 TeleOp 2.0");
-        telemetry.addData("Say", "Initializing 15024 TeleOp 2.0");
-        telemetry.addData("Say", "Locking hardware people out of the code...");
-        telemetry.addData("Say", "Eating s'mores...");
-        telemetry.addData("Say", "Annihilating positrons...");
-        telemetry.addData("Say", "Downloading RAM...");
-        telemetry.addData("Say", "Done!");
-        telemetry.update();
+
         //Local boolean variables for one-button-two-functions operations
         Boolean gamepad1AState = false;
         Boolean gamepad1BState = false;
@@ -130,8 +122,10 @@ public class Clark15024TeleOp extends LinearOpMode {
             }
 
             //servo spin for intake on A
-            if (gamepad1.a) {
-                robot.clawRotator.setPosition(robot.clawRotator.getPosition()+0.1);
+            if (gamepad1.left_bumper) {
+                robot.intake.setPower(-1);
+            } else {
+                robot.intake.setPower(0);
             }
 
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 //Imports
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -24,15 +25,13 @@ public class Clark15024HWMap {
     public DcMotor ArmExtender = null;
     public DcMotor ArmRotator = null;
 
-    public Servo claw = null;
+    public CRServo intake = null;
     public Servo clawRotator = null;
     public Servo bucketRotator = null;
 
-    //public SparkFunOTOS odom = null;
-    //public SparkFunOTOS.Pose2D pos = null;
+    public SparkFunOTOS odom = null;
+    public SparkFunOTOS.Pose2D pos = null;
     //public SensorSparkFunOTOS odom = null;
-    //public Servo drop = null;
-
 
 
     HardwareMap hM = null;
@@ -52,13 +51,10 @@ public class Clark15024HWMap {
         ArmExtender = HWM.get(DcMotor.class, "ArmExtender");
         ArmRotator = HWM.get(DcMotor.class, "ArmRotator");
 
-        /*linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
-        intakeHD = HWM.get(DcMotor.class, "Intake");
-        //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
-        odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
+        odom = HWM.get(SparkFunOTOS.class, "sensor_otos");
 
         //Servos for delivery
-        claw = HWM.get(Servo.class, "claw");
+        intake = HWM.get(CRServo.class, "claw");
         clawRotator = HWM.get(Servo.class, "clawRotator");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
 
@@ -97,19 +93,12 @@ public class Clark15024HWMap {
         ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ArmExtender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
-        //ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-
-        claw.setDirection(Servo.Direction.FORWARD);
-        //claw.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setDirection(CRServo.Direction.FORWARD);
 
         clawRotator.setDirection(Servo.Direction.FORWARD);
-        //clawRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         bucketRotator.setDirection(Servo.Direction.FORWARD);
-        //bucketRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         //pos = odom.getPosition();
