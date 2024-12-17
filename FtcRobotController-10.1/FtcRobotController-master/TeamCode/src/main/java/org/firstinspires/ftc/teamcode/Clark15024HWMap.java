@@ -54,7 +54,7 @@ public class Clark15024HWMap {
         odom = HWM.get(SparkFunOTOS.class, "sensor_otos");
 
         //Servos for delivery
-        intake = HWM.get(CRServo.class, "claw");
+        intake = HWM.get(CRServo.class, "intake");
         clawRotator = HWM.get(Servo.class, "clawRotator");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
 
