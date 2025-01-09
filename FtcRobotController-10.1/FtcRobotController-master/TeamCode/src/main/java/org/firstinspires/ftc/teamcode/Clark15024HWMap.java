@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 //Imports
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -21,8 +22,10 @@ public class Clark15024HWMap {
     public DcMotor LiftA = null;
     public DcMotor LiftB = null;
 
-    public DcMotor ArmExtender = null;
-    public DcMotor ArmRotator = null;
+    public CRServo armExtender1 = null;
+    public CRServo armExtender2 = null;
+
+    public Servo armRotator = null;
 
     public Servo claw = null;
     public Servo clawRotator = null;
@@ -49,17 +52,18 @@ public class Clark15024HWMap {
 
         LiftA = HWM.get(DcMotor.class, "LiftA");
         LiftB = HWM.get(DcMotor.class, "LiftB");
-        ArmExtender = HWM.get(DcMotor.class, "ArmExtender");
-        ArmRotator = HWM.get(DcMotor.class, "ArmRotator");
 
-        /*linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
-        intakeHD = HWM.get(DcMotor.class, "Intake");
+
         //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
-        odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
+        //odom = HWM.get(SparkFunOTOS.class, "sensor_otos");
 
         //Servos for delivery
+        armExtender1 = HWM.get(CRServo.class, "armExtender1");
+        armExtender2 = HWM.get(CRServo.class, "armExtender2");
 
-        claw = HWM.get(Servo.class, "intake");
+        armRotator = HWM.get(Servo.class, "armRotator");
+
+        claw = HWM.get(Servo.class, "claw");
         clawRotator = HWM.get(Servo.class, "clawRotator");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
 
@@ -93,32 +97,16 @@ public class Clark15024HWMap {
         LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //TODO Change direction of motor according to the plans of hardware team
-        ArmExtender.setDirection(DcMotorSimple.Direction.FORWARD);
-        ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ArmExtender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        //ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
-        //ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        armRotator.setDirection(Servo.Direction.FORWARD);
+        armExtender1.setDirection(CRServo.Direction.FORWARD);
+        armExtender2.setDirection(CRServo.Direction.FORWARD);
 
         claw.setDirection(Servo.Direction.FORWARD);
-        //claw.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        //clawRotator.setDirection(Servo.Direction.FORWARD);
-        //clawRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        clawRotator.setDirection(Servo.Direction.FORWARD);
 
         bucketRotator.setDirection(Servo.Direction.FORWARD);
-        //bucketRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
 
         //pos = odom.getPosition();
-
-
-
-
-
     }
 
 }
