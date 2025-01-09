@@ -98,6 +98,16 @@ public class Clark15024TeleOp extends LinearOpMode {
                 robot.LiftB.setPower(0);
             }
 
+            //TODO: move lift to controller 2
+            //two CRServos for arm extender - Right stick y for forward and back
+            //two servo for delivery & wrist - fixed position A as boolean
+            //      delivery to go forward and back to bucket
+            //      wrist to go down then up
+            //      also set claw to open
+            //servo for claw - fixed position B to open and close
+            //servo for door - 180 - right bumper - hold to move open - if not pressed, move to close
+
+
             //ArmExtender on DPad up and down
             double armExtenderPower = gamepad1.right_bumper ? 1 : 0.5;
             if (gamepad1.dpad_down) {
