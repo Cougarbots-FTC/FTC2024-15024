@@ -7,14 +7,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//This is essentially a new version that significantly cuts down on unused code and comments,
-//as well as maximizing optimization for ease of future development.
-//Please check out the Code Graveyard, which is in the FTC directory that teamcode is in, to see all of the unused code and comments
-//omitted in TeleOp 2.0.
-//Version 2.0
+
+/// @version 3.0
+/// Used for match 3
 
 //Used to name this specific TeleOP in the driver hub
-@TeleOp(name = "Clark 15024 TeleOp 2.0")
+@TeleOp(name = "Clark 15024 TeleOp 3.0")
 //Base TeleOp class which currently has the Hardware map Initialized and the running Op mode
 //extends LinearOpMode - used as a parent class of this child class, meaning you can use all the functions from the parent class in this child class
 public class Clark15024TeleOp extends LinearOpMode {
@@ -33,19 +31,19 @@ public class Clark15024TeleOp extends LinearOpMode {
         //Initiates the Map function, assigning items to instance variables in the hardware map
         robot.Map(hardwareMap);
         //Launch easter eggs
-        telemetry.addData("Say", "Starting 15024 TeleOp 2.0");
-        telemetry.addData("Say", "Initializing 15024 TeleOp 2.0");
-        telemetry.addData("Say", "Locking hardware people out of the code...");
-        telemetry.addData("Say", "Eating s'mores...");
-        telemetry.addData("Say", "Annihilating positrons...");
-        telemetry.addData("Say", "Downloading RAM...");
-        telemetry.addData("Say", "Done!");
+        telemetry.addData("Say", "Starting 15024 TeleOp 3.0");
         telemetry.update();
         //Local boolean variables for one-button-two-functions operations
-        Boolean gamepad1AState = false;
-        Boolean gamepad1BState = false;
-        Boolean gamepad1XState = false;
-        Boolean gamepad1YState = false;
+        Boolean gamepad2ALastPressed = false;
+        Boolean gamepad2BLastPressed = false;
+        Boolean gamepad2XState = false;
+        Boolean gamepad2YState = false;
+
+        int clawOpenPosition = 1;
+        int clawClosedPosition = 0;
+
+        int clawRotatorClosedPosition = 0;
+        int clawRotatorOpenPosition = 1;
 
         //Waits for the button to start on the driver hub to be pressed
         waitForStart();
@@ -80,17 +78,14 @@ public class Clark15024TeleOp extends LinearOpMode {
             robot.LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             robot.LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            robot.ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            robot.ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
             //left_trigger - liftA and liftB up
             //right_trigger - liftA and liftB down
-            float liftPowerUp = gamepad1.left_trigger;
-            float liftPowerDown = gamepad1.right_trigger;
-            if (gamepad1.left_trigger > 0.1) {
+            float liftPowerUp = gamepad2.left_trigger;
+            float liftPowerDown = gamepad2.right_trigger;
+            if (liftPowerUp > 0.1) {
                 robot.LiftA.setPower(liftPowerUp);
                 robot.LiftB.setPower(liftPowerUp);
-            } else if (gamepad1.right_trigger > 0.1) {
+            } else if (liftPowerDown > 0.1) {
                 robot.LiftA.setPower(-1 * liftPowerDown);
                 robot.LiftB.setPower(-1 * liftPowerDown);
             } else {
@@ -98,64 +93,64 @@ public class Clark15024TeleOp extends LinearOpMode {
                 robot.LiftB.setPower(0);
             }
 
-            //TODO: move lift to controller 2
             //two CRServos for arm extender - Right stick y for forward and back
+            double armExtnderPower = gamepad2.right_stick_y;
+            if (armExtnderPower != 0) {
+                robot.armExtender1.setPower(armExtnderPower);
+                robot.armExtender2.setPower(armExtnderPower);
+            } else {
+                robot.armExtender1.setPower(0);
+                robot.armExtender2.setPower(0);
+            }
             //two servo for delivery & wrist - fixed position A as boolean
             //      delivery to go forward and back to bucket
             //      wrist to go down then up
             //      also set claw to open
+            boolean aPressed = gamepad2.a;
+            if (aPressed && !gamepad2ALastPressed) {
+                robot.claw.setPosition(1);
+
+                if (robot.clawRotator.getPosition() == clawOpenPosition) {
+                    robot.clawRotator.setPosition(clawRotatorClosedPosition);
+                } else {
+                    robot.clawRotator.setPosition(clawRotatorOpenPosition);
+                }
+            }
+            gamepad2ALastPressed = aPressed;
+
             //servo for claw - fixed position B to open and close
+            boolean bPressed = gamepad2.b;
+            if (bPressed) {
+                if (robot.claw.getPosition() == clawOpenPosition) {
+                    robot.claw.setPosition(clawClosedPosition);
+                } else {
+                    robot.claw.setPosition(clawOpenPosition);
+                }
+            }
+
             //servo for door - 180 - right bumper - hold to move open - if not pressed, move to close
 
 
-            //ArmExtender on DPad up and down
-            double armExtenderPower = gamepad1.right_bumper ? 1 : 0.5;
-            if (gamepad1.dpad_down) {
-                robot.ArmExtender.setPower(armExtenderPower);
-            } else if (gamepad1.dpad_up) {
-                robot.ArmExtender.setPower(-1 * armExtenderPower);
-            } else {
-               robot.ArmExtender.setPower(0);
-            }
-
             //ArmRotator on DPad left and Right
-            double armRotatorPower = gamepad1.right_bumper ? 0.5 : 0.3;
-            if (gamepad1.dpad_left) {
-                robot.ArmRotator.setPower(armRotatorPower);
+            double armRotatorPower = gamepad2.right_bumper ? 0.5 : 0.3;
+            if (gamepad2.dpad_left) {
+                robot.armRotator.setPower(armRotatorPower);
                 telemetry.addData("Arm Rotator Power: ", armRotatorPower);
                 telemetry.update();
 
             } else if (gamepad1.dpad_right){
                 //down
-                robot.ArmRotator.setPower(-0.3);
+                robot.armRotator.setPower(-0.3);
             } else {
-                robot.ArmRotator.setPower(0);
+                robot.armRotator.setPower(0);
             }
 
-            //servo for intake
-            robot.claw.setPosition(robot.claw.getPosition() - robot.claw.getPosition());
-            if (gamepad1.x) {
-                robot.claw.setPosition(robot.claw.getPosition() - 1);
-            }
-            else if (gamepad1.y){
-                robot.claw.setPosition(robot.claw.getPosition() + 1);
-            }
-//            else{
-//
-//            }
 
-            //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
-            if (gamepad1.b) {
+            if (gamepad2.x) {
                 robot.bucketRotator.setPosition(robot.bucketRotator.getPosition()-0.1);
             } else {
                 robot.bucketRotator.setPosition(0.4);
             }
-
-            //servo spin for intake on A
-            /*if (gamepad1.a) {
-                robot.clawRotator.setPosition(robot.clawRotator.getPosition()+0.1);
-            }*/
-
 
         }
     }
