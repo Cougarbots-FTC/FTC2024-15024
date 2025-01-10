@@ -36,14 +36,17 @@ public class Clark15024TeleOp extends LinearOpMode {
         //Local boolean variables for one-button-two-functions operations
         Boolean gamepad2ALastPressed = false;
         Boolean gamepad2BLastPressed = false;
-        Boolean gamepad2XState = false;
-        Boolean gamepad2YState = false;
+        Boolean gamepad2YLastPressed = false;
+        Boolean gamepad2XLastPressed = false;
 
         int clawOpenPosition = 1;
         int clawClosedPosition = 0;
 
         int clawRotatorClosedPosition = 0;
         int clawRotatorOpenPosition = 1;
+
+        int armRotatorDownPosition = 0;
+        int armRotatorUpPosition = 1;
 
         //Waits for the button to start on the driver hub to be pressed
         waitForStart();
@@ -95,21 +98,20 @@ public class Clark15024TeleOp extends LinearOpMode {
 
             //two CRServos for arm extender - Right stick y for forward and back
             double armExtnderPower = gamepad2.right_stick_y;
-            if (armExtnderPower != 0) {
+            if (armExtnderPower > 0.1) {
                 robot.armExtender1.setPower(armExtnderPower);
-                robot.armExtender2.setPower(armExtnderPower);
+                robot.armExtender2.setPower(-armExtnderPower);
+            } else if (armExtnderPower < 0.1){
+                robot.armExtender1.setPower(armExtnderPower);
+                robot.armExtender2.setPower(-armExtnderPower);
             } else {
-                robot.armExtender1.setPower(0);
-                robot.armExtender2.setPower(0);
+                robot.armExtender1.setPower(-1);
+                robot.armExtender2.setPower(-1);
             }
-            //two servo for delivery & wrist - fixed position A as boolean
-            //      delivery to go forward and back to bucket
-            //      wrist to go down then up
-            //      also set claw to open
+
+            // toggle for claw rotator
             boolean aPressed = gamepad2.a;
             if (aPressed && !gamepad2ALastPressed) {
-                robot.claw.setPosition(1);
-
                 if (robot.clawRotator.getPosition() == clawOpenPosition) {
                     robot.clawRotator.setPosition(clawRotatorClosedPosition);
                 } else {
@@ -118,33 +120,31 @@ public class Clark15024TeleOp extends LinearOpMode {
             }
             gamepad2ALastPressed = aPressed;
 
-            //servo for claw - fixed position B to open and close
+            //toggle for claw - fixed position B to open and close
             boolean bPressed = gamepad2.b;
-            if (bPressed) {
+            if (bPressed && !gamepad2BLastPressed) {
                 if (robot.claw.getPosition() == clawOpenPosition) {
                     robot.claw.setPosition(clawClosedPosition);
                 } else {
                     robot.claw.setPosition(clawOpenPosition);
                 }
             }
+            gamepad2BLastPressed = bPressed;
 
             //servo for door - 180 - right bumper - hold to move open - if not pressed, move to close
 
 
             //ArmRotator on DPad left and Right
-            double armRotatorPower = gamepad2.right_bumper ? 0.5 : 0.3;
-            if (gamepad2.dpad_left) {
-                robot.armRotator.setPower(armRotatorPower);
-                telemetry.addData("Arm Rotator Power: ", armRotatorPower);
-                telemetry.update();
+            boolean yPressed = gamepad2.y;
 
-            } else if (gamepad1.dpad_right){
-                //down
-                robot.armRotator.setPower(-0.3);
-            } else {
-                robot.armRotator.setPower(0);
+            if (yPressed && !gamepad2YLastPressed) {
+                if (robot.armRotator.getPosition() == armRotatorUpPosition) {
+                    robot.armRotator.setPosition(armRotatorDownPosition);
+                } else {
+                    robot.armRotator.setPosition(armRotatorUpPosition);
+                }
             }
-
+            gamepad2YLastPressed = yPressed;
 
             if (gamepad2.x) {
                 robot.bucketRotator.setPosition(robot.bucketRotator.getPosition()-0.1);

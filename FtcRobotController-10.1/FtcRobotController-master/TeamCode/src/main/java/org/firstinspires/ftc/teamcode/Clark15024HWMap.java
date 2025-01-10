@@ -25,7 +25,7 @@ public class Clark15024HWMap {
     public CRServo armExtender1 = null;
     public CRServo armExtender2 = null;
 
-    public CRServo armRotator = null;
+    public Servo armRotator = null;
 
     public Servo claw = null;
     public Servo clawRotator = null;
@@ -61,7 +61,7 @@ public class Clark15024HWMap {
         armExtender1 = HWM.get(CRServo.class, "armExtender1");
         armExtender2 = HWM.get(CRServo.class, "armExtender2");
 
-        armRotator = HWM.get(CRServo.class, "armRotator");
+        armRotator = HWM.get(Servo.class, "armRotator");
 
         claw = HWM.get(Servo.class, "claw");
         clawRotator = HWM.get(Servo.class, "clawRotator");
@@ -97,7 +97,7 @@ public class Clark15024HWMap {
         LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        armRotator.setDirection(CRServo.Direction.FORWARD);
+        armRotator.setDirection(Servo.Direction.FORWARD);
         armExtender1.setDirection(CRServo.Direction.FORWARD);
         armExtender2.setDirection(CRServo.Direction.FORWARD);
 
