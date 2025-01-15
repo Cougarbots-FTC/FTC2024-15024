@@ -1,16 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 //Imports
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
+import com.qualcomm.robotcore.hardware.CRServo;
 
 //Clark Robotics 15024 Hardware Map
-//Currently only have the motors from the robot powering the wheels
-//driveRightFront, driveRightBack, driveLeftFront, driveRightBack
 public class Clark15024HWMap {
     //Instances variables which makes the variables we can use or assign later
     // null - placeholder of a variable and basically has nothing in the variable currently
@@ -22,8 +20,8 @@ public class Clark15024HWMap {
     public DcMotor LiftA = null;
     public DcMotor LiftB = null;
 
-    public DcMotor ArmExtender = null;
-    public DcMotor ArmRotator = null;
+    public DcMotorEx ArmExtender = null;
+    public DcMotorEx ArmRotator = null;
 
     public CRServo intake = null;
     public Servo clawRotator = null;
@@ -32,6 +30,8 @@ public class Clark15024HWMap {
     public SparkFunOTOS odom = null;
     public SparkFunOTOS.Pose2D pos = null;
     //public SensorSparkFunOTOS odom = null;
+    public Servo drop = null;
+
 
 
     HardwareMap hM = null;
@@ -48,14 +48,18 @@ public class Clark15024HWMap {
 
         LiftA = HWM.get(DcMotor.class, "LiftA");
         LiftB = HWM.get(DcMotor.class, "LiftB");
-        ArmExtender = HWM.get(DcMotor.class, "ArmExtender");
-        ArmRotator = HWM.get(DcMotor.class, "ArmRotator");
+        ArmExtender = HWM.get(DcMotorEx.class, "ArmExtender");
+        ArmRotator = HWM.get(DcMotorEx.class, "ArmRotator");
 
-        odom = HWM.get(SparkFunOTOS.class, "sensor_otos");
+        /*linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
+        intakeHD = HWM.get(DcMotor.class, "Intake");
+        //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
+        odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
 
         //Servos for delivery
+
         intake = HWM.get(CRServo.class, "intake");
-        clawRotator = HWM.get(Servo.class, "clawRotator");
+        //clawRotator = HWM.get(Servo.class, "clawRotator");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
 
         //Using functions from the DcMotor class, this changes the direction of the motor, sets the power to 0, and makes the runmode to run without encoder as the robot is not moving
@@ -88,19 +92,18 @@ public class Clark15024HWMap {
         LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //TODO Change direction of motor according to the plans of hardware team
-        ArmExtender.setDirection(DcMotorSimple.Direction.FORWARD);
-        ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ArmExtender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //ArmExtender.setDirection(DcMotorSimple.Direction.FORWARD);
+        //ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //ArmExtender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
+        ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         intake.setDirection(CRServo.Direction.FORWARD);
 
-        clawRotator.setDirection(Servo.Direction.FORWARD);
-
         bucketRotator.setDirection(Servo.Direction.FORWARD);
-
-
         //pos = odom.getPosition();
 
 

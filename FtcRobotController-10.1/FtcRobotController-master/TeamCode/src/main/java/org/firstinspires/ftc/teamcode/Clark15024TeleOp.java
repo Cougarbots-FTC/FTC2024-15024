@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 //Imports
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -7,14 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//This is essentially a new version that significantly cuts down on unused code and comments,
-//as well as maximizing optimization for ease of future development.
-//Please check out the Code Graveyard, which is in the FTC directory that teamcode is in, to see all of the unused code and comments
-//omitted in TeleOp 2.0.
-//Version 2.0
-
 //Used to name this specific TeleOP in the driver hub
-@TeleOp(name = "Clark 15024 TeleOp 2.0")
+@TeleOp(name = "Clark 15024 Testing ")
 //Base TeleOp class which currently has the Hardware map Initialized and the running Op mode
 //extends LinearOpMode - used as a parent class of this child class, meaning you can use all the functions from the parent class in this child class
 public class Clark15024TeleOp extends LinearOpMode {
@@ -24,20 +20,23 @@ public class Clark15024TeleOp extends LinearOpMode {
     //PIDF Test
     PIDFArm pidfArm = new PIDFArm();
     private PIDFController exampleCPIDF = new PIDFController(0.005, 0, 0.0005, 0.15);
-    int targetPosition = 500;
+
 
     //@Override - Used to rewrite the runOpMode function which is in the LinearOpMode class
     //runOpMode - runs when the button before the start button is pressed
     @Override
     public void runOpMode(){
-        //Initiates the Map function, assigning items to instance variables in the hardware map
+
         robot.Map(hardwareMap);
+        telemetry.addData("Say", "Starting 15024 TeleOp Testing");
+        telemetry.addData("Arm Position: ", robot.ArmRotator.getCurrentPosition());
+        telemetry.update();
 
         //Local boolean variables for one-button-two-functions operations
-        Boolean gamepad1AState = false;
-        Boolean gamepad1BState = false;
-        Boolean gamepad1XState = false;
-        Boolean gamepad1YState = false;
+        Boolean gamepad2ALastPressed = false;
+        Boolean gamepad2BLastPressed = false;
+        Boolean gamepad2XLastPressed = false;
+        Boolean gamepad2YLastPressed = false;
 
         //Waits for the button to start on the driver hub to be pressed
         waitForStart();
@@ -45,7 +44,6 @@ public class Clark15024TeleOp extends LinearOpMode {
         //while loop starts once the start button is pressed
         while(opModeIsActive()){
             //Slow mode whenever you need to go slower to get precise blocks
-            //TODO change controller input if needed
             double slow = gamepad1.right_bumper ? 0.5 : 1.0;
 
             //Instances variables assigned to double or decimal values to the different gamepad
@@ -93,9 +91,9 @@ public class Clark15024TeleOp extends LinearOpMode {
             //ArmExtender on DPad up and down
             double armExtenderPower = gamepad1.right_bumper ? 1 : 0.5;
             if (gamepad1.dpad_down) {
-                robot.ArmExtender.setPower(armExtenderPower);
+                robot.ArmExtender.setPower(-armExtenderPower);
             } else if (gamepad1.dpad_up) {
-                robot.ArmExtender.setPower(-1 * armExtenderPower);
+                robot.ArmExtender.setPower(armExtenderPower);
             } else {
                robot.ArmExtender.setPower(0);
             }
@@ -114,18 +112,22 @@ public class Clark15024TeleOp extends LinearOpMode {
                 robot.ArmRotator.setPower(0);
             }
 
+            //servo for intake - x toggle on and off
+            boolean xPressed = gamepad1.x;
+            if (xPressed && !gamepad2XLastPressed) {
+                if (robot.intake.getPower() == -1) {
+                    robot.intake.setPower(0);
+                } else {
+                    robot.intake.setPower(-1);
+                }
+            }
+            gamepad2XLastPressed = xPressed;
+
             //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
             if (gamepad1.b) {
                 robot.bucketRotator.setPosition(robot.bucketRotator.getPosition()-0.1);
             } else {
                 robot.bucketRotator.setPosition(0.4);
-            }
-
-            //servo spin for intake on A
-            if (gamepad1.left_bumper) {
-                robot.intake.setPower(-1);
-            } else {
-                robot.intake.setPower(0);
             }
 
 

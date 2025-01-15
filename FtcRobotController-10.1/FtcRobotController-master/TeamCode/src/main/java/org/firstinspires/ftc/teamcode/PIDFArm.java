@@ -13,39 +13,45 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 public class PIDFArm extends OpMode {
 
     private PIDController controller;
+    Clark15024HWMap robot = new Clark15024HWMap();
 
     public static double p = 0, i = 0, d = 0;
     public static double f = 0;
-    public static int target = -800;
+    public static int target = 0;
 
     // TODO: update based on Motor
-    private final double ticksInDegrees = 28;
+    private final double ticksInDegrees = 28
+            ;
+    //private final FtcDashboard dashboard = FtcDashboard.getInstance();
 
-    private DcMotorEx armRotator;
 
     @Override
     public void init() {
-        controller = new PIDController(p,i,d);
+        robot.Map(hardwareMap);
+
+        controller = new PIDController(p, i, d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        armRotator = hardwareMap.get(DcMotorEx.class, "ArmRotator");
     }
 
     @Override
     public void loop() {
+
         controller.setPID(p, i, d);
-        int armPos = armRotator.getCurrentPosition();
+        int armPos = robot.ArmRotator.getCurrentPosition();
 
         double pid = controller.calculate(armPos, target);
         double ff = Math.cos(Math.toRadians(target / ticksInDegrees)) * f;
 
         double power = pid * ff;
 
-        armRotator.setPower(power);
+        robot.ArmRotator.setPower(power);
 
         telemetry.addData("Arm Position: ", armPos);
         telemetry.addData("target: ", target);
         telemetry.update();
+
+
 
     }
 }

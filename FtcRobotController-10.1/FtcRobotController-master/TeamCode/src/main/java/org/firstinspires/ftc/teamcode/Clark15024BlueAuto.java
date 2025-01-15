@@ -19,7 +19,8 @@ public class Clark15024BlueAuto extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        auto.moveLeft(1, 500);
+        //auto.moveLeft(1, 500);
+
     }
 
 
