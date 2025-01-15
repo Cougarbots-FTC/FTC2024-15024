@@ -27,10 +27,9 @@ public class Clark15024HWMap {
     public Servo clawRotator = null;
     public Servo bucketRotator = null;
 
-    public SparkFunOTOS odom = null;
-    public SparkFunOTOS.Pose2D pos = null;
-    //public SensorSparkFunOTOS odom = null;
-    public Servo drop = null;
+    public SparkFunOTOS myOtos = null;
+
+    //public SparkFunOTOS.Pose2D pos = null;
 
 
 
@@ -51,10 +50,8 @@ public class Clark15024HWMap {
         ArmExtender = HWM.get(DcMotorEx.class, "ArmExtender");
         ArmRotator = HWM.get(DcMotorEx.class, "ArmRotator");
 
-        /*linearMotionRight1 = HWM.get(DcMotor.class, "linearMotionRight1");
-        intakeHD = HWM.get(DcMotor.class, "Intake");
-        //odom = HWM.get(SensorSparkFunOTOS.class, "sensor_otos");
-        odom = HWM.get(SparkFunOTOS.class, "sensor_otos");*/
+
+        myOtos = HWM.get(SparkFunOTOS.class, "SparkFun");
 
         //Servos for delivery
 
@@ -96,15 +93,14 @@ public class Clark15024HWMap {
         //ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //ArmExtender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
-        ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
+        //ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         intake.setDirection(CRServo.Direction.FORWARD);
 
         bucketRotator.setDirection(Servo.Direction.FORWARD);
-        //pos = odom.getPosition();
 
 
 
