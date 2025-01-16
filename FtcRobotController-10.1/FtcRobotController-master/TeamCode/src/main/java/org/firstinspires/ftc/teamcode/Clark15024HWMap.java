@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
+import org.firstinspires.ftc.teamcode.PIDFArm;
 
 //Clark Robotics 15024 Hardware Map
 public class Clark15024HWMap {
@@ -93,9 +94,9 @@ public class Clark15024HWMap {
         //ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //ArmExtender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
-        //ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //ArmRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
+        ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ArmRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         intake.setDirection(CRServo.Direction.FORWARD);

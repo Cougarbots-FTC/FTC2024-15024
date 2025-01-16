@@ -16,8 +16,8 @@ public class PIDFArm extends OpMode {
     Clark15024HWMap robot = new Clark15024HWMap();
 
     public static double p = 0, i = 0, d = 0;
-    public static double f = 0;
-    public static int target = 0;
+    public static double f = 0.5;
+    public static int target = 700;
 
     // TODO: update based on Motor
     private final double ticksInDegrees = 28
@@ -31,6 +31,7 @@ public class PIDFArm extends OpMode {
 
         controller = new PIDController(p, i, d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
 
     }
 
@@ -49,6 +50,7 @@ public class PIDFArm extends OpMode {
 
         telemetry.addData("Arm Position: ", armPos);
         telemetry.addData("target: ", target);
+
         telemetry.update();
 
 
