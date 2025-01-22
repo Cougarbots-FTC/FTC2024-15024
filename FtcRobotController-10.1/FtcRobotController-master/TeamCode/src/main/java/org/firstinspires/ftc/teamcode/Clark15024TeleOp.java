@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+
 //Used to name this specific TeleOP in the driver hub
 @TeleOp(name = "Clark 15024 Testing ")
 //Base TeleOp class which currently has the Hardware map Initialized and the running Op mode
@@ -17,9 +18,8 @@ public class Clark15024TeleOp extends LinearOpMode {
     //Initialized Hardware map instance variable assigned to "robot"
     Clark15024HWMap robot = new Clark15024HWMap();
 
-    //PIDF Test
-    PIDFArm pidfArm = new PIDFArm();
-    private PIDFController exampleCPIDF = new PIDFController(0.005, 0, 0.0005, 0.15);
+    //PIDF Arm
+    private PIDFArm pidfArm;
 
 
     //@Override - Used to rewrite the runOpMode function which is in the LinearOpMode class
@@ -27,11 +27,17 @@ public class Clark15024TeleOp extends LinearOpMode {
     @Override
     public void runOpMode(){
 
+
+
         robot.Map(hardwareMap);
         telemetry.addData("Say", "Starting 15024 TeleOp Testing");
         telemetry.addData("Arm Position: ", robot.ArmRotator.getCurrentPosition());
         telemetry.update();
 
+
+        // PID arm code
+        pidfArm = new PIDFArm(hardwareMap);
+        pidfArm.init();
         //Local boolean variables for one-button-two-functions operations
         Boolean gamepad2ALastPressed = false;
         Boolean gamepad2BLastPressed = false;
@@ -43,6 +49,23 @@ public class Clark15024TeleOp extends LinearOpMode {
 
         //while loop starts once the start button is pressed
         while(opModeIsActive()){
+            //PIDF Arm (swtching between positions)
+            if(gamepad2.a){
+                pidfArm.setSetPoint(580);
+            }else if(gamepad2.b){
+                pidfArm.setSetPoint(70);
+            }
+
+            // Updating and rerunning the loop
+            pidfArm.loop();
+
+            //Telemetry for PID, for debugging
+
+            telemetry.addData("Target Position", pidfArm.getSetPoint());
+            telemetry.addData("Current Position", pidfArm.getCurrentPosition());
+            telemetry.update();
+
+
             //Slow mode whenever you need to go slower to get precise blocks
             double slow = gamepad1.right_bumper ? 0.5 : 1.0;
 
@@ -99,6 +122,8 @@ public class Clark15024TeleOp extends LinearOpMode {
             }
 
             //ArmRotator on DPad left and Right
+
+            /*
             double armRotatorPower = gamepad1.right_bumper ? 0.5 : 0.3;
             if (gamepad1.dpad_left) {
                 robot.ArmRotator.setPower(armRotatorPower);
@@ -111,7 +136,7 @@ public class Clark15024TeleOp extends LinearOpMode {
             } else {
                 robot.ArmRotator.setPower(0);
             }
-
+*/
             //servo for intake - x toggle on and off
             boolean xPressed = gamepad1.x;
             if (xPressed && !gamepad2XLastPressed) {

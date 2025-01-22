@@ -8,31 +8,50 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 @Config
 @TeleOp
 public class PIDFArm extends OpMode {
 
     private PIDController controller;
-    Clark15024HWMap robot = new Clark15024HWMap();
+    Clark15024HWMap robot;
 
     public static double p = 0, i = 0, d = 0;
-    public static double f = 0.5;
-    public static int target = 700;
+    public static double f = 0.7;
+    public int target = 70;
 
     // TODO: update based on Motor
     private final double ticksInDegrees = 28
             ;
     //private final FtcDashboard dashboard = FtcDashboard.getInstance();
 
+    public PIDFArm(HardwareMap map) {
+        robot = new Clark15024HWMap();
+
+        robot.Map(map);
+    }
 
     @Override
     public void init() {
-        robot.Map(hardwareMap);
 
         controller = new PIDController(p, i, d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
 
+    }
+
+
+    public void setSetPoint(int encoderval){
+        target = encoderval;
+    }
+
+    public int getSetPoint(){
+        return target;
+    }
+
+    public int getCurrentPosition(){
+        return robot.ArmRotator.getCurrentPosition();
     }
 
     @Override
@@ -47,11 +66,6 @@ public class PIDFArm extends OpMode {
         double power = pid * ff;
 
         robot.ArmRotator.setPower(power);
-
-        telemetry.addData("Arm Position: ", armPos);
-        telemetry.addData("target: ", target);
-
-        telemetry.update();
 
 
 
