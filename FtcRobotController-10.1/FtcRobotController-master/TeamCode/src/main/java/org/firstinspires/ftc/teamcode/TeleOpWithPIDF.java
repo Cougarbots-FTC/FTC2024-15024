@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class TeleOpWithPIDF extends LinearOpMode {
-        private PIDFArm pidfArm;
+        private PIDFAttempt2 pidfArm;
 
         @Override
         public void runOpMode() {

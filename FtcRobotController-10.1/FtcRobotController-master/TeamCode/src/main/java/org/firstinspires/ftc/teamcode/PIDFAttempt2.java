@@ -11,9 +11,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 @Config
 public class PIDFAttempt2 extends OpMode{
     private PIDController controller;
-    public static double p=0,i=0,d=0;
-    public static double f=0.09;
-    public static int target =3283;
+    public static double p=0.1,i=0,d=0.0009;
+    public static double f=0.22;
+    public static int target =70;
     private final double ticks_in_degree = 2100;
     private DcMotorEx arm_motor;
     @Override
