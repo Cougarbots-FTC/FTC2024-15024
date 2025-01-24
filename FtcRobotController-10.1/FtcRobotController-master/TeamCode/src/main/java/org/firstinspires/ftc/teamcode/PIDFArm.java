@@ -18,12 +18,11 @@ public class PIDFArm extends OpMode {
     Clark15024HWMap robot;
 
     public static double p = 0, i = 0, d = 0;
-    public static double f = 0.7;
+    public static double f = 1;
     public int target = 70;
 
     // TODO: update based on Motor
-    private final double ticksInDegrees = 28
-            ;
+    private final double ticksInDegrees = 2100;
     //private final FtcDashboard dashboard = FtcDashboard.getInstance();
 
     public PIDFArm(HardwareMap map) {
@@ -42,8 +41,8 @@ public class PIDFArm extends OpMode {
     }
 
 
-    public void setSetPoint(int encoderval){
-        target = encoderval;
+    public void setSetPoint(int encoder){
+        target = encoder;
     }
 
     public int getSetPoint(){

@@ -95,9 +95,9 @@ public class Clark15024HWMap {
         //ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //ArmExtender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        ArmRotator.setDirection(DcMotorSimple.Direction.FORWARD);
-        ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ArmRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmRotator.setDirection(DcMotorEx.Direction.FORWARD);
+        ArmRotator.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        ArmRotator.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
 
         intake.setDirection(CRServo.Direction.FORWARD);

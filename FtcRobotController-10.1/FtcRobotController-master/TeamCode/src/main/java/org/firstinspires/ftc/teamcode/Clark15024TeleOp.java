@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -93,7 +94,7 @@ public class Clark15024TeleOp extends LinearOpMode {
             robot.LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             robot.LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-            robot.ArmRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            robot.ArmRotator.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
             robot.ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             //left_trigger - liftA and liftB up
