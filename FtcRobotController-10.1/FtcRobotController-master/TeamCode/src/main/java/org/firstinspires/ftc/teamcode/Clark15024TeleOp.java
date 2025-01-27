@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 
 //Used to name this specific TeleOP in the driver hub
-@TeleOp(name = "Clark 15024 Testing ")
+@TeleOp(name = "Clark 15024 TeleOp ")
 //Base TeleOp class which currently has the Hardware map Initialized and the running Op mode
 //extends LinearOpMode - used as a parent class of this child class, meaning you can use all the functions from the parent class in this child class
 public class Clark15024TeleOp extends LinearOpMode {
@@ -24,7 +24,7 @@ public class Clark15024TeleOp extends LinearOpMode {
         pidfArm = new PIDFAttempt2(robot.ArmRotator);
 
 
-        telemetry.addData("Say", "Starting 15024 TeleOp Testing");
+        telemetry.addData("Say", "Starting 15024 TeleOp using PIDF");
         telemetry.addData("Arm Position: ", robot.ArmRotator.getCurrentPosition());
         telemetry.update();
 
@@ -87,20 +87,15 @@ public class Clark15024TeleOp extends LinearOpMode {
 
 
             //ArmRotator on left x stick
+            double armRotatorPower = gamepad2.left_stick_x;
+            robot.ArmRotator.setPower(armRotatorPower);
 
-
-            double armRotatorPower = gamepad1.right_bumper ? 0.5 : 0.3;
-            if (gamepad1.dpad_left) {
-                robot.ArmRotator.setPower(armRotatorPower);
-                telemetry.addData("Arm Rotator Power: ", armRotatorPower);
-                telemetry.update();
-
-            } else if (gamepad1.dpad_right){
-                //down
-                robot.ArmRotator.setPower(-0.3);
-            } else {
-                robot.ArmRotator.setPower(0);
+            if (gamepad2.a) {
+                pidfArm.setSetpoint(600); // Set encoder position to 1000
+            } else if (gamepad2.b) {
+                pidfArm.setSetpoint(50); // Set encoder position to 2000
             }
+            pidfArm.loop();
 
             // Telemetry for debugging
             //telemetry.addData("Target Position", pidfArm.getSetpoint());
@@ -108,7 +103,7 @@ public class Clark15024TeleOp extends LinearOpMode {
             telemetry.update();
 
             //servo for intake - x toggle on and off
-            boolean xPressed = gamepad1.x;
+            boolean xPressed = gamepad2.x;
             if (xPressed && !gamepad2XLastPressed) {
                 if (robot.intake.getPower() == -1) {
                     robot.intake.setPower(0);
@@ -124,6 +119,7 @@ public class Clark15024TeleOp extends LinearOpMode {
             } else {
                 robot.bucketRotator.setPosition(0.4);
             }
+            
 
 
         }
