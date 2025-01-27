@@ -16,7 +16,7 @@ public class Clark15024TeleOp extends LinearOpMode {
 
     //PIDF Arm
     //private PIDFArm pidfArm;
-
+    private PIDFAttempt2 pidfArm;
 
     //@Override - Used to rewrite the runOpMode function which is in the LinearOpMode class
     //runOpMode - runs when the button before the start button is pressed
@@ -120,7 +120,7 @@ public class Clark15024TeleOp extends LinearOpMode {
 
             //ArmRotator on DPad left and Right
 
-            /*
+
             double armRotatorPower = gamepad1.right_bumper ? 0.5 : 0.3;
             if (gamepad1.dpad_left) {
                 robot.ArmRotator.setPower(armRotatorPower);
@@ -133,7 +133,12 @@ public class Clark15024TeleOp extends LinearOpMode {
             } else {
                 robot.ArmRotator.setPower(0);
             }
-*/
+
+            // Telemetry for debugging
+            //telemetry.addData("Target Position", pidfArm.getSetpoint());
+            telemetry.addData("Current Position", robot.ArmRotator.getCurrentPosition());
+            telemetry.update();
+
             //servo for intake - x toggle on and off
             boolean xPressed = gamepad1.x;
             if (xPressed && !gamepad2XLastPressed) {
