@@ -113,13 +113,24 @@ public class Clark15024TeleOp extends LinearOpMode {
             }
             gamepad2XLastPressed = xPressed;
 
+            boolean yPressed = gamepad2.y;
+            if (gamepad2.y && !gamepad2YLastPressed) {
+                if (robot.claw.getPosition() == 0) {
+                    robot.claw.setPosition(1);
+                } else {
+                    robot.claw.setPosition(0);
+                }
+            }
+            gamepad2YLastPressed = yPressed;
+
             //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
             if (gamepad1.b) {
                 robot.bucketRotator.setPosition(robot.bucketRotator.getPosition()-0.1);
             } else {
                 robot.bucketRotator.setPosition(0.4);
             }
-            
+
+
 
 
         }
