@@ -26,7 +26,7 @@ public class Clark15024HWMap {
     public DcMotorEx ArmRotator = null;
 
     public CRServo intake = null;
-    public Servo clawRotator = null;
+    public Servo claw = null;
     public Servo bucketRotator = null;
 
     public SparkFunOTOS myOtos = null;
@@ -56,15 +56,11 @@ public class Clark15024HWMap {
 
         myOtos = HWM.get(SparkFunOTOS.class, "SparkFun");
 
-        //Servos for delivery
 
         intake = HWM.get(CRServo.class, "intake");
-        //clawRotator = HWM.get(Servo.class, "clawRotator");
+        claw = HWM.get(Servo.class, "claw");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
 
-        //Using functions from the DcMotor class, this changes the direction of the motor, sets the power to 0, and makes the runmode to run without encoder as the robot is not moving
-        //The direction of the some variables are different because they are needed to offset each other to move
-       
         //setDirection function sets the direction of the wheels which it has to go. Some say forward and some say reverse because that is how you are also to move the robot back and forth
         driveLeftBack.setDirection(DcMotorSimple.Direction.FORWARD);
         //setZeroPowerBehavior function indicates to us that the power of the motor is at zero or not changing
@@ -92,19 +88,17 @@ public class Clark15024HWMap {
         LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //ArmExtender.setDirection(DcMotorSimple.Direction.FORWARD);
-        //ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //ArmExtender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmExtender.setDirection(DcMotorSimple.Direction.FORWARD);
+        ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         ArmRotator.setDirection(DcMotorEx.Direction.REVERSE);
-        //ArmRotator.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        //ArmRotator.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
 
         intake.setDirection(CRServo.Direction.FORWARD);
 
         bucketRotator.setDirection(Servo.Direction.FORWARD);
 
+        claw.setDirection(Servo.Direction.FORWARD);
 
 
 

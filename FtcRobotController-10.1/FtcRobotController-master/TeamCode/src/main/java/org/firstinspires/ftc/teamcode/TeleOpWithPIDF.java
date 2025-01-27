@@ -12,7 +12,6 @@ public class TeleOpWithPIDF extends LinearOpMode {
         public void runOpMode() {
             // Initialize hardware map and PIDFArm
             robot.Map(hardwareMap);
-            //pidfArm.init();
             pidfArm = new PIDFAttempt2(robot.ArmRotator);
 
             waitForStart();

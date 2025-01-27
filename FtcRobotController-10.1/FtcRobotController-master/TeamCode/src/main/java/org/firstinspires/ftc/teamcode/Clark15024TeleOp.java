@@ -13,9 +13,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 public class Clark15024TeleOp extends LinearOpMode {
     //Initialized Hardware map instance variable assigned to "robot"
     Clark15024HWMap robot = new Clark15024HWMap();
-
-    //PIDF Arm
-    //private PIDFArm pidfArm;
     private PIDFAttempt2 pidfArm;
 
     //@Override - Used to rewrite the runOpMode function which is in the LinearOpMode class
@@ -23,17 +20,15 @@ public class Clark15024TeleOp extends LinearOpMode {
     @Override
     public void runOpMode(){
 
-
-
         robot.Map(hardwareMap);
+        pidfArm = new PIDFAttempt2(robot.ArmRotator);
+
+
         telemetry.addData("Say", "Starting 15024 TeleOp Testing");
         telemetry.addData("Arm Position: ", robot.ArmRotator.getCurrentPosition());
         telemetry.update();
 
 
-        // PID arm code
-        //pidfArm = new PIDFArm(hardwareMap);
-        //pidfArm.init();
         //Local boolean variables for one-button-two-functions operations
         Boolean gamepad2ALastPressed = false;
         Boolean gamepad2BLastPressed = false;
@@ -45,23 +40,6 @@ public class Clark15024TeleOp extends LinearOpMode {
 
         //while loop starts once the start button is pressed
         while(opModeIsActive()){
-            //PIDF Arm (swtching between positions)
-            /*
-            if(gamepad2.a){
-                pidfArm.setSetPoint(580);
-            }else if(gamepad2.b){
-                pidfArm.setSetPoint(70);
-            }
-
-            // Updating and rerunning the loop
-            pidfArm.loop();
-
-            //Telemetry for PID, for debugging
-
-            telemetry.addData("Target Position", pidfArm.getSetPoint());
-            telemetry.addData("Current Position", pidfArm.getCurrentPosition());
-            telemetry.update();
-*/
 
             //Slow mode whenever you need to go slower to get precise blocks
             double slow = gamepad1.right_bumper ? 0.5 : 1.0;
@@ -87,11 +65,6 @@ public class Clark15024TeleOp extends LinearOpMode {
             robot.driveLeftBack.setPower(LeftBackPower * slow);
             robot.driveLeftFront.setPower(LeftFrontPower * slow);
 
-            robot.LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            robot.LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-            robot.ArmRotator.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-            robot.ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             //left_trigger - liftA and liftB up
             //right_trigger - liftA and liftB down
@@ -108,17 +81,12 @@ public class Clark15024TeleOp extends LinearOpMode {
                 robot.LiftB.setPower(0);
             }
 
-            //ArmExtender on DPad up and down
-            double armExtenderPower = gamepad1.right_bumper ? 1 : 0.5;
-            if (gamepad1.dpad_down) {
-                robot.ArmExtender.setPower(-armExtenderPower);
-            } else if (gamepad1.dpad_up) {
-                robot.ArmExtender.setPower(armExtenderPower);
-            } else {
-               robot.ArmExtender.setPower(0);
-            }
+            //ArmExtender on left y stick
+            double armExtenderPower = -gamepad2.left_stick_y;
+            robot.ArmExtender.setPower(armExtenderPower);
 
-            //ArmRotator on DPad left and Right
+
+            //ArmRotator on left x stick
 
 
             double armRotatorPower = gamepad1.right_bumper ? 0.5 : 0.3;
