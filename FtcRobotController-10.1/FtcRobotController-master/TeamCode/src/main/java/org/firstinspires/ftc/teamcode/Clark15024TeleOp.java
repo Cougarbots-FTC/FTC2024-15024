@@ -14,6 +14,7 @@ public class Clark15024TeleOp extends LinearOpMode {
     //Initialized Hardware map instance variable assigned to "robot"
     Clark15024HWMap robot = new Clark15024HWMap();
     private PIDFAttempt2 pidfArm;
+    //fix stuff
 
     //@Override - Used to rewrite the runOpMode function which is in the LinearOpMode class
     //runOpMode - runs when the button before the start button is pressed
