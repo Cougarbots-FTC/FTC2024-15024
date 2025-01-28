@@ -16,25 +16,24 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 @Config
 public class PIDFAttempt2 extends OpMode{
     private PIDController controller;
-    public static double p=0.007,i=0,d=0.0005;
-    public static double f=0.12;
-    public static int target =300;
+    public static double p,i,d; //p=0.007,i=0,d=0.0005;
+    public static double f; //=0.12;
+    public static int target; // = 300;
     private final double ticks_in_degree = 2100;
     private DcMotorEx arm_motor;
 
-    public PIDFAttempt2(DcMotorEx arm_motor) {
+    public PIDFAttempt2(DcMotorEx arm_motor, double p, double i, double d, double f, int target) {
         this.arm_motor = arm_motor;
+        this.p = p;
+        this.i = i;
+        this.d = d;
+        this.f = f;
+        this.target = target;
         controller = new PIDController(p,i,d);
-
     }
-
     @Override
     public void init(){
-        //controller = new PIDController(p,i,d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-
-        //arm_motor = hardwareMap.get(DcMotorEx.class,"ArmRotator");
-        //arm_motor.setDirection(DcMotorEx.Direction.REVERSE);
     }
     @Override
     public void loop(){
@@ -46,21 +45,18 @@ public class PIDFAttempt2 extends OpMode{
         double power = pid +ff;
 
         arm_motor.setPower(power);
-
-        //telemetry.addData("pos",armPos);
-        //telemetry.addData("target", target);
-        //telemetry.update();
     }
-
     public void setSetpoint(int newTarget) {
         target = newTarget;
     }
-
     public int getSetpoint() {
         return target;
     }
-
     public int getCurrentPosition() {
         return arm_motor.getCurrentPosition();
+    }
+
+    public void setPower(double power) {
+        arm_motor.setPower(power);
     }
 }

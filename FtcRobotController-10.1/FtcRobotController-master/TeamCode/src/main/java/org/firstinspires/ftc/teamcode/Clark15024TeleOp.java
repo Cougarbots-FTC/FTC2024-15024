@@ -14,7 +14,6 @@ public class Clark15024TeleOp extends LinearOpMode {
     //Initialized Hardware map instance variable assigned to "robot"
     Clark15024HWMap robot = new Clark15024HWMap();
     private PIDFAttempt2 pidfArm;
-    //fix stuff
 
     //@Override - Used to rewrite the runOpMode function which is in the LinearOpMode class
     //runOpMode - runs when the button before the start button is pressed
@@ -22,7 +21,7 @@ public class Clark15024TeleOp extends LinearOpMode {
     public void runOpMode(){
 
         robot.Map(hardwareMap);
-        pidfArm = new PIDFAttempt2(robot.ArmRotator);
+        pidfArm = new PIDFAttempt2(robot.ArmRotator,0.007,0,0.0005,0.12,300);
 
 
         telemetry.addData("Say", "Starting 15024 TeleOp using PIDF");
@@ -89,7 +88,8 @@ public class Clark15024TeleOp extends LinearOpMode {
 
             //ArmRotator on left x stick
             double armRotatorPower = gamepad2.left_stick_x;
-            robot.ArmRotator.setPower(armRotatorPower);
+            //robot.ArmRotator.setPower(armRotatorPower);
+            pidfArm.setPower(armRotatorPower);
 
             if (gamepad2.a) {
                 pidfArm.setSetpoint(600); // Set encoder position to 1000
@@ -99,7 +99,7 @@ public class Clark15024TeleOp extends LinearOpMode {
             pidfArm.loop();
 
             // Telemetry for debugging
-            //telemetry.addData("Target Position", pidfArm.getSetpoint());
+            telemetry.addData("Target Position", pidfArm.getSetpoint());
             telemetry.addData("Current Position", robot.ArmRotator.getCurrentPosition());
             telemetry.update();
 
