@@ -21,7 +21,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
     red observation zone.
 */
 
-@Autonomous(name = "Clark15024AutoTest", group = "auto")
+@Autonomous(name = "Clark15024 Auto Test", group = "auto")
 //@Disabled
 public class AutoTest extends LinearOpMode {
     //  Set the GAIN constants to control the relationship between the measured position error, and how much power is
@@ -39,12 +39,14 @@ public class AutoTest extends LinearOpMode {
 
     Clark15024HWMap robot = new Clark15024HWMap();
 
-    public SparkFunOTOS.Pose2D pos = null;
+    public SparkFunOTOS.Pose2D pos;
 
 
     @Override
     public void runOpMode() {
         robot.Map(hardwareMap);
+        pos = robot.myOtos.getPosition();
+
 
         // All the configuration for the OTOS is done in this helper method, check it out!
         configureOtos();
@@ -54,20 +56,24 @@ public class AutoTest extends LinearOpMode {
         while (!isStarted()) {
             // Wait for the game to start (driver presses PLAY)
             telemetry.addData("Status", "Initialized");
+            telemetry.addData("Position x: ", pos.x);
+            telemetry.addData("Position y: ", pos.y);
             telemetry.update();
         }
         waitForStart();
         runtime.reset();
 
-        telemetry.addData("Status", "Running");
+
+        otosDrive(0, 2, 0, 2);      // small moveforward and right away from wall
+        //otosDrive(18, 2, 0, 2);     // forward and push sample into net zone
+
+        //otosDrive(0, 24, 0, 2);     // backup and move away from wall
+        //otosDrive(-87, 24, 0, 4);   // backup straight
+        //otosDrive(-87, 4, 0, 2);    // park in observation zone
+
+        telemetry.addData("Position x: ", pos.x);
+        telemetry.addData("Position y: ", pos.y);
         telemetry.update();
-
-        otosDrive(2, 2, 0, 2);      // small moveforward and right away from wall
-        otosDrive(18, 2, 0, 2);     // forward and push sample into net zone
-
-        otosDrive(0, 24, 0, 2);     // backup and move away from wall
-        otosDrive(-87, 24, 0, 4);   // backup straight
-        otosDrive(-87, 4, 0, 2);    // park in observation zone
 
         sleep(1000);
     }
