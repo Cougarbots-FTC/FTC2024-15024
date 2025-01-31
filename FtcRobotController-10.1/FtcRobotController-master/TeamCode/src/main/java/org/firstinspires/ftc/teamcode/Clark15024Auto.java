@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous (name = "Clark2024Auto")
+@Autonomous (name = "Clark 15024 Auto v1")
 public class Clark15024Auto extends LinearOpMode {
     Clark15024HWMap robot = new Clark15024HWMap();
     ElapsedTime time = new ElapsedTime();
@@ -17,7 +17,7 @@ public class Clark15024Auto extends LinearOpMode {
         telemetry.addData("Time", time.time());
         waitForStart();
 
-        turnRight(500);
+        moveForward(0.5, 1000);
     }
 
     public void moveForward(double p, int t){

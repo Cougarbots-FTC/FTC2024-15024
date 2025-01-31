@@ -1,19 +1,33 @@
+/* Copyright (c) 2021 FIRST. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided that
+ * the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or
+ * other materials provided with the distribution.
+ *
+ * Neither the name of FIRST nor the names of its contributors may be used to endorse or
+ * promote products derived from this software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
+ * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
-
 /* this is an autonomous program for red. Start centered on tile F2 along wall.
     It uses the SparkFun OTOS sensor to control driving.
     It drives forward to push a sample into the net zone,
@@ -21,31 +35,46 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
     red observation zone.
 */
 
-@Autonomous(name = "Clark15024 Auto Test", group = "auto")
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+@Autonomous(name="Auto Test with SparkFun", group="auto")
 //@Disabled
 public class AutoTest extends LinearOpMode {
     //  Set the GAIN constants to control the relationship between the measured position error, and how much power is
     //  applied to the drive motors to correct the error.
     //  Drive = Error * Gain    Make these values smaller for smoother control, or larger for a more aggressive response.
-    final double SPEED_GAIN = 0.03;   // 0.02 Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
-    final double STRAFE_GAIN = 0.15;   // 0.015 Strafe Speed Control "Gain".  eg: Ramp up to 25% power at a 25 degree Yaw error.   (0.25 / 25.0)
-    final double TURN_GAIN = 0.03;   // 0.01 Turn Control "Gain".  eg: Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
+    final double SPEED_GAIN  =  0.03;   // 0.02 Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
+    final double STRAFE_GAIN =  0.15;   // 0.015 Strafe Speed Control "Gain".  eg: Ramp up to 25% power at a 25 degree Yaw error.   (0.25 / 25.0)
+    final double TURN_GAIN   =  0.03;   // 0.01 Turn Control "Gain".  eg: Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
 
     final double MAX_AUTO_SPEED = 0.4;   //  Clip the approach speed to this max value (adjust for your robot)
-    final double MAX_AUTO_STRAFE = 0.4;   //  Clip the approach speed to this max value (adjust for your robot)
-    final double MAX_AUTO_TURN = 0.4;   //  Clip the turn speed to this max value (adjust for your robot)
+    final double MAX_AUTO_STRAFE= 0.4;   //  Clip the approach speed to this max value (adjust for your robot)
+    final double MAX_AUTO_TURN  = 0.4;   //  Clip the turn speed to this max value (adjust for your robot)
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    Clark15024HWMap robot = new Clark15024HWMap();
+    // Declare OpMode members for each of the 4 drive motors.
+    //private DcMotor leftFrontDrive = null;
+    //private DcMotor leftBackDrive = null;
+    //private DcMotor rightFrontDrive = null;
+    //private DcMotor rightBackDrive = null;
 
-    public SparkFunOTOS.Pose2D pos;
+    // Sensors
+    //private SparkFunOTOS myOtos;        // Optical tracking odometry sensor
+    SparkFunOTOS.Pose2D pos;
+    Clark15024HWMap robot = new Clark15024HWMap();
 
 
     @Override
     public void runOpMode() {
+
         robot.Map(hardwareMap);
-        pos = robot.myOtos.getPosition();
 
 
         // All the configuration for the OTOS is done in this helper method, check it out!
@@ -53,27 +82,22 @@ public class AutoTest extends LinearOpMode {
         sleep(1000);
 
 
-        while (!isStarted()) {
+        while(!isStarted()) {
             // Wait for the game to start (driver presses PLAY)
             telemetry.addData("Status", "Initialized");
-            telemetry.addData("Position x: ", pos.x);
-            telemetry.addData("Position y: ", pos.y);
             telemetry.update();
         }
         waitForStart();
         runtime.reset();
 
+        telemetry.addData("Status", "Running");
+        telemetry.update();
 
-        otosDrive(0, 2, 0, 2);      // small moveforward and right away from wall
+        otosDrive(5, 0, 0, 2);      // small move forward and right away from wall
         //otosDrive(18, 2, 0, 2);     // forward and push sample into net zone
-
         //otosDrive(0, 24, 0, 2);     // backup and move away from wall
         //otosDrive(-87, 24, 0, 4);   // backup straight
         //otosDrive(-87, 4, 0, 2);    // park in observation zone
-
-        telemetry.addData("Position x: ", pos.x);
-        telemetry.addData("Position y: ", pos.y);
-        telemetry.update();
 
         sleep(1000);
     }
@@ -103,7 +127,7 @@ public class AutoTest extends LinearOpMode {
         // clockwise (negative rotation) from the robot's orientation, the offset
         // would be {-5, 10, -90}. These can be any value, even the angle can be
         // tweaked slightly to compensate for imperfect mounting (eg. 1.3 degrees).
-        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(-4.25, 7.25, 180); // should be -4.25, 7.25
+        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(-3.75, -7.5, 90); // should be -3.75 & -7.5 and 90
         robot.myOtos.setOffset(offset);
 
         // Here we can set the linear and angular scalars, which can compensate for
@@ -170,20 +194,20 @@ public class AutoTest extends LinearOpMode {
         double opp, adj;
 
         SparkFunOTOS.Pose2D currentPos = myPosition();
-        xError = targetX - currentPos.x;
-        yError = targetY - currentPos.y;
-        yawError = targetHeading - currentPos.h;
+        xError = targetX-currentPos.x;
+        yError = targetY-currentPos.y;
+        yawError = targetHeading-currentPos.h;
 
         runtime.reset();
 
-        while (opModeIsActive() && (runtime.milliseconds() < maxTime * 1000) &&
-                ((Math.abs(xError) > 1.5) || (Math.abs(yError) > 1.5) || (Math.abs(yawError) > 4))) {
+        while(opModeIsActive() && (runtime.milliseconds() < maxTime*1000) &&
+                ((Math.abs(xError) > 1.5) || (Math.abs(yError) > 1.5) || (Math.abs(yawError) > 4)) ) {
             // Use the speed and turn "gains" to calculate how we want the robot to move.
-            drive = Range.clip(xError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
+            drive  = Range.clip(xError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
             strafe = Range.clip(yError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
-            turn = Range.clip(yawError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN);
+            turn   = Range.clip(yawError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
 
-            telemetry.addData("Auto", "Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+            telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
             // current x,y swapped due to 90 degree rotation
             telemetry.addData("current X coordinate", currentPos.x);
             telemetry.addData("current Y coordinate", currentPos.y);
@@ -201,16 +225,18 @@ public class AutoTest extends LinearOpMode {
 
             // then recalc error
             currentPos = myPosition();
-            xError = targetX - currentPos.x;
-            yError = targetY - currentPos.y;
-            yawError = targetHeading - currentPos.h;
+            xError = targetX-currentPos.x;
+            yError = targetY-currentPos.y;
+            yawError = targetHeading-currentPos.h;
         }
-        moveRobot(0, 0, 0);
+        moveRobot(0,0,0);
         currentPos = myPosition();
         telemetry.addData("current X coordinate", currentPos.x);
         telemetry.addData("current Y coordinate", currentPos.y);
         telemetry.addData("current Heading angle", currentPos.h);
         telemetry.update();
+        //TODO
+        sleep(1000);
     }
 
     /* the reported OTOS values are based on sensor orientation, convert to robot centric
@@ -219,9 +245,8 @@ public class AutoTest extends LinearOpMode {
     SparkFunOTOS.Pose2D myPosition() {
         pos = robot.myOtos.getPosition();
         SparkFunOTOS.Pose2D myPos = new SparkFunOTOS.Pose2D(pos.y, pos.x, -pos.h);
-        return (myPos);
+        return(myPos);
     }
-
     /**
      * Move robot according to desired axes motions assuming robot centric point of view
      * Positive X is forward
@@ -231,10 +256,10 @@ public class AutoTest extends LinearOpMode {
     void moveRobot(double x, double y, double yaw) {
 
         // Calculate wheel powers.
-        double leftFrontPower = x + y + yaw;
-        double rightFrontPower = x - y - yaw;
-        double leftBackPower = x - y + yaw;
-        double rightBackPower = x + y - yaw;
+        double leftFrontPower    =  x +y +yaw;
+        double rightFrontPower   =  x -y -yaw;
+        double leftBackPower     =  x -y +yaw;
+        double rightBackPower    =  x +y -yaw;
 
         // Normalize wheel powers to be less than 1.0
         double max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
@@ -255,5 +280,4 @@ public class AutoTest extends LinearOpMode {
         robot.driveRightBack.setPower(rightBackPower);
         sleep(10);
     }
-
 }

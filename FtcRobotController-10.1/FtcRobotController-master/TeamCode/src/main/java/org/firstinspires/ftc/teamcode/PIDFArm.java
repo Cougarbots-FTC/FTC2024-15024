@@ -18,8 +18,8 @@ public class PIDFArm extends OpMode{
     private PIDController controller;
     public static double p=0.007,i=0,d=0.0005;
     public static double f=0.12;
-    public static int target =0;
-    private final double ticks_in_degree = 2100;
+    public static int target =500;
+    private final double ticks_in_degree = 2100; // 75
     private DcMotorEx arm_motor;
 
 

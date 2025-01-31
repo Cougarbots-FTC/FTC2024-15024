@@ -66,18 +66,22 @@ public class Clark15024HWMap {
         //setZeroPowerBehavior function indicates to us that the power of the motor is at zero or not changing
         driveLeftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //setMode with Running without encoder means that the motor is on by the encoders on the motors are not activated yet
+        //driveLeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveLeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         driveLeftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         driveLeftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //driveLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveLeftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         driveRightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         driveRightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //driveRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveRightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         driveRightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         driveRightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //driveRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveRightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         LiftA.setDirection(DcMotorSimple.Direction.FORWARD);

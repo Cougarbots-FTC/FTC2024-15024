@@ -17,16 +17,17 @@ public class PIDFAttempt2 extends OpMode{
     public static double p,i,d; //p=0.007,i=0,d=0.0005;
     public static double f; //=0.12;
     public static int target; // = 300;
-    private final double ticks_in_degree = 2100;
+    private double ticks_in_degree; // = 2100;
     private DcMotorEx arm_motor;
 
-    public PIDFAttempt2(DcMotorEx arm_motor, double p, double i, double d, double f, int target) {
+    public PIDFAttempt2(DcMotorEx arm_motor, double p, double i, double d, double f, int target, double ticks_in_degree) {
         this.arm_motor = arm_motor;
         this.p = p;
         this.i = i;
         this.d = d;
         this.f = f;
         this.target = target;
+        this.ticks_in_degree = ticks_in_degree;
         controller = new PIDController(p,i,d);
     }
     @Override
