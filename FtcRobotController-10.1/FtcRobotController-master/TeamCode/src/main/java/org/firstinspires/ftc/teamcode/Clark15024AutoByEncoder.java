@@ -29,7 +29,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
     static final double     TURN_SPEED              = 0.5;
 
     static final double LIFT_GEAR_RATIO = 13.7;
-    static final double LIFT_COUNTS_PER_INCH = (438 * LIFT_GEAR_RATIO) / (Math.PI * 2) * 2; //* 28;
+    static final double LIFT_COUNTS_PER_INCH = (28 * LIFT_GEAR_RATIO) / (Math.PI * Math.pow(1.5,2)) ; //* 28;
 
     @Override
     public void runOpMode(){
@@ -40,42 +40,86 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
                 robot.driveRightFront.getCurrentPosition());
         telemetry.update();
 
-        //TODO is this needed?
-        robot.LiftA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.LiftB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         robot.driveRightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.driveLeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.driveRightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.driveLeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.LiftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.LiftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.LiftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.LiftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         waitForStart();
 
         // Step through each leg of the path,
         robot.claw.setPosition(0);
-        encoderDrive(DRIVE_SPEED,  20,  20, 5.0);       //Move toward submersible - Total distance to submersible is 25.5
-
-        deliver_specimen(4.21);
-
+        //encoderDrive(DRIVE_SPEED,  20,  20, 5.0);       //Move toward submersible - Total distance to submersible is 25.5
+        //move lift go forward, drop lift
+        robot.LiftA.setPower(-1);
+        robot.LiftB.setPower(-1);
+        sleep(675);
+        robot.LiftA.setPower(0);
+        robot.LiftB.setPower(0);
+        sleep(500);
+        encoderDrive(DRIVE_SPEED, 4.21, 4.21, 2);
+        robot.LiftA.setPower(1);
+        robot.LiftB.setPower(1);
+        sleep(600);
+        robot.claw.setPosition(0.5);
         //TODO: make this a function - move to get new piece
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse
-        //turn to left
-        //move back
-        //turn left
+
+        //turn right
+        encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
+        //drive to observation zone
+        encoderDrive(DRIVE_SPEED, 30,30, 5.0);
+        //turn right
+        encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
         //move forward
+        encoderDrive(DRIVE_SPEED, 5, 5,2);
         //lift
+        robot.LiftA.setPower(-1);
+        robot.LiftB.setPower(-1);
+        sleep(250);
+        robot.LiftA.setPower(0);
+        robot.LiftB.setPower(0);
+        sleep(250);
+
         //close claw
-        //TODO: make this a function - move to the submersible
+        robot.claw.setPosition(0);
         // reverse
+        encoderDrive(DRIVE_SPEED, -10, -10, 5.0);
         //turn right
-        //forward
+        encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
+        //forward to submersible
+        encoderDrive(DRIVE_SPEED, 30,30, 5.0);
         //turn right
-        //forward
-        //deliver_specimen(10);
-        //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
+        //move forward to submersible
+        encoderDrive(DRIVE_SPEED, 5, 5,2);
+        //deliver_specimen
+        //move lift go forward, drop lift
+        robot.LiftA.setPower(-1);
+        robot.LiftB.setPower(-1);
+        sleep(675);
+        robot.LiftA.setPower(0);
+        robot.LiftB.setPower(0);
+        sleep(500);
+        encoderDrive(DRIVE_SPEED, 4.21, 4.21, 2);
+        robot.LiftA.setPower(1);
+        robot.LiftB.setPower(1);
+        sleep(600);
+        robot.claw.setPosition(0.5);
+
+        //move back to observation zone
+        encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse
+        //turn right
+        encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
+        //drive to observation zone
+        encoderDrive(DRIVE_SPEED, 30,30, 5.0);
+        //turn right
+        encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
+        //move forward
+        encoderDrive(DRIVE_SPEED, 5, 5,2);
 
     }
 
@@ -87,12 +131,11 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
      * @param distance_to_submersible - how far to go forward once the lift goes up
      */
     public void deliver_specimen(double distance_to_submersible) {
-        encoderLift(DRIVE_SPEED*.1, -0.01, 0.4);                          // Lift the arm
-        sleep(600);   // optional pause after each move.
+        //encoderLift(DRIVE_SPEED*.1, -0.5, 0.2);                          // Lift the arm
 
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  distance_to_submersible,  distance_to_submersible, 5.0);     // Move the rest of the way to the submersible
-        encoderLift(DRIVE_SPEED*.3, 0.01, 0.2);                         // Drop arm
+        //encoderDrive(DRIVE_SPEED,  distance_to_submersible,  distance_to_submersible, 5.0);     // Move the rest of the way to the submersible
+        encoderLift(DRIVE_SPEED*.1, 0.01, 0.4);                         // Drop arm
         robot.claw.setPosition(0.5);                                                 //open claw
     }
 
@@ -128,7 +171,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.LiftA.isBusy() && robot.LiftB.isBusy())) {
+                    (robot.LiftA.isBusy() || robot.LiftB.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Lift running to", " %7d :%7d", newLeftTarget, newRightTarget);
