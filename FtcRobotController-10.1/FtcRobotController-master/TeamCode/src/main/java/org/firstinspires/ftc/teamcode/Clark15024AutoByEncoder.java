@@ -52,19 +52,21 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
 
         // Step through each leg of the path,
         robot.claw.setPosition(0);
-        //encoderDrive(DRIVE_SPEED,  20,  20, 5.0);       //Move toward submersible - Total distance to submersible is 25.5
+        encoderDrive(DRIVE_SPEED,  20,  20, 5.0);       //Move toward submersible - Total distance to submersible is 25.5
         //move lift go forward, drop lift
         robot.LiftA.setPower(-1);
         robot.LiftB.setPower(-1);
         sleep(675);
         robot.LiftA.setPower(0);
         robot.LiftB.setPower(0);
-        sleep(500);
+//        sleep(450);
         encoderDrive(DRIVE_SPEED, 4.21, 4.21, 2);
+        robot.claw.setPosition(0);
         robot.LiftA.setPower(1);
         robot.LiftB.setPower(1);
-        sleep(600);
-        robot.claw.setPosition(0.5);
+        robot.claw.setPosition(.9);
+        sleep(300);
+        robot.claw.setPosition(0.7);
         //TODO: make this a function - move to get new piece
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse
 
@@ -75,17 +77,19 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         //turn right
         encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
         //move forward
-        encoderDrive(DRIVE_SPEED, 5, 5,2);
+        encoderDrive(DRIVE_SPEED, 12.5, 12.5,2);
         //lift
-        robot.LiftA.setPower(-1);
-        robot.LiftB.setPower(-1);
+//        robot.LiftA.setPower(-1);
+//        robot.LiftB.setPower(-1);
+        robot.claw.setPosition(1);
         sleep(250);
-        robot.LiftA.setPower(0);
-        robot.LiftB.setPower(0);
+        robot.LiftA.setPower(-.35);
+        robot.LiftB.setPower(-.35);
         sleep(250);
+        robot.claw.setPosition(0);
 
         //close claw
-        robot.claw.setPosition(0);
+        //robot.claw.setPosition(0);
         // reverse
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);
         //turn right
@@ -98,9 +102,8 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, 5, 5,2);
         //deliver_specimen
         //move lift go forward, drop lift
-        robot.LiftA.setPower(-1);
-        robot.LiftB.setPower(-1);
-        sleep(675);
+        robot.LiftA.setPower(0);
+        robot.LiftB.setPower(0);
         robot.LiftA.setPower(0);
         robot.LiftB.setPower(0);
         sleep(500);
@@ -108,7 +111,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         robot.LiftA.setPower(1);
         robot.LiftB.setPower(1);
         sleep(600);
-        robot.claw.setPosition(0.5);
+        robot.claw.setPosition(1);
 
         //move back to observation zone
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse

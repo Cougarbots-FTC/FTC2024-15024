@@ -122,17 +122,18 @@ public class Clark15024TeleOp extends LinearOpMode {
     public void armRotator(double slow) {
         //ArmRotator on left x stick
         double armRotatorPower = gamepad2.left_stick_x * slow;
-        //robot.ArmRotator.setPower(armRotatorPower);
-        //if (armRotatorPower != 0) {
+        robot.ArmRotator.setPower(armRotatorPower);
+        if (armRotatorPower != 0) {
             pidfArm.setPower(armRotatorPower);
-        /*} else {
-            if (gamepad2.a) {
-                pidfArm.setSetpoint(0); // Set encoder position to 1000
-            } else if (gamepad2.b) {
-                pidfArm.setSetpoint(-550); // Set encoder position to 2000
-            }
-            pidfArm.loop();
-        }*/
+        }/* else {
+
+        if (gamepad2.a) {
+            pidfArm.setSetpoint(1000); // Set encoder position to 1000
+        } else if (gamepad2.b) {
+            pidfArm.setSetpoint(2000); // Set encoder position to 2000
+        }
+        pidfArm.loop();
+    }*/
     }
 
     public void clawFunctionality() {
