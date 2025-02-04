@@ -25,7 +25,7 @@ public class Clark15024TeleOp extends LinearOpMode {
     public void runOpMode(){
         robot.Map(hardwareMap);
 
-        robot.ArmRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.ArmRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         telemetry.addData("Say", "Starting 15024 TeleOp using PIDF");
         telemetry.addData("Arm Position: ", robot.ArmRotator.getCurrentPosition());
@@ -124,7 +124,7 @@ public class Clark15024TeleOp extends LinearOpMode {
         double armRotatorPower = gamepad2.left_stick_x * slow;
         //robot.ArmRotator.setPower(armRotatorPower);
         //if (armRotatorPower != 0) {
-            pidfArm.setPower(armRotatorPower);
+            robot.ArmRotator.setPower(armRotatorPower);
         /*} else {
             if (gamepad2.a) {
                 pidfArm.setSetpoint(0); // Set encoder position to 1000

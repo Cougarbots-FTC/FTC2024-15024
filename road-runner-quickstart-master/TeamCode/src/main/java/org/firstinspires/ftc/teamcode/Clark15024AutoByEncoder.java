@@ -11,7 +11,6 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
     Clark15024HWMap robot = new Clark15024HWMap();
     ElapsedTime runtime = new ElapsedTime();
 
-    Clark15024Auto auto = new Clark15024Auto();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
