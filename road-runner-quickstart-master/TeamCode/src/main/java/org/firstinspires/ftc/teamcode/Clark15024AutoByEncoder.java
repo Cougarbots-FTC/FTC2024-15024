@@ -44,14 +44,11 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         robot.driveRightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.driveLeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //robot.LiftA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.LiftB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         waitForStart();
 
         // Step through each leg of the path,
         robot.claw.setPosition(0);
-        //encoderDrive(DRIVE_SPEED,  20,  20, 5.0);       //Move toward submersible - Total distance to submersible is 25.5
+        encoderDrive(DRIVE_SPEED,  20,  20, 5.0);       //Move toward submersible - Total distance to submersible is 25.5
         //move lift go forward, drop lift
         robot.LiftA.setPower(-1);
         robot.LiftB.setPower(-1);
