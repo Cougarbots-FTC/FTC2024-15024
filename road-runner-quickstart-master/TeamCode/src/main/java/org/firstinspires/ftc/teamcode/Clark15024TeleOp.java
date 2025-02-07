@@ -14,8 +14,8 @@ public class Clark15024TeleOp extends LinearOpMode {
     //Initialized Hardware map instance variable assigned to "robot"
     Clark15024HWMap robot = new Clark15024HWMap();
     private PIDFAttempt2 pidfArm;
-    //Boolean gamepad2ALastPressed = false;
-    //Boolean gamepad2BLastPressed = false;
+    Boolean gamepad2ALastPressed = false;
+    Boolean gamepad2BLastPressed = false;
     Boolean gamepad2XLastPressed = false;
     Boolean gamepad2YLastPressed = false;
 
@@ -47,9 +47,10 @@ public class Clark15024TeleOp extends LinearOpMode {
             lift(slow);
             armExtender(slow);
             armRotator(slow);
-            clawFunctionality();
+            backClawFunctionality();
             delivery();
-            intake();
+            clawRotatorFunctionality();
+            frontCclawFunctionality();
 
             // Telemetry for debugging
             telemetry.addData("Target Position", pidfArm.getSetpoint());
@@ -134,14 +135,35 @@ public class Clark15024TeleOp extends LinearOpMode {
             pidfArm.loop();
         }*/
     }
-
-    public void clawFunctionality() {
+    public void clawRotatorFunctionality() {
+        boolean aPressed = gamepad2.a;
+        if (gamepad2.a && !gamepad2ALastPressed) {
+            if (robot.clawRotate.getPosition() == 0) {
+                robot.clawRotate.setPosition(0.5);
+            } else {
+                robot.clawRotate.setPosition(0);
+            }
+        }
+        gamepad2ALastPressed = aPressed;
+    }
+    public void frontCclawFunctionality() {
+        boolean bPressed = gamepad2.b;
+        if (gamepad2.b && !gamepad2BLastPressed) {
+            if (robot.frontClaw.getPosition() == 0) {
+                robot.frontClaw.setPosition(0.5);
+            } else {
+                robot.frontClaw.setPosition(0);
+            }
+        }
+        gamepad2BLastPressed = bPressed;
+    }
+    public void backClawFunctionality() {
         boolean yPressed = gamepad2.y;
         if (gamepad2.y && !gamepad2YLastPressed) {
-            if (robot.claw.getPosition() == 0) {
-                robot.claw.setPosition(0.5);
+            if (robot.backClaw.getPosition() == 0) {
+                robot.backClaw.setPosition(0.5);
             } else {
-                robot.claw.setPosition(0);
+                robot.backClaw.setPosition(0);
             }
         }
         gamepad2YLastPressed = yPressed;
@@ -157,17 +179,4 @@ public class Clark15024TeleOp extends LinearOpMode {
         }
     }
 
-    //TODO: Do we need a way to reverse the spin of the intake??
-    public void intake() {
-        //servo for intake - x toggle on and off
-        boolean xPressed = gamepad2.x;
-        if (xPressed && !gamepad2XLastPressed) {
-            if (robot.intake.getPower() == -1) {
-                robot.intake.setPower(0);
-            } else {
-                robot.intake.setPower(-1);
-            }
-        }
-        gamepad2XLastPressed = xPressed;
-    }
 }

@@ -47,7 +47,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         waitForStart();
 
         // Step through each leg of the path,
-        robot.claw.setPosition(0);
+        robot.backClaw.setPosition(0);
         encoderDrive(DRIVE_SPEED,  20,  20, 5.0);       //Move toward submersible - Total distance to submersible is 25.5
         //move lift go forward, drop lift
         robot.LiftA.setPower(-1);
@@ -60,7 +60,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         robot.LiftA.setPower(1);
         robot.LiftB.setPower(1);
         sleep(600);
-        robot.claw.setPosition(0.5);
+        robot.backClaw.setPosition(0.5);
         //TODO: make this a function - move to get new piece
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse
 
@@ -80,8 +80,8 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         robot.LiftB.setPower(0);
         sleep(250);
 
-        //close claw
-        robot.claw.setPosition(0);
+        //close backClaw
+        robot.backClaw.setPosition(0);
         // reverse
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);
         //turn right
@@ -104,7 +104,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         robot.LiftA.setPower(1);
         robot.LiftB.setPower(1);
         sleep(600);
-        robot.claw.setPosition(0.5);
+        robot.backClaw.setPosition(0.5);
 
         //move back to observation zone
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse
@@ -123,7 +123,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
      * This function lifts the arm,
      * moves forward to the submersible,
      * lowers the arm
-     * opens the claw
+     * opens the backClaw
      * @param distance_to_submersible - how far to go forward once the lift goes up
      */
     public void deliver_specimen(double distance_to_submersible) {
@@ -132,7 +132,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         //encoderDrive(DRIVE_SPEED,  distance_to_submersible,  distance_to_submersible, 5.0);     // Move the rest of the way to the submersible
         encoderLift(DRIVE_SPEED*.1, 0.01, 0.4);                         // Drop arm
-        robot.claw.setPosition(0.5);                                                 //open claw
+        robot.backClaw.setPosition(0.5);                                                 //open backClaw
     }
 
     public void encoderLift(double speed,

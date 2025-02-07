@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 //Imports
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -25,15 +26,15 @@ public class Clark15024HWMap {
     public DcMotorEx ArmExtender = null;
     public DcMotorEx ArmRotator = null;
 
-    public CRServo intake = null;
-    public Servo claw = null;
-    public Servo bucketRotator = null;
+    public Servo clawRotate = null; // 0 c
+    public Servo frontClaw = null; // 0 e
+    public Servo backClaw = null; // 2 c
+    public Servo bucketRotator = null; // 1 c
 
+    public ColorSensor colorSensor;//i2c 2 e
     public SparkFunOTOS myOtos = null;
 
     //public SparkFunOTOS.Pose2D pos = null;
-
-
 
     HardwareMap hM = null;
     //Map function which we can use to assign values to the instance variables
@@ -57,9 +58,12 @@ public class Clark15024HWMap {
         myOtos = HWM.get(SparkFunOTOS.class, "SparkFun");
 
 
-        intake = HWM.get(CRServo.class, "intake");
-        claw = HWM.get(Servo.class, "claw");
+        clawRotate = HWM.get(Servo.class, "clawRotate");
+        backClaw = HWM.get(Servo.class, "backClaw");
+        frontClaw = HWM.get(Servo.class, "frontClaw");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
+
+        colorSensor = HWM.get(ColorSensor.class, "colorSensor");
 
         //setDirection function sets the direction of the wheels which it has to go. Some say forward and some say reverse because that is how you are also to move the robot back and forth
         driveLeftBack.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -98,11 +102,12 @@ public class Clark15024HWMap {
         ArmRotator.setDirection(DcMotorEx.Direction.REVERSE);
 
 
-        intake.setDirection(CRServo.Direction.FORWARD);
-
         bucketRotator.setDirection(Servo.Direction.FORWARD);
+        backClaw.setDirection(Servo.Direction.FORWARD);
+        frontClaw.setDirection(Servo.Direction.FORWARD);
+        clawRotate.setDirection(Servo.Direction.FORWARD);
 
-        claw.setDirection(Servo.Direction.FORWARD);
+
 
 
 

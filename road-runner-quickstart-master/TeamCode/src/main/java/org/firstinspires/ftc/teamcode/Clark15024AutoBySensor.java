@@ -49,7 +49,7 @@ public class Clark15024AutoBySensor extends LinearOpMode {
     //  Set the GAIN constants to control the relationship between the measured position error, and how much power is
     //  applied to the drive motors to correct the error.
     //  Drive = Error * Gain    Make these values smaller for smoother control, or larger for a more aggressive response.
-    final double SPEED_GAIN  =  0.03;   // 0.02 Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
+    final double SPEED_GAIN  =  0.1;   // 0.02 Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
     final double STRAFE_GAIN =  0.15;   // 0.015 Strafe Speed Control "Gain".  eg: Ramp up to 25% power at a 25 degree Yaw error.   (0.25 / 25.0)
     final double TURN_GAIN   =  0.03;   // 0.01 Turn Control "Gain".  eg: Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
 
@@ -58,15 +58,6 @@ public class Clark15024AutoBySensor extends LinearOpMode {
     final double MAX_AUTO_TURN  = 0.4;   //  Clip the turn speed to this max value (adjust for your robot)
 
     private ElapsedTime runtime = new ElapsedTime();
-
-    // Declare OpMode members for each of the 4 drive motors.
-    //private DcMotor leftFrontDrive = null;
-    //private DcMotor leftBackDrive = null;
-    //private DcMotor rightFrontDrive = null;
-    //private DcMotor rightBackDrive = null;
-
-    // Sensors
-    //private SparkFunOTOS myOtos;        // Optical tracking odometry sensor
     SparkFunOTOS.Pose2D pos;
     Clark15024HWMap robot = new Clark15024HWMap();
 
@@ -79,7 +70,7 @@ public class Clark15024AutoBySensor extends LinearOpMode {
 
         // All the configuration for the OTOS is done in this helper method, check it out!
         configureOtos();
-        sleep(1000);
+        sleep(100);
 
 
         while(!isStarted()) {
@@ -93,7 +84,7 @@ public class Clark15024AutoBySensor extends LinearOpMode {
         telemetry.addData("Status", "Running");
         telemetry.update();
 
-        otosDrive(5, 0, 0, 2);      // small move forward and right away from wall
+        otosDrive(0, 0, 8, 2);      // small move forward and right away from wall
         //otosDrive(18, 2, 0, 2);     // forward and push sample into net zone
         //otosDrive(0, 24, 0, 2);     // backup and move away from wall
         //otosDrive(-87, 24, 0, 4);   // backup straight
@@ -127,7 +118,7 @@ public class Clark15024AutoBySensor extends LinearOpMode {
         // clockwise (negative rotation) from the robot's orientation, the offset
         // would be {-5, 10, -90}. These can be any value, even the angle can be
         // tweaked slightly to compensate for imperfect mounting (eg. 1.3 degrees).
-        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(-3.75, -7.5, 90); // should be -3.75 & -7.5 and 90
+        SparkFunOTOS.Pose2D offset = new SparkFunOTOS.Pose2D(-3.75, -7.75, 90); // should be -3.75 & -7.5 and 90
         robot.myOtos.setOffset(offset);
 
         // Here we can set the linear and angular scalars, which can compensate for
