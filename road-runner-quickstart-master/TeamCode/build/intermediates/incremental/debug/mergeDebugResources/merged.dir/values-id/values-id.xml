@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="__arcore_cancel">Batal</string>
+    <string name="__arcore_continue">Lanjutkan</string>
+    <string name="__arcore_install_app">Aplikasi ini memerlukan versi terbaru Layanan Google Play untuk AR.</string>
+    <string name="__arcore_install_feature">Fitur ini memerlukan versi terbaru Layanan Google Play untuk AR.</string>
+    <string name="__arcore_installing">Menginstal Layanan Google Play untuk AR…</string>
+    <string name="zxing_app_name">Barcode Scanner</string>
+    <string name="zxing_button_ok">OK</string>
+    <string name="zxing_msg_camera_framework_bug">Maaf, kamera mengalami masalah. Anda mungkin perlu me-restart perangkat.</string>
+    <string name="zxing_msg_default_status">Letakkan barcode di dalam kotak jendela untuk memindai.</string>
+</resources>

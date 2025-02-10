@@ -1,0 +1,43 @@
+{
+    "logs": [
+        {
+            "outputFile": "org.firstinspires.ftc.teamcode.TeamCode-mergeDebugResources-21:/values-id/values-id.xml",
+            "map": [
+                {
+                    "source": "/Users/anudeepbonagiri/.gradle/caches/8.9/transforms/54327fc486dba706935927183821c8d8/transformed/zxing-android-embedded-4.3.0/res/values-id/values-id.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,114,161,293",
+                        "endColumns": "58,46,131,108",
+                        "endOffsets": "109,156,288,397"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,10",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "485,544,591,723",
+                        "endColumns": "58,46,131,108",
+                        "endOffsets": "539,586,718,827"
+                    }
+                },
+                {
+                    "source": "/Users/anudeepbonagiri/.gradle/caches/8.9/transforms/e983c5d766d3812b7d016d4ce4751ca9/transformed/core-1.46.0/res/values-id/values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "0,0,0,0,0",
+                        "startOffsets": "190,236,288,401,515",
+                        "endColumns": "45,51,112,113,84",
+                        "endOffsets": "235,287,400,514,599"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "55,105,161,278,396",
+                        "endColumns": "49,55,116,117,88",
+                        "endOffsets": "100,156,273,391,480"
+                    }
+                }
+            ]
+        }
+    ]
+}
