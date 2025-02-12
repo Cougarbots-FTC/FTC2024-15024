@@ -174,6 +174,7 @@ public class Clark15024TeleOp extends LinearOpMode {
         //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
         if (gamepad1.b) {
             robot.bucketRotator.setPosition(robot.bucketRotator.getPosition()-0.1);
+
         } else {
             robot.bucketRotator.setPosition(0.4);
         }

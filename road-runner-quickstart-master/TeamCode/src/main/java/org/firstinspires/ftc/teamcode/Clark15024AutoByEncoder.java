@@ -173,6 +173,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
                 telemetry.addData("Lift running to", " %7d :%7d", newLeftTarget, newRightTarget);
                 telemetry.addData("Currently at", " at %7d :%7d",
                         robot.LiftA.getCurrentPosition(), robot.LiftB.getCurrentPosition());
+                //telemetry.addData("Left Back: %f\nLeft Front: %f", robot.driveLeftBack.get)
                 telemetry.update();
 
             }
