@@ -65,7 +65,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         robot.backClaw.setPosition(0.5);
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse
 
-        /*
+
         //turn right
         encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
         //drive to observation zone
@@ -74,8 +74,8 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
         //move forward
         encoderDrive(DRIVE_SPEED, 5, 5,2);
-        */
-        encoderStrafe(DRIVE_SPEED, 30, 5.0);            //strafe to observation zone
+
+        //encoderStrafe(DRIVE_SPEED, 30, 5.0);            //strafe to observation zone
         encoderDrive(TURN_SPEED, 40, -40, 2.0);                      //turn around
 
         //lift

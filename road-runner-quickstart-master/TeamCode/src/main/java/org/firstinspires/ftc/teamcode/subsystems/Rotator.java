@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Rotator {
-    private static final double FORWARD_POSITION = 0.5;
-    private static final double BACK_POSITION = 0.0;
+    private static final double FORWARD_POSITION = 0.0;
+    private static final double BACK_POSITION = 0.5;
     private static Servo leftRotator;
     private static Servo rightRotator;
     private static Gamepad driver1;

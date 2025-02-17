@@ -1,22 +1,27 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Lift {
-
+    ElapsedTime runtime = new ElapsedTime();
     public final DcMotor LeftLift;
     public final DcMotor RightLift;
     private final HardwareMap hardwareMap;
     private final Gamepad Driver2;
     private final Gamepad Driver1;
     public final Telemetry telemetry;
+    private final LinearOpMode myOpMode;
     public Lift(OpMode opMode) {
+        myOpMode = (LinearOpMode)opMode;
         Driver2 = opMode.gamepad2;
         Driver1 = opMode.gamepad1;
         hardwareMap = opMode.hardwareMap;
@@ -79,5 +84,20 @@ public class Lift {
     public void addTelemetry(OpMode opMode) {
         opMode.telemetry.addData("Lift Position", liftPosition());
         opMode.telemetry.update();
+    }
+
+    public void HighRung() {
+        LeftLift.setPower(-1);
+        RightLift.setPower(-1);
+        myOpMode.sleep(400);
+        LeftLift.setPower(0);
+        RightLift.setPower(0);
+    }
+    public void Reset() {
+        LeftLift.setPower(1);
+        RightLift.setPower(1);
+        myOpMode.sleep(410);
+        LeftLift.setPower(0);
+        RightLift.setPower(0);
     }
 }
