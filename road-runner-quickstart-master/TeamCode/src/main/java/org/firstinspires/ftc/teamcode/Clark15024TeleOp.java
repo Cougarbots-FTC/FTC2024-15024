@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 public class Clark15024TeleOp extends LinearOpMode {
     //Initialized Hardware map instance variable assigned to "robot"
     Clark15024HWMap robot = new Clark15024HWMap();
-    private PIDFAttempt2 pidfArm;
+    //private PIDFAttempt2 pidfArm;
     Boolean gamepad2ALastPressed = false;
     Boolean gamepad2BLastPressed = false;
     Boolean gamepad2XLastPressed = false;
@@ -24,15 +24,6 @@ public class Clark15024TeleOp extends LinearOpMode {
     @Override
     public void runOpMode(){
         robot.Map(hardwareMap);
-
-        //robot.ArmRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        telemetry.addData("Say", "Starting 15024 TeleOp using PIDF");
-        telemetry.addData("Arm Position: ", robot.ArmRotator.getCurrentPosition());
-        telemetry.update();
-
-        //TODO check the new position of the arm
-        pidfArm = new PIDFAttempt2(robot.ArmRotator,0.007,0,0.0005,0.12,0, 2100);
 
         //Waits for the button to start on the driver hub to be pressed
         waitForStart();
@@ -45,17 +36,10 @@ public class Clark15024TeleOp extends LinearOpMode {
 
             driveTrain(slow);
             lift(slow);
-            armExtender(slow);
-            armRotator(slow);
+            armRotatorFunctionality();
             backClawFunctionality();
+            frontClawFunctionality();
             delivery();
-            clawRotatorFunctionality();
-            frontCclawFunctionality();
-
-            // Telemetry for debugging
-            telemetry.addData("Target Position", pidfArm.getSetpoint());
-            telemetry.addData("Current Position", robot.ArmRotator.getCurrentPosition());
-            telemetry.update();
 
         }
     }
@@ -112,41 +96,21 @@ public class Clark15024TeleOp extends LinearOpMode {
             robot.LiftB.setPower(0);
         }
     }
-
-    public void armExtender(double slow) {
-        //ArmExtender on left y stick
-        double armExtenderPower = -gamepad2.left_stick_y * slow;
-        robot.ArmExtender.setPower(armExtenderPower);
-    }
-
-    //TODO fix the setpoint values for the pidf arm
-    public void armRotator(double slow) {
-        //ArmRotator on left x stick
-        double armRotatorPower = gamepad2.left_stick_x * slow;
-        //robot.ArmRotator.setPower(armRotatorPower);
-        //if (armRotatorPower != 0) {
-            robot.ArmRotator.setPower(armRotatorPower);
-        /*} else {
-            if (gamepad2.a) {
-                pidfArm.setSetpoint(0); // Set encoder position to 1000
-            } else if (gamepad2.b) {
-                pidfArm.setSetpoint(-550); // Set encoder position to 2000
-            }
-            pidfArm.loop();
-        }*/
-    }
-    public void clawRotatorFunctionality() {
+    //TODO - check positions
+    public void armRotatorFunctionality() {
         boolean aPressed = gamepad2.a;
         if (gamepad2.a && !gamepad2ALastPressed) {
-            if (robot.clawRotate.getPosition() == 0) {
-                robot.clawRotate.setPosition(0.5);
+            if (robot.leftArmRotator.getPosition() == 0) {
+                robot.leftArmRotator.setPosition(1);
+                robot.rightArmRotator.setPosition(0);
             } else {
-                robot.clawRotate.setPosition(0);
-            }
+                robot.leftArmRotator.setPosition(0);
+                robot.rightArmRotator.setPosition(1);            }
         }
         gamepad2ALastPressed = aPressed;
     }
-    public void frontCclawFunctionality() {
+    //TODO - check positions once programmed
+    public void frontClawFunctionality() {
         boolean bPressed = gamepad2.b;
         if (gamepad2.b && !gamepad2BLastPressed) {
             if (robot.frontClaw.getPosition() == 0) {
@@ -169,7 +133,7 @@ public class Clark15024TeleOp extends LinearOpMode {
         gamepad2YLastPressed = yPressed;
     }
 
-    //TODO: Check if the position values need to be updated
+    //TODO: Check if the position values need to be updated - check if this should be on gamepad1
     public void delivery() {
         //delivery bucket on B - on press roll forward to deliver, on release roll back to start position
         if (gamepad1.b) {

@@ -20,16 +20,15 @@ public class Clark15024HWMap {
     public DcMotor driveRightBack = null; //2 c
     public DcMotor driveLeftBack = null; // 0 c
 
-    public DcMotor LiftA = null; // 1 e
-    public DcMotor LiftB = null; // 0 e
+    public DcMotor LiftA = null; // 0 c
+    public DcMotor LiftB = null; // 1 c
 
-    public DcMotorEx ArmExtender = null; // 2 e
-    public DcMotorEx ArmRotator = null;  // 3 e
-
-    public Servo clawRotate = null; // 0 c
-    public Servo frontClaw = null; // 0 e
     public Servo backClaw = null; // 2 c
     public Servo bucketRotator = null; // 1 c
+    public Servo frontClaw = null; // 0 e
+    public Servo frontClawRotator = null; //
+    public Servo leftArmRotator = null;
+    public Servo rightArmRotator = null;
 
     public ColorSensor colorSensor;//i2c 2 e
     public SparkFunOTOS myOtos = null; //i2c 0 c
@@ -50,45 +49,40 @@ public class Clark15024HWMap {
 
         LiftA = HWM.get(DcMotor.class, "LiftA");
         LiftB = HWM.get(DcMotor.class, "LiftB");
-        ArmExtender = HWM.get(DcMotorEx.class, "ArmExtender");
-        ArmRotator = HWM.get(DcMotorEx.class, "ArmRotator");
-
 
 
         myOtos = HWM.get(SparkFunOTOS.class, "SparkFun");
 
 
-        clawRotate = HWM.get(Servo.class, "clawRotate");
         backClaw = HWM.get(Servo.class, "backClaw");
         frontClaw = HWM.get(Servo.class, "frontClaw");
+        frontClawRotator = HWM.get(Servo.class, "frontClawRotator");
         bucketRotator = HWM.get(Servo.class, "bucketRotator");
+        rightArmRotator = HWM.get(Servo.class, "rightArmRotator");
+        leftArmRotator = HWM.get(Servo.class, "leftArmRotator");
 
         colorSensor = HWM.get(ColorSensor.class, "colorSensor");
 
         //setDirection function sets the direction of the wheels which it has to go. Some say forward and some say reverse because that is how you are also to move the robot back and forth
-        driveLeftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveLeftBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        driveLeftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveRightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveRightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
         //setZeroPowerBehavior function indicates to us that the power of the motor is at zero or not changing
         driveLeftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //setMode with Running without encoder means that the motor is on by the encoders on the motors are not activated yet
-        //driveLeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveLeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        driveLeftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         driveLeftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //driveLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveLeftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        driveRightBack.setDirection(DcMotorSimple.Direction.FORWARD);
         driveRightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //driveRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveRightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        driveRightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         driveRightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //driveRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //setMode with Running without encoder means that the motor is on by the encoders on the motors are not activated yet
+        driveLeftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveLeftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveRightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         driveRightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        LiftA.setDirection(DcMotorSimple.Direction.FORWARD);
+        LiftA.setDirection(DcMotorSimple.Direction.REVERSE);
         LiftA.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -96,22 +90,13 @@ public class Clark15024HWMap {
         LiftB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LiftB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        ArmExtender.setDirection(DcMotorSimple.Direction.FORWARD);
-        ArmExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        ArmRotator.setDirection(DcMotorEx.Direction.REVERSE);
-
-
         bucketRotator.setDirection(Servo.Direction.FORWARD);
         backClaw.setDirection(Servo.Direction.FORWARD);
+
         frontClaw.setDirection(Servo.Direction.FORWARD);
-        clawRotate.setDirection(Servo.Direction.FORWARD);
 
-
-
-
-
-
+        leftArmRotator.setDirection(Servo.Direction.FORWARD);
+        rightArmRotator.setDirection(Servo.Direction.REVERSE);
     }
 
 }

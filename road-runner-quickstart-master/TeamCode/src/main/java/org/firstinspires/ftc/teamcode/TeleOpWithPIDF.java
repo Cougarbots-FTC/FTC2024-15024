@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "Testing PIDF")
 public class TeleOpWithPIDF extends LinearOpMode {
-    private PIDFAttempt2 liftA;
-    private PIDFAttempt2 liftB;
+    //private PIDFAttempt2 liftA;
+    //private PIDFAttempt2 liftB;
     Clark15024HWMap robot = new Clark15024HWMap();
 
     @Override
@@ -19,17 +19,17 @@ public class TeleOpWithPIDF extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (gamepad1.a) {
-                liftA.setSetpoint(600); // Set encoder position to 1000
+                //liftA.setSetpoint(600); // Set encoder position to 1000
             } else if (gamepad1.b) {
-                liftA.setSetpoint(50); // Set encoder position to 2000
+                //liftA.setSetpoint(50); // Set encoder position to 2000
             }
 
             // Update the PID loop to adjust motor power
-            liftA.loop();
+            //liftA.loop();
 
             // Telemetry for debugging
-            telemetry.addData("Target Position", liftA.getSetpoint());
-            telemetry.addData("Current Position", liftA.getCurrentPosition());
+            //telemetry.addData("Target Position", liftA.getSetpoint());
+            //telemetry.addData("Current Position", liftA.getCurrentPosition());
             telemetry.update();
         }
     }

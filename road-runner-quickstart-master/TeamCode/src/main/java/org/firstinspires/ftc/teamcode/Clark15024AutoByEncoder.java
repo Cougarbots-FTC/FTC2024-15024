@@ -24,7 +24,9 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 3.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 1;
+
+    //TODO: is this speed okay?
+    static final double     DRIVE_SPEED             = 0.7;
     static final double     TURN_SPEED              = 0.5;
 
     static final double LIFT_GEAR_RATIO = 13.7;
@@ -59,11 +61,11 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, 4.21, 4.21, 2);
         robot.LiftA.setPower(1);
         robot.LiftB.setPower(1);
-        sleep(600);
+        sleep(625);
         robot.backClaw.setPosition(0.5);
-        //TODO: make this a function - move to get new piece
         encoderDrive(DRIVE_SPEED, -10, -10, 5.0);       //reverse
 
+        /*
         //turn right
         encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
         //drive to observation zone
@@ -72,6 +74,10 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, -20, 20, 5.0);
         //move forward
         encoderDrive(DRIVE_SPEED, 5, 5,2);
+        */
+        encoderStrafe(DRIVE_SPEED, 30, 5.0);            //strafe to observation zone
+        encoderDrive(TURN_SPEED, 40, -40, 2.0);                      //turn around
+
         //lift
         robot.LiftA.setPower(-1);
         robot.LiftB.setPower(-1);
@@ -227,7 +233,7 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.driveLeftFront.isBusy() && robot.driveRightFront.isBusy())) {
+                    (robot.driveLeftFront.isBusy() || robot.driveRightFront.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Running to", " %7d :%7d", newLeftTarget, newRightTarget);
@@ -252,4 +258,75 @@ public class Clark15024AutoByEncoder extends LinearOpMode {
         }
     }
 
+    /**
+     *
+     * @param speed
+     * @param strafeInches - positive number moves to the robot's right, negative numbers move to robot's left
+     * @param timeoutS
+     */
+    public void encoderStrafe(double speed,
+                             double strafeInches,
+                             double timeoutS) {
+        int newStrafeTarget;
+
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            newStrafeTarget = robot.driveLeftFront.getCurrentPosition() + (int) (strafeInches * COUNTS_PER_INCH);
+            robot.driveLeftFront.setTargetPosition(newStrafeTarget);
+            robot.driveLeftBack.setTargetPosition(newStrafeTarget);
+
+            if (strafeInches > 0) {
+                robot.driveRightFront.setTargetPosition(newStrafeTarget+16);
+                robot.driveRightBack.setTargetPosition(newStrafeTarget+16);
+            } else {
+                robot.driveRightFront.setTargetPosition(newStrafeTarget-16);
+                robot.driveRightBack.setTargetPosition(newStrafeTarget-16);
+            }
+
+            robot.driveLeftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.driveRightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.driveLeftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.driveRightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            if (strafeInches > 0) {
+                robot.driveLeftFront.setPower(-speed);
+                robot.driveLeftBack.setPower(-speed);
+                robot.driveRightFront.setPower(Math.abs(speed));
+                robot.driveRightBack.setPower(Math.abs(speed));
+            } else {
+                robot.driveLeftFront.setPower(Math.abs(speed));
+                robot.driveLeftBack.setPower(Math.abs(speed));
+                robot.driveRightFront.setPower(speed);
+                robot.driveRightBack.setPower(speed);
+            }
+
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.driveLeftFront.isBusy() || robot.driveRightFront.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Running to", " %7d :%7d", newStrafeTarget);
+                telemetry.addData("Currently at", " at %7d :%7d",
+                        robot.driveLeftFront.getCurrentPosition(), robot.driveRightFront.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            robot.driveLeftFront.setPower(0);
+            robot.driveRightFront.setPower(0);
+            robot.driveLeftBack.setPower(0);
+            robot.driveRightBack.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            robot.driveLeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.driveRightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.driveLeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.driveRightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            sleep(250);   // optional pause after each move.
+        }
+    }
 }
