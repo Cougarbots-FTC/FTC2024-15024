@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.R;
 
 public class Lift {
     ElapsedTime runtime = new ElapsedTime();
@@ -20,12 +21,14 @@ public class Lift {
     private final Gamepad Driver1;
     public final Telemetry telemetry;
     private final LinearOpMode myOpMode;
+    private final BackClaw backClaw;
     public Lift(OpMode opMode) {
         myOpMode = (LinearOpMode)opMode;
         Driver2 = opMode.gamepad2;
         Driver1 = opMode.gamepad1;
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
+        backClaw = new BackClaw(opMode);
 
         LeftLift = hardwareMap.get(DcMotor.class, "LiftA");
         LeftLift.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -89,14 +92,37 @@ public class Lift {
     public void HighRung() {
         LeftLift.setPower(-1);
         RightLift.setPower(-1);
-        myOpMode.sleep(400);
+        myOpMode.sleep(600);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }
-    public void Reset() {
+    //TODO: check to make sure the claw open functionality is working
+
+    /**
+     * This function will drop the lift half way then open the claw
+     */
+    public void ResetAndOpenClaw() {
         LeftLift.setPower(1);
         RightLift.setPower(1);
-        myOpMode.sleep(410);
+        myOpMode.sleep(250);
+        backClaw.setClawOpen();
+        myOpMode.sleep(250);
+        //myOpMode.sleep(360);
+        LeftLift.setPower(0);
+        RightLift.setPower(0);
+    }
+
+    public void liftSpecimen() {
+        LeftLift.setPower(-1);
+        RightLift.setPower(-1);
+        myOpMode.sleep(250);
+        LeftLift.setPower(0);
+        RightLift.setPower(0);
+    }
+    public void smallReset() {
+        LeftLift.setPower(1);
+        RightLift.setPower(1);
+        myOpMode.sleep(300);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }
