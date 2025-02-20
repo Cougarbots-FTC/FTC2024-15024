@@ -20,9 +20,12 @@ public class SpecimenAuto extends LinearOpMode{
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        //Pose2d beginPose = new Pose2d(12, 60, Math.toRadians(90));
+
         Pose2d beginPose = new Pose2d(0, 0, Math.toRadians(90));
         Pose2d WallIntake = new Pose2d(-36, -10, Math.toRadians(180)); // back claw facing wall
-        Pose2d Score1 = new Pose2d(1.5, -25.5, Math.toRadians(90));
+        Pose2d Score1 = new Pose2d(1.5, -10, Math.toRadians(90));
         Pose2d Score2 = new Pose2d(3.5, -25.5, Math.toRadians(180)); // done with specimen 2
         Pose2d Score3 = new Pose2d(3.5, 25.5, Math.toRadians(90)); // ready to score specimen 3
         Pose2d Score4 = new Pose2d(5, 25.5, Math.toRadians(90)); // ready to score specimen 4
@@ -61,21 +64,22 @@ public class SpecimenAuto extends LinearOpMode{
 
             ///move back
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(1.5, -25.5, Math.toRadians(90)))
-                            .lineToY(-25.5)
+                    drive.actionBuilder(new Pose2d(1.5, -29, Math.toRadians(90)))
+                            .lineToY(-20)
                             .build()
             );
+            lift.smallReset();
 
             /// Finished scoring specimen 1
             /// Push the three samples into the observation zone
             Actions.runBlocking(
                     drive.actionBuilder(Score1)     //1.5, -29, 90
-                            //.splineToLinearHeading(new Pose2d(-38,40,Math.toRadians(90)),Math.toRadians(270))
                             //TODO: check degrees should it be 180?
-                            .splineToLinearHeading(new Pose2d(-25,-60,Math.toRadians(90)),Math.toRadians(180))
-                            .strafeTo(new Vector2d(-36,10)) // push first sample to observation zone
-                            .lineToY(-60)
-                            .lineToX(-48) //move back to second sample
+
+                            .splineToLinearHeading(new Pose2d(-36, -60, Math.toRadians(180)), Math.toRadians(270))
+
+                            //.lineToY(-60)
+                            //.lineToX(-48) //move back to second sample
                             .strafeTo(new Vector2d(-48,10)) // push second sample into observation zone
                             .strafeTo(new Vector2d(-60, -53)) // move back to third sample
                             .lineToY(-10) // push third sample into observation zone

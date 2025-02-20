@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class BackClaw {
-    private static final double OPEN_POSITION = 0.5;
+    private static final double OPEN_POSITION = 1.0;
     private static final double CLOSED_POSITION = 0.0;
     private static Servo clawServo;
     private static Gamepad driver1;

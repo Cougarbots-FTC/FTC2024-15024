@@ -23,7 +23,11 @@ public class Lift {
     private final LinearOpMode myOpMode;
     private final BackClaw backClaw;
     public Lift(OpMode opMode) {
-        myOpMode = (LinearOpMode)opMode;
+        if (opMode instanceof LinearOpMode) {
+            myOpMode = (LinearOpMode) opMode;
+        } else {
+            myOpMode = null;
+        }
         Driver2 = opMode.gamepad2;
         Driver1 = opMode.gamepad1;
         hardwareMap = opMode.hardwareMap;
@@ -104,10 +108,10 @@ public class Lift {
     public void ResetAndOpenClaw() {
         LeftLift.setPower(1);
         RightLift.setPower(1);
-        myOpMode.sleep(250);
+        myOpMode.sleep(200);
         backClaw.setClawOpen();
-        myOpMode.sleep(250);
-        //myOpMode.sleep(360);
+        //myOpMode.sleep(600);
+        myOpMode.sleep(360);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }
@@ -115,7 +119,7 @@ public class Lift {
     public void liftSpecimen() {
         LeftLift.setPower(-1);
         RightLift.setPower(-1);
-        myOpMode.sleep(250);
+        myOpMode.sleep(50);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }

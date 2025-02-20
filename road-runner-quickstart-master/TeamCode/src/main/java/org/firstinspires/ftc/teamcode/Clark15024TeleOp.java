@@ -41,6 +41,7 @@ public class Clark15024TeleOp extends LinearOpMode {
             frontClawFunctionality();
             delivery();
 
+
         }
     }
 
@@ -98,6 +99,7 @@ public class Clark15024TeleOp extends LinearOpMode {
     }
     //TODO - check positions
     public void armRotatorFunctionality() {
+        /*
         boolean aPressed = gamepad2.a;
         if (gamepad2.a && !gamepad2ALastPressed) {
             if (robot.leftArmRotator.getPosition() == 0) {
@@ -108,6 +110,8 @@ public class Clark15024TeleOp extends LinearOpMode {
                 robot.rightArmRotator.setPosition(1);            }
         }
         gamepad2ALastPressed = aPressed;
+
+         */
     }
     //TODO - check positions once programmed
     public void frontClawFunctionality() {

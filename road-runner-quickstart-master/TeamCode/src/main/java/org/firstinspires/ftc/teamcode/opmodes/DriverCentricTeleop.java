@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.subsystems.*;
 
@@ -15,6 +16,9 @@ public class DriverCentricTeleop extends OpMode {
     private DriverCentricDrive driverCentricDrive;
     private Rotator rotator;
     private Wrist wrist;
+    private Color_Sensor colorSensor;
+
+    private final String ALLIANCE_COLOR = "Blue";
 
     @Override
     public void init() {
@@ -25,6 +29,7 @@ public class DriverCentricTeleop extends OpMode {
         lift = new Lift(this);
         rotator = new Rotator(this);
         wrist = new Wrist(this);
+        colorSensor = new Color_Sensor(this);
 
     }
 
@@ -36,9 +41,13 @@ public class DriverCentricTeleop extends OpMode {
         backClaw.teleOp();
         deliveryBucket.teleOp();
         frontClaw.teleOp();
+        frontClaw.addTelemetry(this);
         lift.teleop();
-        lift.addTelemetry(this);
         rotator.teleOp();
         wrist.teleOp();
+        colorSensor.teleOp(ALLIANCE_COLOR);
+        colorSensor.addTelemetry(this);
+
+
     }
 }
