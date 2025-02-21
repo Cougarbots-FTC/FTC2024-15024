@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class DriverCentricDrive {
     private final DcMotor leftFront,leftBack,rightFront,rightBack;
     private final Gamepad Driver1;
-    double speed = 0.85;
+    double speed = 1;
     public DriverCentricDrive(OpMode opMode) {
         Driver1 = opMode.gamepad1;
         HardwareMap hardwareMap = opMode.hardwareMap;

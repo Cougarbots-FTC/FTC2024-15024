@@ -22,7 +22,7 @@ public class Rotator {
         driver2 = opMode.gamepad2;
         leftRotator = opMode.hardwareMap.get(Servo.class, "leftArmRotator");
         rightRotator = opMode.hardwareMap.get(Servo.class, "rightArmRotator");
-        leftRotator.setDirection(Servo.Direction.REVERSE);
+        leftRotator.setDirection(Servo.Direction.FORWARD);
         rightRotator.setDirection(Servo.Direction.REVERSE);
         leftRotator.setPosition(BACK_POSITION); // Start with the arm back
         rightRotator.setPosition(BACK_POSITION);
@@ -63,7 +63,7 @@ public class Rotator {
         return isRotatorForward;
     }
     public void addTelemetry(OpMode opMode) {
-        opMode.telemetry.addData("Arm Rotator State", isRotatorForward ? "Open" : "Closed");
+        opMode.telemetry.addData("Arm Rotator State", isRotatorForward ? "Up" : "Down");
         opMode.telemetry.addData("Arm Rotator Position", leftRotator.getPosition() + ", " + rightRotator.getPosition());
         opMode.telemetry.update();
     }

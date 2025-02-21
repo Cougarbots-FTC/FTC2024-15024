@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import static java.lang.Thread.sleep;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.subsystems.*;
 
 
-@TeleOp (name = "DriverCentricTeleOp - NEW")
-public class DriverCentricTeleop extends OpMode {
+@TeleOp (name = "DriverCentricTeleOp - RED")
+public class DriverCentricTeleopRed extends OpMode {
     private BackClaw backClaw;
     private DeliveryBucket deliveryBucket;
     private FrontClaw frontClaw;
@@ -18,7 +19,7 @@ public class DriverCentricTeleop extends OpMode {
     private Wrist wrist;
     private Color_Sensor colorSensor;
 
-    private final String ALLIANCE_COLOR = "Blue";
+    private final String ALLIANCE_COLOR = "Red";
 
     @Override
     public void init() {
@@ -45,9 +46,24 @@ public class DriverCentricTeleop extends OpMode {
         lift.teleop();
         rotator.teleOp();
         wrist.teleOp();
-        colorSensor.teleOp(ALLIANCE_COLOR);
         colorSensor.addTelemetry(this);
-
+        //colorSensor.addTelemetry(this);
+        detectColorAndOpen();
+        detectColorAndClose();
 
     }
+
+    public void detectColorAndOpen() {
+        if (gamepad2.b && colorSensor.getColorDetected().equals(ALLIANCE_COLOR)) {// && !frontClaw.isOpen()) {
+            //sleep(2000);
+            frontClaw.setClawOpen();
+        }
+    }
+
+    public void detectColorAndClose() {
+        if (!gamepad2.b && colorSensor.getColorDetected().equals(ALLIANCE_COLOR)) {
+            frontClaw.setClawClosed();
+        }
+    }
+
 }

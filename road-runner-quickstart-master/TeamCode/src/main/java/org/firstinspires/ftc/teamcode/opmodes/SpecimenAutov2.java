@@ -19,8 +19,8 @@ public class SpecimenAutov2 extends LinearOpMode{
     public void runOpMode() throws InterruptedException {
 
         Pose2d beginPose = new Pose2d(-12, 58, Math.toRadians(90));
-        Pose2d WallIntake = new Pose2d(-47, 56.5, Math.toRadians(90));
-        Vector2d WallIntakeV = new Vector2d(-47, 56.5);
+        Pose2d WallIntake = new Pose2d(-47, 55.5, Math.toRadians(90));
+        Vector2d WallIntakeV = new Vector2d(-47, 55.5);
         Pose2d Score = new Pose2d(-1.5, 33, Math.toRadians(90));
         Vector2d ScoreV = new Vector2d(-1.5, 33);
         /*
@@ -78,7 +78,7 @@ public class SpecimenAutov2 extends LinearOpMode{
                             .strafeTo(new Vector2d(-46,53))
                             .strafeTo(new Vector2d(-46,10))
                             .strafeTo(new Vector2d(-55,10))
-                            .strafeTo(new Vector2d(-55,52))
+                            .strafeTo(new Vector2d(-55,51))
                             //.strafeTo(new Vector2d(-57,10))
                             //.strafeTo(new Vector2d(-60.5,10))
                             //.strafeTo(new Vector2d(-60.5,56))
@@ -88,7 +88,7 @@ public class SpecimenAutov2 extends LinearOpMode{
             );
             ///Pick up specimen to score
             claw.setClawClosed();
-            sleep(300);
+            sleep(600);
             lift.liftSpecimen();
 
             Actions.runBlocking(

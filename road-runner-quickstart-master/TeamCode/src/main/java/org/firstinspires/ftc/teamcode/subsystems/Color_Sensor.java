@@ -10,11 +10,11 @@ import com.qualcomm.robotcore.hardware.SwitchableLight;
 public class Color_Sensor {
     private final NormalizedColorSensor colorSensor;
     private boolean isLightOn = false;
-    private FrontClaw claw;
+
+    private double REDTUNER = 0.5;
 
     public Color_Sensor(OpMode opMode) {
-        claw = new FrontClaw(opMode);
-        colorSensor = opMode.hardwareMap.get(NormalizedColorSensor.class, "color_sensor"); //i2c contol 0
+        colorSensor = opMode.hardwareMap.get(NormalizedColorSensor.class, "colorSensor"); //i2c contol 0
 
         // Check if the sensor has a controllable light and turn it off initially
         if (colorSensor instanceof SwitchableLight) {
@@ -22,12 +22,6 @@ public class Color_Sensor {
         }
         turnLightOn();
     }
-
-    public void teleOp(String color) {
-       /* if (getColorDetected().equals(color)){// && claw.isOpen()) {
-
-        }*/
-     }
 
     /**
      * Toggles the built-in light if the sensor supports it.
@@ -73,9 +67,9 @@ public class Color_Sensor {
      */
     public String getColorDetected() {
         NormalizedRGBA colors = getColor();
-        if (colors.blue > colors.red && colors.blue > colors.green) {
+        if (colors.blue > colors.red * REDTUNER && colors.blue > colors.green) {
             return "Blue";
-        } else if (colors.red > colors.blue && colors.red > colors.green) {
+        } else if (colors.red * REDTUNER > colors.blue && colors.red * REDTUNER > colors.green) {
             return "Red";
         } else {
             return "Neither";
