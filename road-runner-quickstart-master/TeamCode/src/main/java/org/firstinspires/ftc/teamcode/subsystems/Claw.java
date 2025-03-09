@@ -2,12 +2,11 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-public class FrontClaw {
+public class Claw {
     private static final double OPEN_POSITION = 1;
     private static final double CLOSED_POSITION = 0.0;
     private static Servo clawServo;
@@ -17,7 +16,7 @@ public class FrontClaw {
     private int debounceCounter = 0;
     private static final int DEBOUNCE_THRESHOLD = 30;
 
-    public FrontClaw(OpMode opMode) {
+    public Claw(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
         clawServo = opMode.hardwareMap.get(Servo.class, "frontClaw");

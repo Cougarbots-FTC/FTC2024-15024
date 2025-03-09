@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-public class Rotator {
+public class ClawRotator {
     private static final double FORWARD_POSITION = 1;
     private static final double BACK_POSITION = 0.0;
     private static Servo leftRotator;
@@ -17,7 +17,7 @@ public class Rotator {
     private int debounceCounter = 0;
     private static final int DEBOUNCE_THRESHOLD = 30;
 
-    public Rotator(OpMode opMode) {
+    public ClawRotator(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
         leftRotator = opMode.hardwareMap.get(Servo.class, "leftArmRotator");

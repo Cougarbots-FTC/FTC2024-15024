@@ -2,6 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/FtcRobotController-10.1/road-runner-quickstart" vcs="Git" />
   </component>
 </project>

@@ -21,7 +21,6 @@ public class Lift {
     private final Gamepad Driver1;
     public final Telemetry telemetry;
     private final LinearOpMode myOpMode;
-    private final BackClaw backClaw;
     public Lift(OpMode opMode) {
         if (opMode instanceof LinearOpMode) {
             myOpMode = (LinearOpMode) opMode;
@@ -32,7 +31,6 @@ public class Lift {
         Driver1 = opMode.gamepad1;
         hardwareMap = opMode.hardwareMap;
         telemetry = opMode.telemetry;
-        backClaw = new BackClaw(opMode);
 
         LeftLift = hardwareMap.get(DcMotor.class, "LiftA");
         LeftLift.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -93,41 +91,7 @@ public class Lift {
         opMode.telemetry.update();
     }
 
-    public void HighRung() {
-        LeftLift.setPower(1);
-        RightLift.setPower(1);
-        myOpMode.sleep(700);
-        LeftLift.setPower(0);
-        RightLift.setPower(0);
-    }
-    //TODO: check to make sure the claw open functionality is working
 
-    /**
-     * This function will drop the lift half way then open the claw
-     */
-    public void ResetAndOpenClaw() {
-        LeftLift.setPower(-1);
-        RightLift.setPower(-1);
-        myOpMode.sleep(200);
-        backClaw.setClawOpen();
-        //myOpMode.sleep(600);
-        myOpMode.sleep(400);
-        LeftLift.setPower(0);
-        RightLift.setPower(0);
-    }
 
-    public void liftSpecimen() {
-        LeftLift.setPower(1);
-        RightLift.setPower(1);
-        myOpMode.sleep(50);
-        LeftLift.setPower(0);
-        RightLift.setPower(0);
-    }
-    public void smallReset() {
-        LeftLift.setPower(-1);
-        RightLift.setPower(-1);
-        myOpMode.sleep(200);
-        LeftLift.setPower(0);
-        RightLift.setPower(0);
-    }
+
 }
