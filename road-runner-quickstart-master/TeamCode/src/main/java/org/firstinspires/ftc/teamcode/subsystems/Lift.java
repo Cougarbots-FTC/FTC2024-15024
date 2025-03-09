@@ -94,9 +94,9 @@ public class Lift {
     }
 
     public void HighRung() {
-        LeftLift.setPower(-1);
-        RightLift.setPower(-1);
-        myOpMode.sleep(600);
+        LeftLift.setPower(1);
+        RightLift.setPower(1);
+        myOpMode.sleep(700);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }
@@ -106,27 +106,27 @@ public class Lift {
      * This function will drop the lift half way then open the claw
      */
     public void ResetAndOpenClaw() {
-        LeftLift.setPower(1);
-        RightLift.setPower(1);
+        LeftLift.setPower(-1);
+        RightLift.setPower(-1);
         myOpMode.sleep(200);
         backClaw.setClawOpen();
         //myOpMode.sleep(600);
-        myOpMode.sleep(360);
+        myOpMode.sleep(400);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }
 
     public void liftSpecimen() {
-        LeftLift.setPower(-1);
-        RightLift.setPower(-1);
+        LeftLift.setPower(1);
+        RightLift.setPower(1);
         myOpMode.sleep(50);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }
     public void smallReset() {
-        LeftLift.setPower(1);
-        RightLift.setPower(1);
-        myOpMode.sleep(300);
+        LeftLift.setPower(-1);
+        RightLift.setPower(-1);
+        myOpMode.sleep(200);
         LeftLift.setPower(0);
         RightLift.setPower(0);
     }

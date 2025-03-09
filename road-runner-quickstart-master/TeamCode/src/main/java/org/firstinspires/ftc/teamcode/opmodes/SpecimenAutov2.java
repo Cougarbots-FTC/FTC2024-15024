@@ -11,24 +11,62 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.*;
 
+import java.util.Vector;
+
 @Config
 @Autonomous(name = "Specimen Auto V2", group = "auto")
 public class SpecimenAutov2 extends LinearOpMode{
 
     @Override
     public void runOpMode() throws InterruptedException {
+        Pose2d beginPose = new Pose2d(-12, 62.25, Math.toRadians(90));
+        Pose2d WallIntake = new Pose2d(-37, 48, Math.toRadians(90));
+        Pose2d Score1 = new Pose2d(1.5, 27.75, Math.toRadians(90));
+        Pose2d Score2 = new Pose2d(.5, 27.75, Math.toRadians(90));
+        Pose2d Score3 = new Pose2d(-1, 27.75, Math.toRadians(90));
+        Pose2d Score4 = new Pose2d(-4.5, 27.75, Math.toRadians(90));
+        Pose2d Score5 = new Pose2d(-6.25, 27.75, Math.toRadians(90));
 
+        MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
+        BackClaw claw = new BackClaw(this);
+
+        while (!opModeIsActive() && !isStopRequested()) {
+
+        }
+
+        waitForStart();
+
+        if (opModeIsActive()) {
+            // Preload
+            Actions.runBlocking(
+                    drive.actionBuilder(beginPose)
+                            .strafeTo(new Vector2d(1.5,27.75))
+                            .build()
+            );
+
+
+            Actions.runBlocking(
+                    drive.actionBuilder(Score1)
+                            .splineToLinearHeading(new Pose2d(-38,40,Math.toRadians(90)),Math.toRadians(270))
+                            .strafeTo(new Vector2d(-38,10))
+                            .strafeTo(new Vector2d(-52,10))
+                            .strafeTo(new Vector2d(-52,56))
+                            .strafeTo(new Vector2d(-52,10))
+                            .strafeTo(new Vector2d(-58,10))
+                            .strafeTo(new Vector2d(-58,56))
+                            .strafeTo(new Vector2d(-58,10))
+                            .strafeTo(new Vector2d(-66,10))
+                            .strafeTo(new Vector2d(-66,56))
+                            .strafeTo(new Vector2d(-37,47.75))
+                            .build());
+
+/*
         Pose2d beginPose = new Pose2d(-12, 58, Math.toRadians(90));
         Pose2d WallIntake = new Pose2d(-47, 55.5, Math.toRadians(90));
         Vector2d WallIntakeV = new Vector2d(-47, 55.5);
         Pose2d Score = new Pose2d(-1.5, 33, Math.toRadians(90));
         Vector2d ScoreV = new Vector2d(-1.5, 33);
-        /*
-        Pose2d Score2 = new Pose2d(.5, 27.75, Math.toRadians(90));
-        Pose2d Score3 = new Pose2d(-1, 27.75, Math.toRadians(90));
-        Pose2d Score4 = new Pose2d(-4.5, 27.75, Math.toRadians(90));
-        Pose2d Score5 = new Pose2d(-6.25, 27.75, Math.toRadians(90));
-        */
+
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         BackClaw claw = new BackClaw(this);
         Lift lift = new Lift(this);
@@ -43,13 +81,15 @@ public class SpecimenAutov2 extends LinearOpMode{
 
         if (opModeIsActive()) {
             /// Preload & move to submersible to score 1st specimen
+
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .strafeTo(ScoreV)
+                            //.splineTo(ScoreV, Math.toRadians(90))
+                            .strafeTo(new Vector2d(-1.5, 33))
                             .build()
             );
             lift.HighRung();
-            sleep(200);
+            sleep(600);
 
             ///move up to score
             Actions.runBlocking(
@@ -58,36 +98,37 @@ public class SpecimenAutov2 extends LinearOpMode{
                             .build()
             );
             lift.ResetAndOpenClaw();
-            //sleep(250); // can remove if action is moving smoothly
+            sleep(250); // can remove if action is moving smoothly
 
             ///move back
             Actions.runBlocking(
-                    drive.actionBuilder(new Pose2d(0, 29.75, Math.toRadians(90)))
+                    drive.actionBuilder(new Pose2d(-1.5, 29.75, Math.toRadians(90)))
                             //TODO: can this value be smaller to speed up?
                             .lineToY(33)
                             .build()
             );
             lift.smallReset();
-            claw.setClawOpen();
+            //claw.setClawOpen();
             /// Push two of the samples into the observation zone
-            Actions.runBlocking(
+           Actions.runBlocking(
                     drive.actionBuilder(new Pose2d(-1.5, 33, Math.toRadians(90)))
-                            .splineToSplineHeading(new Pose2d(-37,40,Math.toRadians(270)),Math.toRadians(270))
+                            .splineToSplineHeading(new Pose2d(-37,30,Math.toRadians(270)),Math.toRadians(270))
                             .lineToY(10)
-                            .strafeTo(new Vector2d(-46,10))
-                            .strafeTo(new Vector2d(-46,53))
-                            .strafeTo(new Vector2d(-46,10))
-                            .strafeTo(new Vector2d(-55,10))
-                            .strafeTo(new Vector2d(-55,51))
-                            //.strafeTo(new Vector2d(-57,10))
+                            .strafeTo(new Vector2d(-48.5,10))
+                            .strafeTo(new Vector2d(-48.5, 45))
+                            .strafeTo(new Vector2d(-48.5,5))
+                            .strafeTo(new Vector2d(-57,5))
+                            .strafeTo(new Vector2d(-57,45))
                             //.strafeTo(new Vector2d(-60.5,10))
                             //.strafeTo(new Vector2d(-60.5,56))
-                            .strafeTo(new Vector2d(-47, 50))
-                            .strafeTo(WallIntakeV)
+                            //.strafeTo(new Vector2d(-47, 50))
+                            //.strafeTo(WallIntakeV)
                             .build()
             );
+
+/*
             ///Pick up specimen to score
-            claw.setClawClosed();
+/*            claw.setClawClosed();
             sleep(600);
             lift.liftSpecimen();
 
@@ -108,15 +149,15 @@ public class SpecimenAutov2 extends LinearOpMode{
             );
             lift.ResetAndOpenClaw();
 
-            /*
+
             Actions.runBlocking(
                     drive.actionBuilder(Score)
                             .splineToSplineHeading(WallIntake, Math.toRadians(270))
                             .build()
             );
-            */
 
 
+*/
         }
     }
 }
