@@ -2,15 +2,15 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 @Config
 public class ClawRotator {
     private static final double FORWARD_POSITION = 1;
     private static final double BACK_POSITION = 0.0;
-    private static Servo leftRotator;
-    private static Servo rightRotator;
+    private static CRServo rotator;
     private static Gamepad driver1;
     private static Gamepad driver2;
     public static boolean isRotatorForward = false;
@@ -20,51 +20,32 @@ public class ClawRotator {
     public ClawRotator(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
-        leftRotator = opMode.hardwareMap.get(Servo.class, "leftArmRotator");
-        rightRotator = opMode.hardwareMap.get(Servo.class, "rightArmRotator");
-        leftRotator.setDirection(Servo.Direction.FORWARD);
-        rightRotator.setDirection(Servo.Direction.REVERSE);
-        leftRotator.setPosition(BACK_POSITION); // Start with the arm back
-        rightRotator.setPosition(BACK_POSITION);
+        rotator = opMode.hardwareMap.get(CRServo.class, "clawRotator");
+        rotator.setDirection(CRServo.Direction.FORWARD);
     }
 
     public void teleOp() {
-        handleToggle();
+        handleRotate();
     }
-    private void handleToggle() {
-        // Toggle claw when trigger is pressed
-        if (driver2.a) {
-            if (debounceCounter > DEBOUNCE_THRESHOLD) {
-                toggleRotator();
-                debounceCounter = 0;
-            }
-        } else {
-            debounceCounter++;
-        }
-    }
-    private void toggleRotator() {
-        if (isRotatorForward) {
-            setRotatorBack();
-        } else {
-            setRotatorForward();
-        }
+    private void handleRotate() {
+        // rotate claw left/right on driver2 right stick
+       double power = driver2.right_stick_x;
+       rotator.setPower(power);
     }
     public void setRotatorBack() {
-        leftRotator.setPosition(FORWARD_POSITION);
-        rightRotator.setPosition(FORWARD_POSITION);
+        rotator.setPower(-1);
         isRotatorForward = false;
     }
     public void setRotatorForward() {
-        leftRotator.setPosition(BACK_POSITION);
-        rightRotator.setPosition(BACK_POSITION);
+        rotator.setPower(1);
         isRotatorForward = true;
     }
     public boolean isIsRotatorForward() {
         return isRotatorForward;
     }
     public void addTelemetry(OpMode opMode) {
-        opMode.telemetry.addData("Arm Rotator State", isRotatorForward ? "Up" : "Down");
-        opMode.telemetry.addData("Arm Rotator Position", leftRotator.getPosition() + ", " + rightRotator.getPosition());
+        opMode.telemetry.addData("Claw Rotator State: ", isRotatorForward ? "Left" : "Right");
+        opMode.telemetry.addData("Claw Rotator Power: ", rotator.getPower());
         opMode.telemetry.update();
     }
 }

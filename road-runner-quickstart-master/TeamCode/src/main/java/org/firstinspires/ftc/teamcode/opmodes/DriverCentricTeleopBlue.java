@@ -10,9 +10,11 @@ import org.firstinspires.ftc.teamcode.subsystems.*;
 
 @TeleOp (name = "DriverCentricTeleOp - BLUE")
 public class DriverCentricTeleopBlue extends OpMode {
-    private Claw claw;
-    private Lift lift;
+
     private DriverCentricDrive driverCentricDrive;
+
+    private Lift lift;
+    private Claw claw;
     private ClawRotator clawRotator;
     private Wrist wrist;
     private Color_Sensor colorSensor;
