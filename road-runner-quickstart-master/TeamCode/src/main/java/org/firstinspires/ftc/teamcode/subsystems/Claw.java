@@ -30,7 +30,7 @@ public class Claw {
     }
     private void handleToggle() {
         // Toggle claw when trigger is pressed
-        if (driver2.b) {
+        if (driver2.y) {
             if (debounceCounter > DEBOUNCE_THRESHOLD) {
                 toggleClaw();
                 debounceCounter = 0;

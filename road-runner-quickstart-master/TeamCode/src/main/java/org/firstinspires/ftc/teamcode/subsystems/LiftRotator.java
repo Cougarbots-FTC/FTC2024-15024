@@ -20,9 +20,11 @@ public class LiftRotator {
         liftRotator = hardwareMap.get(DcMotor.class, "liftRotator");
 
         liftRotator.setDirection(DcMotorSimple.Direction.FORWARD);
-        liftRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        liftRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void teleop() {
@@ -31,11 +33,21 @@ public class LiftRotator {
         } else if (Driver2.right_trigger > 0.1) {
             moveByTicks(-150);
         }
+
+        if (Driver2.a) {
+            liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            liftRotator.setTargetPosition(0);
+        } else if (Driver2.b) {
+            liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //TODO: Check position values
+            liftRotator.setTargetPosition(300);
+        }
+
     }
 
     public void  moveByTicks(int ticks) {
-        // Calculate new target posistion by adding ticks
-        int newTarget = liftRotator.getCurrentPosition() + ticks;
+        // Calculate new target position by adding ticks
+        int newTarget = liftRotatorPosition() + ticks;
         liftRotator.setTargetPosition(newTarget);
         liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRotator.setPower(1);
@@ -45,10 +57,10 @@ public class LiftRotator {
         liftRotator.setPower(0);
     }
 
-    public double liftRotatorPosition () { return liftRotator.getCurrentPosition(); }
+    public int liftRotatorPosition () { return liftRotator.getCurrentPosition(); }
 
     public void addTelemetry (OpMode opMode) {
-        opMode.telemetry.addData("Rotator Position: ", liftRotator.getCurrentPosition());
+        opMode.telemetry.addData("Rotator Position: ", liftRotatorPosition());
         opMode.telemetry.update();
     }
 }

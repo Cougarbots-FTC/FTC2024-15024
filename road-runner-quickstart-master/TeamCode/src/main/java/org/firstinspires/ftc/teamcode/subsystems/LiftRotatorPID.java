@@ -33,6 +33,10 @@ public class LiftRotatorPID {
         driver2 = opMode.gamepad2;
 
         liftRotator = hardwareMap.get(DcMotor.class, "liftRotator");
+        liftRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         controller = new PIDController(p, i, d);
     }
 

@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.CRServo;
 
@@ -25,6 +24,7 @@ public class ClawRotator {
     }
 
     public void teleOp() {
+
         handleRotate();
     }
     private void handleRotate() {
@@ -44,7 +44,7 @@ public class ClawRotator {
         return isRotatorForward;
     }
     public void addTelemetry(OpMode opMode) {
-        opMode.telemetry.addData("Claw Rotator State: ", isRotatorForward ? "Left" : "Right");
+        opMode.telemetry.addData("Claw Rotator State: ", isRotatorForward ? "Forward" : "Back");
         opMode.telemetry.addData("Claw Rotator Power: ", rotator.getPower());
         opMode.telemetry.update();
     }

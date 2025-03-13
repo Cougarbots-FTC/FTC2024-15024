@@ -12,8 +12,9 @@ import org.firstinspires.ftc.teamcode.subsystems.*;
 public class DriverCentricTeleopBlue extends OpMode {
 
     private DriverCentricDrive driverCentricDrive;
-
     private Lift lift;
+    private LiftRotator liftRotator;
+    //private LiftRotatorPID liftRotator;
     private Claw claw;
     private ClawRotator clawRotator;
     private Wrist wrist;
@@ -26,6 +27,8 @@ public class DriverCentricTeleopBlue extends OpMode {
         driverCentricDrive = new DriverCentricDrive(this);
         claw = new Claw(this);
         lift = new Lift(this);
+        liftRotator = new LiftRotator(this);
+        //liftRotator = new LiftRotatorPID(this);
         clawRotator = new ClawRotator(this);
         wrist = new Wrist(this);
         colorSensor = new Color_Sensor(this);
@@ -34,17 +37,16 @@ public class DriverCentricTeleopBlue extends OpMode {
 
     @Override
     public void loop() {
-        //TODO: reduce speed if lift if up or right
-
         driverCentricDrive.driverCentric();
         claw.teleOp();
-        claw.addTelemetry(this);
         lift.teleop();
+        liftRotator.teleop();
+        liftRotator.addTelemetry(this);
+        //liftRotator.loop();
         clawRotator.teleOp();
         wrist.teleOp();
-        colorSensor.addTelemetry(this);
-        detectColorAndOpen();
-        detectColorAndClose();
+        //detectColorAndOpen();
+        //detectColorAndClose();
 
     }
 
