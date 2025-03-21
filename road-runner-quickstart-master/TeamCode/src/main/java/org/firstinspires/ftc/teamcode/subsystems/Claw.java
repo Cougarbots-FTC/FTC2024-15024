@@ -3,30 +3,38 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 @Config
 public class Claw {
-    private static final double OPEN_POSITION = 1;
-    private static final double CLOSED_POSITION = 0.0;
-    private static Servo clawServo;
+    private static final double OPEN_POSITION = 0.0;
+    private static final double CLOSED_POSITION = 1;
+    private static CRServo clawServo;
     private static Gamepad driver1;
     private static Gamepad driver2;
-    public static boolean isClawOpen = true;
+    public static boolean isClawOpen = false;
     private int debounceCounter = 0;
     private static final int DEBOUNCE_THRESHOLD = 30;
 
     public Claw(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
-        clawServo = opMode.hardwareMap.get(Servo.class, "frontClaw");
-        clawServo.setDirection(Servo.Direction.FORWARD);
-        clawServo.setPosition(OPEN_POSITION); // Start with the claw open
+        clawServo = opMode.hardwareMap.get(CRServo.class, "claw");
+        clawServo.setDirection(CRServo.Direction.FORWARD);
+        //clawServo.setPosition(OPEN_POSITION); // Start with the claw open
 
     }
 
     public void teleOp() {
-        handleToggle();
+
+        if (driver2.y){
+            clawServo.setPower(1);
+        }
+        else if(driver2.b){
+            clawServo.setPower(-1);
+        } else {
+            clawServo.setPower(0);
+        }
     }
     private void handleToggle() {
         // Toggle claw when trigger is pressed
@@ -47,20 +55,20 @@ public class Claw {
         }
     }
     public void setClawClosed() {
-        clawServo.setPosition(CLOSED_POSITION);
+        //clawServo.setPosition(CLOSED_POSITION);
         isClawOpen = false;
 
     }
     public void setClawOpen() {
-        clawServo.setPosition(OPEN_POSITION);
+        //clawServo.setPosition(OPEN_POSITION);
 
     }
     public boolean isOpen() {
         return isClawOpen;
     }
     public void addTelemetry(OpMode opMode) {
-        opMode.telemetry.addData("Front Claw State", isClawOpen ? "Open" : "Closed");
-        opMode.telemetry.addData("Front Claw Position", clawServo.getPosition());
+        opMode.telemetry.addData("Claw State", isClawOpen ? "Open" : "Closed");
+        //opMode.telemetry.addData("Claw Position", clawServo.getPosition());
         opMode.telemetry.update();
     }
 }

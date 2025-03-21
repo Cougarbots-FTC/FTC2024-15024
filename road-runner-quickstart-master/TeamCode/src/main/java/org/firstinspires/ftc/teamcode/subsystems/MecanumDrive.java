@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import androidx.annotation.NonNull;
-
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -44,6 +43,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.Localizer;
+import org.firstinspires.ftc.teamcode.ThreeDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.*;
 
@@ -59,18 +59,18 @@ public final class MecanumDrive {
         // DONE: fill in these values based on
         //   see https://ftc-docs.firstinspires.org/en/latest/programming_resources/imu/imu.html?highlight=imu#physical-hub-mounting
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
         // drive model parameters
-        public double inPerTick = 0.000532011579373; // 40/75147.0; //v2 // 143.2/3898
-        public double lateralInPerTick = 0.0004665038398571372; //0.0004419817894804352;
-        public double trackWidthTicks = 20173.0618953087;  //21118.410615914137;
+        public double inPerTick = 0.0005350041314207926;
+        public double lateralInPerTick = 0.0004181503956078575; //0.0004419817894804352;
+        public double trackWidthTicks = 26762.79391840519;  //21118.410615914137;
 
         // feedforward parameters (in tick units)
-        public double kS = 0.9005280552786585;//0.9212287655709721;
-        public double kV = 0.00013717197518465374;//0.00013106971195187312;
+        public double kS = 1.0453883026387278;//0.9212287655709721;
+        public double kV = 0.00009032620640071854;//0.00013106971195187312;
         public double kA = 0.00002; //0.00001;
 
         // path profile parameters (in inches)
@@ -83,7 +83,7 @@ public final class MecanumDrive {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 3.0;
+        public double axialGain = 6.0;
         public double lateralGain = 8.0;
         public double headingGain = 3.0; // shared with turn
 
@@ -139,10 +139,8 @@ public final class MecanumDrive {
             imu = lazyImu.get();
 
             // DONE: reverse encoders if needed
-            leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
-            leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-            rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
-            rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+            leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+            rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
             this.pose = pose;
@@ -241,10 +239,10 @@ public final class MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // DONE: reverse motor directions if needed
-        leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // DONE: make sure your config has an IMU with this name (can be BNO or BHI)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html

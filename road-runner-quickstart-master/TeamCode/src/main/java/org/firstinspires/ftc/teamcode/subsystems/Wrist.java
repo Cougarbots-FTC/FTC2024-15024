@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Wrist {
     private static final double OPEN_POSITION = 1;
-    private static final double CLOSED_POSITION = 0.0;
-    private static CRServo wristServo;
+    private static final double CLOSED_POSITION = 0.5;
+    private static Servo wristServo;
     private static Gamepad driver1;
     private static Gamepad driver2;
     public static boolean isClawForward = false;
@@ -20,14 +20,14 @@ public class Wrist {
     public Wrist(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
-        wristServo = opMode.hardwareMap.get(CRServo.class, "wrist");
-        wristServo.setDirection(CRServo.Direction.FORWARD);
+        wristServo = opMode.hardwareMap.get(Servo.class, "wrist");
+        wristServo.setDirection(Servo.Direction.FORWARD);
         //wristServo.setPosition(CLOSED_POSITION); // Start with the claw closed
     }
 
     public void teleOp() {
-        double power = driver2.left_stick_x;
-        wristServo.setPower(power);
+        //double power = driver2.left_stick_x;
+        //wristServo.setPower(power);
         /*
         if (driver2.dpad_left) {
             wristServo.setPower(1);
@@ -37,11 +37,11 @@ public class Wrist {
             wristServo.setPower(0);
         }
         */
-        //handleToggle();
+        handleToggle();
     }
     private void handleToggle() {
         // Toggle claw when trigger is pressed
-        if (driver2.left_bumper) {
+        if (driver2.x) {
             if (debounceCounter > DEBOUNCE_THRESHOLD) {
                 toggleClaw();
                 debounceCounter = 0;

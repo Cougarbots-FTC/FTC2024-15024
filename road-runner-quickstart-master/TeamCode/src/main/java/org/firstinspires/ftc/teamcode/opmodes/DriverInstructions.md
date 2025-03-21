@@ -1,17 +1,23 @@
-**Driver1**
+**Driver 1**
 - left stick driving 
 - right stick turning 
 - left trigger raise lift 
 - right trigger lower lift
-- DPad up - raise lift to set position
-- DPad down - lower lift to bottom
+- A - raise lift to wall
+- B - raise lift to high rung
+- X - lower to deliver specimen
+- Y - Max extend demo for inspection
 
 
-**Driver2**
+**Driver 2**
 - left trigger rotate lift up 
 - right trigger rotate lift down 
-- A - Set rotator to top
-- B - Set Rotator to bottom
+- A - rotate to top and bottom
 - Y - open and close claw
-- left stick - left and right to move claw wrist
+- X - move claw wrist
 - right stick - left and right to move claw rotator forward and back
+
+
+Notes:
+When slide rotates forward, rotate arm forward and open claw
+When claw closes, rotate arm back up and rotate slides forward

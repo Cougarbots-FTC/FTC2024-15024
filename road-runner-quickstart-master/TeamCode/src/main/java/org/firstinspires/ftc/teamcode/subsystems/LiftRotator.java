@@ -23,8 +23,9 @@ public class LiftRotator {
 
         liftRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         liftRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 
     public void teleop() {
@@ -32,15 +33,16 @@ public class LiftRotator {
             moveByTicks(150);
         } else if (Driver2.right_trigger > 0.1) {
             moveByTicks(-150);
-        }
-
-        if (Driver2.a) {
-            liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        } /*else if (Driver2.a) {
             liftRotator.setTargetPosition(0);
-        } else if (Driver2.b) {
             liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            //TODO: Check position values
+            liftRotator.setPower(1);
+        } else if (Driver2.b) {
             liftRotator.setTargetPosition(300);
+            liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            liftRotator.setPower(1);
+        } */else {
+            Stop();
         }
 
     }
@@ -50,7 +52,7 @@ public class LiftRotator {
         int newTarget = liftRotatorPosition() + ticks;
         liftRotator.setTargetPosition(newTarget);
         liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftRotator.setPower(1);
+        liftRotator.setPower(0.25);
     }
 
     public void Stop() {

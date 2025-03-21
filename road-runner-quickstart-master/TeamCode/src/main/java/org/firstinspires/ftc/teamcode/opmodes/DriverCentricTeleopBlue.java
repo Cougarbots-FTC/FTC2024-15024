@@ -41,12 +41,17 @@ public class DriverCentricTeleopBlue extends OpMode {
         claw.teleOp();
         lift.teleop();
         liftRotator.teleop();
-        liftRotator.addTelemetry(this);
-        //liftRotator.loop();
         clawRotator.teleOp();
         wrist.teleOp();
+
+        lift.addTelemetry(this);
+
         //detectColorAndOpen();
         //detectColorAndClose();
+
+    }
+
+    public void armRotatorFunctionality() {
 
     }
 
