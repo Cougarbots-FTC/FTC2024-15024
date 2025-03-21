@@ -19,6 +19,7 @@ public class DriverCentricTeleopBlue extends OpMode {
     private ClawRotator clawRotator;
     private Wrist wrist;
     private Color_Sensor colorSensor;
+    private boolean liftForward = false;
 
     private final String ALLIANCE_COLOR = "Blue";
 
@@ -39,7 +40,7 @@ public class DriverCentricTeleopBlue extends OpMode {
     public void loop() {
         driverCentricDrive.driverCentric();
         claw.teleOp();
-        lift.teleop();
+        lift.teleop(liftForward);
         liftRotator.teleop();
         clawRotator.teleOp();
         wrist.teleOp();

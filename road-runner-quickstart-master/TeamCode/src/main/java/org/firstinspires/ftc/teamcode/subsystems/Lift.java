@@ -52,14 +52,16 @@ public class Lift {
 */
     }
 
-    public void teleop() {
+    public void teleop(boolean liftForward) {
 
         double slow = (Driver1.right_bumper ? 0.5 : 1.0);
         double liftPowerUp = Driver1.left_trigger * slow;
         double liftPowerDown = Driver1.right_trigger * slow;
 
-
-        if (Driver1.left_trigger > 0.1) {
+        //lift can only extend if the trigger is pressed
+        //if the lift is forward, the lift must be lest than the horizontal max
+        if (Driver1.left_trigger > 0.1 &&
+                (!liftForward || leftLiftPosition() < MAX_EXTEND) ) {
             LeftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             RightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             LeftLift.setPower(liftPowerUp);
