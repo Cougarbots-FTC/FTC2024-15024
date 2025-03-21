@@ -45,7 +45,9 @@ public class DriverCentricTeleopBlue extends OpMode {
         clawRotator.teleOp();
         wrist.teleOp();
 
-        lift.addTelemetry(this);
+        liftRotator.addTelemetry(this);
+
+        liftForward = liftRotator.liftForward();
 
         //detectColorAndOpen();
         //detectColorAndClose();
@@ -59,13 +61,13 @@ public class DriverCentricTeleopBlue extends OpMode {
     public void detectColorAndOpen() {
         if (gamepad2.b && colorSensor.getColorDetected().equals(ALLIANCE_COLOR)) {// && !frontClaw.isOpen()) {
             //sleep(2000);
-            claw.setClawOpen();
+            //claw.setClawOpen(this);
         }
     }
 
     public void detectColorAndClose() {
         if (!gamepad2.b && colorSensor.getColorDetected().equals(ALLIANCE_COLOR)) {
-            claw.setClawClosed();
+            //claw.setClawClosed(this);
         }
     }
 

@@ -20,7 +20,8 @@ public class Lift {
     private final Gamepad Driver2;
     private final Gamepad Driver1;
     public final Telemetry telemetry;
-    public final Integer HIGH_BASKET = 2080;
+    public final Integer HIGH_CHAMBER = 2080;
+    //TODO: Check wall position
     public final Integer WALL_POSITION = 300;
     public final Integer MAX_EXTEND = 1500;
     public Lift(OpMode opMode) {
@@ -78,7 +79,7 @@ public class Lift {
         } else if (Driver1.a) {
             moveToWall();
         } else if (Driver1.x) {
-            smallReset();
+            resetLift();
         } else if (Driver1.y) {
             maxExtend();
         }else {
@@ -102,18 +103,16 @@ public class Lift {
     }
 
     public void moveHighRung() {
-        LeftLift.setTargetPosition(HIGH_BASKET);
-        RightLift.setTargetPosition(HIGH_BASKET);
+        LeftLift.setTargetPosition(HIGH_CHAMBER);
+        RightLift.setTargetPosition(HIGH_CHAMBER);
 
         LeftLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RightLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         setPower(1.0);
 
-        while (leftLiftPosition() < HIGH_BASKET) {
-            //opMode.telemetry.addData("Left Target Position", LeftLift.getTargetPosition());
-            //addTelemetry(opMode);
-        }
+        while (leftLiftPosition() < HIGH_CHAMBER) { }
+        //TODO: make the motor stronger to hold high???
         setPower(0.2);
     }
     public void moveToWall() {
@@ -125,26 +124,20 @@ public class Lift {
 
         setPower(1);
 
-        while (leftLiftPosition() < WALL_POSITION) {
-            //opMode.telemetry.addData("Left Target Position", LeftLift.getTargetPosition());
-            //addTelemetry(opMode);
-        }
+        while (leftLiftPosition() < WALL_POSITION) {}
         setPower(0.2);
     }
-    public void smallReset() {
-        LeftLift.setTargetPosition(WALL_POSITION);
-        RightLift.setTargetPosition(WALL_POSITION);
+    public void resetLift() {
+        LeftLift.setTargetPosition(0);
+        RightLift.setTargetPosition(0);
 
         LeftLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RightLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         setPower(1);
 
-        while (leftLiftPosition() > WALL_POSITION) {
-            //opMode.telemetry.addData("Left Target Position", LeftLift.getTargetPosition());
-            //addTelemetry(opMode);
-        }
-        setPower(0.2);
+        while (leftLiftPosition() > 50) {}
+        Stop();
     }
 
     public void maxExtend() {
@@ -156,10 +149,7 @@ public class Lift {
 
         setPower(1.0);
 
-        while (leftLiftPosition() <= MAX_EXTEND) {
-            //opMode.telemetry.addData("Left Target Position", LeftLift.getTargetPosition());
-            //addTelemetry(opMode);
-        }
+        while (leftLiftPosition() <= MAX_EXTEND) {}
         Stop();
     }
 
@@ -181,8 +171,4 @@ public class Lift {
         opMode.telemetry.addData("Slide Power", LeftLift.getPower());
         opMode.telemetry.update();
     }
-
-
-
-
 }

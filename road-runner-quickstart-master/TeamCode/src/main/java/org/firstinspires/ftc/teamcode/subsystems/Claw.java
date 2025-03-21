@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -49,19 +50,29 @@ public class Claw {
     }
     private void toggleClaw() {
         if (isClawOpen) {
-            setClawClosed();
+            //setClawClosed();
         } else {
-            setClawOpen();
+            //setClawOpen();
         }
     }
-    public void setClawClosed() {
+    //TODO: check the sleep times
+    public void setClawClosed(LinearOpMode opMode) {
         //clawServo.setPosition(CLOSED_POSITION);
+        clawServo.setPower(-1);
+        opMode.sleep(1);
+        Stop();
         isClawOpen = false;
-
     }
-    public void setClawOpen() {
+    public void setClawOpen(LinearOpMode opMode) {
         //clawServo.setPosition(OPEN_POSITION);
+        clawServo.setPower(1);
+        opMode.sleep(200);
+        Stop();
+        isClawOpen = true;
+    }
 
+    public void Stop() {
+        clawServo.setPower(0);
     }
     public boolean isOpen() {
         return isClawOpen;

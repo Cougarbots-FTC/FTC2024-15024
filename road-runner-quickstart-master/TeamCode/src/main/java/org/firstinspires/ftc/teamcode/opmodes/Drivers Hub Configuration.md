@@ -16,8 +16,8 @@
     - 2 - driveRightBack 
     - 3 - driveRightFront - encoder for par0
 - Servos
-  - 2 - clawRotator2
+  - 2 - clawRotator2 - removed
   - 3 - clawRotator1 
-  - 4 - wrist (CRServo)
+  - 4 - wrist (CRServo) - Not working
   - 5 - claw
 

@@ -11,6 +11,9 @@ public class LiftRotator {
     private final DcMotor liftRotator;
     private final Gamepad Driver1;
     private final Gamepad Driver2;
+    //TODO: Check this position
+    private final int FORWARD_POSITION = 300;
+    private final int BACK_POSITION = 0;
 
     public LiftRotator(OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -18,33 +21,34 @@ public class LiftRotator {
         Driver2 = opMode.gamepad2;
 
         liftRotator = hardwareMap.get(DcMotor.class, "liftRotator");
-
         liftRotator.setDirection(DcMotorSimple.Direction.FORWARD);
+        liftRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        liftRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //liftRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        liftRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
     public void teleop() {
+        double slow = (Driver2.right_bumper ? 0.5 : 1.0);
+        double rotatorPowerUp = Driver2.left_trigger * slow;
+        double rotatorPowerDown = -1 * Driver2.right_trigger * slow;
         if (Driver2.left_trigger > 0.1) {
-            moveByTicks(150);
+            liftRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            liftRotator.setPower(rotatorPowerUp);
+            //moveByTicks(150);
         } else if (Driver2.right_trigger > 0.1) {
-            moveByTicks(-150);
-        } /*else if (Driver2.a) {
-            liftRotator.setTargetPosition(0);
-            liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftRotator.setPower(1);
-        } else if (Driver2.b) {
-            liftRotator.setTargetPosition(300);
-            liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftRotator.setPower(1);
-        } */else {
+            liftRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            liftRotator.setPower(rotatorPowerDown);
+            //moveByTicks(-150);
+        } else if (Driver2.a) {
+            setLiftBack();
+        } else if (Driver2.x) {
+            setLiftForward();
+        } else {
             Stop();
         }
-
     }
 
     public void  moveByTicks(int ticks) {
@@ -59,10 +63,30 @@ public class LiftRotator {
         liftRotator.setPower(0);
     }
 
+    public void setLiftBack() {
+        liftRotator.setTargetPosition(BACK_POSITION);
+        liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftRotator.setPower(0.5);
+        //TODO: Check value
+        while (liftRotatorPosition() > 50) {}
+        liftRotator.setPower(0);
+    }
+    public void setLiftForward() {
+        liftRotator.setTargetPosition(FORWARD_POSITION);
+        liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftRotator.setPower(0.25);
+        //TODO: Check value
+        while (liftRotatorPosition() < FORWARD_POSITION) {}
+        liftRotator.setPower(0);
+    }
     public int liftRotatorPosition () { return liftRotator.getCurrentPosition(); }
 
+    public boolean liftForward() {
+        return liftRotatorPosition() >= FORWARD_POSITION; //TODO: check this
+    }
     public void addTelemetry (OpMode opMode) {
         opMode.telemetry.addData("Rotator Position: ", liftRotatorPosition());
+        opMode.telemetry.addData("Rotator Forward", liftForward());
         opMode.telemetry.update();
     }
 }
