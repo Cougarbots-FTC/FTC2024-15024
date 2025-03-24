@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -11,9 +10,12 @@ public class LiftRotator {
     private final DcMotor liftRotator;
     private final Gamepad Driver1;
     private final Gamepad Driver2;
-    //TODO: Check this position
-    private final int FORWARD_POSITION = 300;
+    private final int FORWARD_POSITION = 500;
     private final int BACK_POSITION = 0;
+
+    private int debounceCounter = 0;
+    private static final int DEBOUNCE_THRESHOLD = 15;
+
 
     public LiftRotator(OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -26,6 +28,8 @@ public class LiftRotator {
 
         //liftRotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        liftRotator.setPower(0.8);
 
 
     }
@@ -42,10 +46,8 @@ public class LiftRotator {
             liftRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             liftRotator.setPower(rotatorPowerDown);
             //moveByTicks(-150);
-        } else if (Driver2.a) {
-            setLiftBack();
         } else if (Driver2.x) {
-            setLiftForward();
+            handleToggle();
         } else {
             Stop();
         }
@@ -56,7 +58,7 @@ public class LiftRotator {
         int newTarget = liftRotatorPosition() + ticks;
         liftRotator.setTargetPosition(newTarget);
         liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftRotator.setPower(0.25);
+        liftRotator.setPower(0);
     }
 
     public void Stop() {
@@ -67,26 +69,44 @@ public class LiftRotator {
         liftRotator.setTargetPosition(BACK_POSITION);
         liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRotator.setPower(0.5);
-        //TODO: Check value
         while (liftRotatorPosition() > 50) {}
-        liftRotator.setPower(0);
+        liftRotator.setPower(0.25);
+    }
+    private void handleToggle() {
+        // Toggle claw when trigger is pressed
+        if (debounceCounter > DEBOUNCE_THRESHOLD) {
+                toggleLiftRotator();
+                debounceCounter = 0;
+        }
+        else {
+            debounceCounter++;
+        }
+    }
+
+    private void toggleLiftRotator(){
+        if (isLiftForward()) {
+            setLiftBack();
+        } else {
+            setLiftForward();
+        }
     }
     public void setLiftForward() {
         liftRotator.setTargetPosition(FORWARD_POSITION);
         liftRotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftRotator.setPower(0.25);
-        //TODO: Check value
         while (liftRotatorPosition() < FORWARD_POSITION) {}
         liftRotator.setPower(0);
     }
     public int liftRotatorPosition () { return liftRotator.getCurrentPosition(); }
 
-    public boolean liftForward() {
-        return liftRotatorPosition() >= FORWARD_POSITION; //TODO: check this
+    public boolean isLiftForward() {
+        return liftRotatorPosition() >= FORWARD_POSITION;
     }
     public void addTelemetry (OpMode opMode) {
         opMode.telemetry.addData("Rotator Position: ", liftRotatorPosition());
-        opMode.telemetry.addData("Rotator Forward", liftForward());
+        opMode.telemetry.addData("Rotator Forward", isLiftForward());
         opMode.telemetry.update();
     }
+
+
 }

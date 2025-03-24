@@ -21,9 +21,9 @@ public class Lift {
     private final Gamepad Driver1;
     public final Telemetry telemetry;
     public final Integer HIGH_CHAMBER = 2080;
-    //TODO: Check wall position
-    public final Integer WALL_POSITION = 300;
-    public final Integer MAX_EXTEND = 1500;
+    public final Integer HIGH_BASKET = 3500;
+    public final Integer WALL_POSITION = 550;
+    public final Integer MAX_EXTEND = 650; // can go up to 1500 if arm is not out
     public Lift(OpMode opMode) {
 
         Driver2 = opMode.gamepad2;
@@ -112,8 +112,7 @@ public class Lift {
         setPower(1.0);
 
         while (leftLiftPosition() < HIGH_CHAMBER) { }
-        //TODO: make the motor stronger to hold high???
-        setPower(0.2);
+        setPower(0.4);
     }
     public void moveToWall() {
         LeftLift.setTargetPosition(WALL_POSITION);
@@ -125,7 +124,7 @@ public class Lift {
         setPower(1);
 
         while (leftLiftPosition() < WALL_POSITION) {}
-        setPower(0.2);
+        setPower(0.4);
     }
     public void resetLift() {
         LeftLift.setTargetPosition(0);

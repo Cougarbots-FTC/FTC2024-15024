@@ -8,13 +8,16 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.subsystems.*;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.ClawRotator;
+import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.subsystems.LiftRotator;
+import org.firstinspires.ftc.teamcode.subsystems.MecanumDrive;
 
 @Config
-@Autonomous(name = "Specimen Auto", group = "auto")
-public class SpecimenAuto extends LinearOpMode{
+@Autonomous(name = "Sample Auto", group = "auto")
+public class SampleAuto extends LinearOpMode{
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,6 +28,7 @@ public class SpecimenAuto extends LinearOpMode{
         Pose2d Score3 = new Pose2d(-1, 27.75, Math.toRadians(90));
         Pose2d Score4 = new Pose2d(-4.5, 27.75, Math.toRadians(90));
         Pose2d Score5 = new Pose2d(-6.25, 27.75, Math.toRadians(90));
+        Pose2d targetPosition = new Pose2d(5, 36, Math.toRadians(90)); // Target position (5, 36)
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         Claw claw = new Claw(this);
@@ -37,6 +41,7 @@ public class SpecimenAuto extends LinearOpMode{
                 //.turn(Math.toRadians(270))
                 //.splineTo(new Vector2d(0,35.5), Math.toRadians(90))
                 .build();
+
         Action pushSamplesToObservation = drive.actionBuilder(Score1)
                 .splineToLinearHeading(new Pose2d(-34.5, 40, Math.toRadians(90)), Math.toRadians(270))
                 .strafeTo(new Vector2d(-34.5, 8))
@@ -45,9 +50,6 @@ public class SpecimenAuto extends LinearOpMode{
                 .strafeTo(new Vector2d(-44, 10))
                 .strafeTo(new Vector2d(-55, 10)) // move behind the second sample to push
                 .strafeTo(new Vector2d(-55, 52.5))
-                //.strafeTo(new Vector2d(-55, 10))
-                //.strafeTo(new Vector2d(-60, 10))
-                //.strafeTo(new Vector2d(-60, 52.5))
                 .strafeTo(new Vector2d(-36, 52.5))
                 .turn(Math.toRadians(-180))
                 .strafeTo(new Vector2d(-36, 58.75)) // move to pick up first specimen
@@ -93,25 +95,26 @@ public class SpecimenAuto extends LinearOpMode{
             sleep(200); // maybe ??? small lift
             lift.Stop();
 
-            //move back to submersible
+            // Move to the target position (5, 36)
             Actions.runBlocking(
-                    drive.actionBuilder(WallIntake)
-                            .splineToLinearHeading(Score2, Math.toRadians(270)) //I have no idea...😕
+                    drive.actionBuilder(Score2) // Starting from Score2 position
+                            .splineToLinearHeading(targetPosition, Math.toRadians(90)) // Move to (5, 36)
                             .build()
             );
 
+            // Additional code continues here...
             lift.moveHighRung();
             Actions.runBlocking(
-              drive.actionBuilder(Score2)
-                      .strafeTo(new Vector2d(0.5, 32)) //second score
-                      .build()
+                    drive.actionBuilder(Score2)
+                            .strafeTo(new Vector2d(0.5, 32)) //second score
+                            .build()
             );
             lift.resetLift();
             sleep(50);
             claw.setClawOpen(this);
 
             //TODO: keep going
-
         }
     }
+
 }

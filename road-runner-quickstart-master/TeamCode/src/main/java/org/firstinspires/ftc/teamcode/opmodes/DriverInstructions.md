@@ -5,17 +5,17 @@
 - right trigger lower lift
 - A - raise lift to wall
 - B - raise lift to high rung
-- X - lower to deliver specimen
-- Y - Max extend demo for inspection
+- X - reset
+- Y - raise to high basket
 
 
 **Driver 2**
-- left trigger rotate lift up 
-- right trigger rotate lift down 
+- left trigger -  rotate lift up (for full power, hold right bumper)
+- right trigger - rotate lift down 
 - A - rotate lift back
+- X - rotate lift forward
 - Y - open claw
 - B - close claw
-- X - rotate lift forward
 - right stick - left and right to move claw rotator forward and back
 
 

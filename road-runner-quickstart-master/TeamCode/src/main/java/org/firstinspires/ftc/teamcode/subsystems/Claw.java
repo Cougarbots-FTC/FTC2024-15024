@@ -59,8 +59,7 @@ public class Claw {
     public void setClawClosed(LinearOpMode opMode) {
         //clawServo.setPosition(CLOSED_POSITION);
         clawServo.setPower(-1);
-        opMode.sleep(1);
-        Stop();
+        //opMode.sleep(200);
         isClawOpen = false;
     }
     public void setClawOpen(LinearOpMode opMode) {
