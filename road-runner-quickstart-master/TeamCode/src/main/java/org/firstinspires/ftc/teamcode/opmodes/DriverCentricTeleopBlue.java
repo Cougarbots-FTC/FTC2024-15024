@@ -54,10 +54,6 @@ public class DriverCentricTeleopBlue extends OpMode {
 
     }
 
-    public void armRotatorFunctionality() {
-
-    }
-
     public void detectColorAndOpen() {
         if (gamepad2.b && colorSensor.getColorDetected().equals(ALLIANCE_COLOR)) {// && !frontClaw.isOpen()) {
             //sleep(2000);
