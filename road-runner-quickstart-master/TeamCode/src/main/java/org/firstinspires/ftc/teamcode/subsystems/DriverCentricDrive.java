@@ -13,10 +13,10 @@ public class DriverCentricDrive {
     public DriverCentricDrive(OpMode opMode) {
         Driver1 = opMode.gamepad1;
         HardwareMap hardwareMap = opMode.hardwareMap;
-        leftFront = hardwareMap.get(DcMotor.class, "driveLeftFront");       // e1
-        leftBack = hardwareMap.get(DcMotor.class, "driveLeftBack");         // e0
-        rightFront = hardwareMap.get(DcMotor.class, "driveRightFront");     // e3
-        rightBack = hardwareMap.get(DcMotor.class, "driveRightBack");       // e2
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");       // e1
+        leftBack = hardwareMap.get(DcMotor.class, "leftRear");         // e0
+        rightFront = hardwareMap.get(DcMotor.class, "rightFront");     // e3
+        rightBack = hardwareMap.get(DcMotor.class, "rightRear");       // e2
 
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
