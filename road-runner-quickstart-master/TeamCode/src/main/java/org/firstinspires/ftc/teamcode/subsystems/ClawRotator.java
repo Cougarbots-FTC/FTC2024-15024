@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ClawRotator {
     private static final double FORWARD_POSITION = 1;
     private static final double BACK_POSITION = 0.0;
-    private static Servo rotator1;
+    private static DcMotor rotator1;
     private static Gamepad driver1;
     private static Gamepad driver2;
     public static boolean isRotatorForward = false;
@@ -23,18 +23,20 @@ public class ClawRotator {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
 
-        rotator1 = opMode.hardwareMap.get(Servo.class, "clawRotator");
-        rotator1.setDirection(Servo.Direction.FORWARD);
+        rotator1 = opMode.hardwareMap.get(DcMotor.class, "clawRotator");
+        rotator1.setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void teleOp() {
 
-        handleRotate();
-        //double rotatorPower = driver2.right_stick_x * 0.75;
-        //rotator1.setPower(rotatorPower);
+        //handleRotate();
+        double rotatorPower = driver2.right_stick_x;
+        rotator1.setPower(rotatorPower);
     }
     private void handleRotate() {
         // rotate claw left/right on driver2 right stick
+
+        /*
         if (driver2.a) {
             if (debounceCounter > DEBOUNCE_THRESHOLD) {
                 toggleRotator();
@@ -42,7 +44,7 @@ public class ClawRotator {
             }
         } else {
             debounceCounter++;
-        }
+        }*/
     }
     private void toggleRotator() {
         if (isIsRotatorForward()) {
@@ -52,12 +54,12 @@ public class ClawRotator {
         }
     }
     public void setRotatorBack() {
-        rotator1.setPosition(0);
+        //rotator1.setPosition(0);
         //rotator1.setPower(1);
         isRotatorForward = false;
     }
     public void setRotatorForward() {
-        rotator1.setPosition(1);
+        //rotator1.setPosition(1);
         isRotatorForward = true;
     }
     public boolean isIsRotatorForward() {

@@ -54,7 +54,7 @@ public class SpecimenAuto extends LinearOpMode{
                 .build();
 
         while (!opModeIsActive() && !isStopRequested()) {
-            claw.setClawClosed(this);
+            claw.setClawClosed();
             lift.resetLift();
             liftRotator.setLiftBack();
         }
@@ -80,7 +80,7 @@ public class SpecimenAuto extends LinearOpMode{
             lift.setPower(-1);
             lift.resetLift();
             sleep(600);
-            claw.setClawOpen(this);
+            claw.setClawOpen();
             Actions.runBlocking(
                     new SequentialAction(
                             pushSamplesToObservation
@@ -88,7 +88,7 @@ public class SpecimenAuto extends LinearOpMode{
             );
 
             lift.moveToWall();
-            claw.setClawClosed(this);
+            claw.setClawClosed();
             lift.setPower(1);
             sleep(200); // maybe ??? small lift
             lift.Stop();
@@ -108,7 +108,7 @@ public class SpecimenAuto extends LinearOpMode{
             );
             lift.resetLift();
             sleep(50);
-            claw.setClawOpen(this);
+            claw.setClawOpen();
 
             //TODO: keep going
 

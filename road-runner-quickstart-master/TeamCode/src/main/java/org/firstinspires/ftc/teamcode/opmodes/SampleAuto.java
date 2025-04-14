@@ -56,7 +56,7 @@ public class SampleAuto extends LinearOpMode{
                 .build();
 
         while (!opModeIsActive() && !isStopRequested()) {
-            claw.setClawClosed(this);
+            //claw.setClawClosed(this);
             lift.resetLift();
             liftRotator.setLiftBack();
         }
@@ -82,7 +82,7 @@ public class SampleAuto extends LinearOpMode{
             lift.setPower(-1);
             lift.resetLift();
             sleep(600);
-            claw.setClawOpen(this);
+            //claw.setClawOpen(this);
             Actions.runBlocking(
                     new SequentialAction(
                             pushSamplesToObservation
@@ -90,7 +90,7 @@ public class SampleAuto extends LinearOpMode{
             );
 
             lift.moveToWall();
-            claw.setClawClosed(this);
+            //claw.setClawClosed(this);
             lift.setPower(1);
             sleep(200); // maybe ??? small lift
             lift.Stop();
@@ -111,7 +111,7 @@ public class SampleAuto extends LinearOpMode{
             );
             lift.resetLift();
             sleep(50);
-            claw.setClawOpen(this);
+            //claw.setClawOpen(this);
 
             //TODO: keep going
         }

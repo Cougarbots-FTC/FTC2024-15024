@@ -4,13 +4,13 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Claw {
     private static final double OPEN_POSITION = 0.0;
     private static final double CLOSED_POSITION = 1;
-    private static CRServo clawServo;
+    private static Servo clawServo;
     private static Gamepad driver1;
     private static Gamepad driver2;
     public static boolean isClawOpen = false;
@@ -20,22 +20,23 @@ public class Claw {
     public Claw(OpMode opMode) {
         driver1 = opMode.gamepad1;
         driver2 = opMode.gamepad2;
-        clawServo = opMode.hardwareMap.get(CRServo.class, "claw");
-        clawServo.setDirection(CRServo.Direction.FORWARD);
+        clawServo = opMode.hardwareMap.get(Servo.class, "claw");
+        clawServo.setDirection(Servo.Direction.FORWARD);
         //clawServo.setPosition(OPEN_POSITION); // Start with the claw open
 
     }
 
     public void teleOp() {
-
+        handleToggle();
+        /*
         if (driver2.y){
-            clawServo.setPower(1);
+            clawServo.setPosition(1);
         }
         else if(driver2.b){
-            clawServo.setPower(-1);
-        } else {
-            clawServo.setPower(0);
+            clawServo.setPosition(0);
         }
+
+         */
     }
     private void handleToggle() {
         // Toggle claw when trigger is pressed
@@ -50,29 +51,21 @@ public class Claw {
     }
     private void toggleClaw() {
         if (isClawOpen) {
-            //setClawClosed();
+            setClawClosed();
         } else {
-            //setClawOpen();
+            setClawOpen();
         }
     }
     //TODO: check the sleep times
-    public void setClawClosed(LinearOpMode opMode) {
-        //clawServo.setPosition(CLOSED_POSITION);
-        clawServo.setPower(-1);
-        //opMode.sleep(200);
+    public void setClawClosed() {
+        clawServo.setPosition(CLOSED_POSITION);
         isClawOpen = false;
     }
-    public void setClawOpen(LinearOpMode opMode) {
-        //clawServo.setPosition(OPEN_POSITION);
-        clawServo.setPower(1);
-        opMode.sleep(200);
-        Stop();
+    public void setClawOpen() {
+        clawServo.setPosition(OPEN_POSITION);
         isClawOpen = true;
     }
 
-    public void Stop() {
-        clawServo.setPower(0);
-    }
     public boolean isOpen() {
         return isClawOpen;
     }

@@ -31,7 +31,7 @@ public class LeftSideAuto extends LinearOpMode {
 
 
         while (!opModeIsActive() && !isStopRequested()) {
-            claw.setClawClosed(this);
+            claw.setClawClosed();
             lift.resetLift();
             liftRotator.setLiftBack();
         }
