@@ -47,9 +47,7 @@ public class MecanumDriveTest extends OpMode {
 
         // Mecanum drive is controlled with three axes: drive (front-and-back),
         // strafe (left-and-right), and twist (rotating the whole chassis).
-        double drive  = gamepad1.left_stick_y;
-        double strafe = gamepad1.left_stick_x;
-        double twist  = gamepad1.right_stick_x;
+
 
         /*
          * If we had a gyro and wanted to do field-oriented control, here
