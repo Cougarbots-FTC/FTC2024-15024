@@ -33,7 +33,6 @@ public class DriverCentricTeleopBlue extends OpMode {
         clawRotator = new ClawRotator(this);
         wrist = new Wrist(this);
         colorSensor = new Color_Sensor(this);
-
     }
 
     @Override
@@ -45,9 +44,9 @@ public class DriverCentricTeleopBlue extends OpMode {
         clawRotator.teleOp();
         wrist.teleOp();
 
-        lift.addTelemetry(this);
+        clawRotator.addTelemetry(this);
 
-        liftForward = liftRotator.isLiftForward();
+        //liftForward = liftRotator.isLiftForward();
 
         //detectColorAndOpen();
         //detectColorAndClose();

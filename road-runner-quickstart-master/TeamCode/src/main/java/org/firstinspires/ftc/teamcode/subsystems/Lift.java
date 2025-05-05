@@ -41,9 +41,9 @@ public class Lift {
 
         // Reset encoders to start at 0
         //RightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    //    RightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //LeftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    //    LeftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 /*
         LeftLift.setTargetPosition(0);
         RightLift.setTargetPosition(0);
@@ -61,6 +61,7 @@ public class Lift {
 
         //lift can only extend if the trigger is pressed
         //if the lift is forward, the lift must be lest than the horizontal max
+
         if (Driver1.left_trigger > 0.1 &&
                 (!liftForward || leftLiftPosition() < MAX_EXTEND) ) {
             LeftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -74,15 +75,23 @@ public class Lift {
             LeftLift.setPower(-1 * liftPowerDown);
             RightLift.setPower(-1 * liftPowerDown);
             //moveByTicks(-150);
-        } else if (Driver1.b) {
+        }  else if (Driver1.y) {
+            maxExtend();
+        }/*else if (Driver1.b) {
             moveHighRung();
         } else if (Driver1.a) {
             moveToWall();
         } else if (Driver1.x) {
             resetLift();
-        } else if (Driver1.y) {
-            maxExtend();
-        }else {
+        }
+
+        if (Driver1.right_trigger > 0.1) {
+
+        } else if (Driver1.left_trigger > 0.1) {
+
+        }
+         */
+        else {
             Stop();
         }
 

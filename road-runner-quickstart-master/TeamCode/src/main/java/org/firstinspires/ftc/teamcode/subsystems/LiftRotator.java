@@ -46,8 +46,8 @@ public class LiftRotator {
             liftRotator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             liftRotator.setPower(rotatorPowerDown);
             //moveByTicks(-150);
-        } else if (Driver2.x) {
-            handleToggle();
+        //} else if (Driver2.x) {
+            //handleToggle();
         } else {
             Stop();
         }

@@ -71,7 +71,7 @@ public class Claw {
     }
     public void addTelemetry(OpMode opMode) {
         opMode.telemetry.addData("Claw State", isClawOpen ? "Open" : "Closed");
-        //opMode.telemetry.addData("Claw Position", clawServo.getPosition());
+        opMode.telemetry.addData("Claw Position", clawServo.getPosition());
         opMode.telemetry.update();
     }
 }
